@@ -4,6 +4,8 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.0 - 2026-08-25
+
 ### Changed
 
 - Upgrade archive, cryptography, and network dependencies across the root,
@@ -29,8 +31,6 @@ All notable changes to this module are documented here.
 
 - Correct stale package, standalone, and authoritative-source links in public
   documentation.
-
-## 1.0.0 - 2026-08-25
 
 ### Added
 
