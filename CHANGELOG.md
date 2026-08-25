@@ -6,6 +6,10 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Upgrade archive, cryptography, and network dependencies across the root,
+  lifecycle, adapter, and comparison modules to current security-fixed
+  releases.
+
 - Exclude intentional nested modules from root local-proxy archives so local,
   bootstrap, CI, and public module checksums describe the same source
   boundary.
