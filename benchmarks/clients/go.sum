@@ -39,7 +39,7 @@ github.com/eapache/go-resiliency v1.7.0 h1:n3NRTnBn5N0Cbi/IeOHuQn9s2UwVUH7Ga0ZWc
 github.com/eapache/go-resiliency v1.7.0/go.mod h1:5yPzW0MIvSe0JDsv0v+DvcjEv2FyD6iZYSs1ZI+iQho=
 github.com/ebitengine/purego v0.10.0 h1:QIw4xfpWT6GWTzaW5XEKy3HXoqrJGx1ijYHzTF0/ISU=
 github.com/ebitengine/purego v0.10.0/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
-github.com/faustbrian/go-kafka v1.0.0 h1:hzkg/kEBqWtgdxU6+0Jd8O6h0+N53G8nB99iBmIJVtY=
+github.com/faustbrian/go-kafka v1.0.0 h1:5mYRu/Ej/o7HICOkp69sI83hfLW7D28LMIA981Q6rLc=
 github.com/faustbrian/go-kafka v1.0.0/go.mod h1:zqdFkw7RGxdoDaH7YFkADT4tyY9lh+INctDTAKNjYeA=
 github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
 github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
