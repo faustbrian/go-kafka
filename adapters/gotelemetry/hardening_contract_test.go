@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 	metricnoop "go.opentelemetry.io/otel/metric/noop"

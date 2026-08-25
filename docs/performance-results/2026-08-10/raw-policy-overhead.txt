@@ -1,6 +1,6 @@
 goos: darwin
 goarch: arm64
-pkg: github.com/faustbrian/golib/pkg/kafka
+pkg: github.com/faustbrian/go-kafka
 cpu: Apple M4 Max
 BenchmarkProducerPolicyOverhead/single/128B/transport-floor-16         	65669475	         1.840 ns/op	139640.83 MB/s	       0 B/op	       0 allocs/op
 BenchmarkProducerPolicyOverhead/single/128B/transport-floor-16         	64829283	         1.847 ns/op	139132.48 MB/s	       0 B/op	       0 allocs/op
@@ -393,4 +393,4 @@ BenchmarkProducerPolicyOverhead/transaction/10-records/1024B/policy-observed-16 
 BenchmarkProducerPolicyOverhead/transaction/10-records/1024B/policy-observed-16  	   14409	      8228 ns/op	1401.26 MB/s	   23088 B/op	     208 allocs/op
 BenchmarkProducerPolicyOverhead/transaction/10-records/1024B/policy-observed-16  	   15040	      7955 ns/op	1449.39 MB/s	   23088 B/op	     208 allocs/op
 PASS
-ok  	github.com/faustbrian/golib/pkg/kafka	49.758s
+ok  	github.com/faustbrian/go-kafka	49.758s

@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 	"github.com/twmb/franz-go/pkg/kerr"
 )
 

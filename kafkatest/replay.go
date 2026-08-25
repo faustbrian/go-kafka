@@ -9,7 +9,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 )
 
 // RunReplayConformance proves broker-validated inclusive/exclusive ranges,

@@ -1,8 +1,8 @@
 # Kafka service integration
 
 `kafkaservice` is the independently versioned integration between
-[`github.com/faustbrian/golib/pkg/kafka`](..) and
-`github.com/faustbrian/golib/pkg/service`. The root Kafka production package
+[`github.com/faustbrian/go-kafka`](..) and
+`github.com/faustbrian/go-service`. The root Kafka production package
 does not import service, correlation, or OpenTelemetry APIs.
 
 The adapter keeps concrete Kafka resources visible. It owns only service
@@ -150,8 +150,8 @@ the root clients or application.
 
 ## Compatibility and migration
 
-This module is pre-v1 and independently versioned. Its module path is
-`github.com/faustbrian/golib/pkg/kafka/kafkaservice`; consumers must pin a
+This stable v1 module is independently versioned. Its module path is
+`github.com/faustbrian/go-kafka/kafkaservice`; consumers must pin a
 released module version and must not rely on the repository workspace or local
 `replace` directives.
 

@@ -1,7 +1,7 @@
 benchmark-tls-broker-runtime=Apache Kafka 4.3.1 OpenSSL 3.5.7 TLS 1.3
 goos: darwin
 goarch: arm64
-pkg: github.com/faustbrian/golib/pkg/kafka/benchmarks/clients
+pkg: github.com/faustbrian/go-kafka/benchmarks/clients
 cpu: Apple M4 Max
 BenchmarkEquivalentAuthenticatedSynchronousProduce/mtls/128B/golib-policy-16         	      10	   3736983 ns/op	   0.03 MB/s	    5212 B/op	      71 allocs/op
 BenchmarkEquivalentAuthenticatedSynchronousProduce/mtls/128B/golib-policy-16         	      10	   6612725 ns/op	   0.02 MB/s	    5336 B/op	      71 allocs/op
@@ -184,4 +184,4 @@ BenchmarkEquivalentAuthenticatedConnectProduceClose/sasl-plain/sarama-16        
 BenchmarkEquivalentAuthenticatedConnectProduceClose/sasl-plain/sarama-16             	      10	  97224421 ns/op	         1.000 connections/op	  923708 B/op	    6409 allocs/op
 BenchmarkEquivalentAuthenticatedConnectProduceClose/sasl-plain/sarama-16             	      10	 114433883 ns/op	         1.000 connections/op	  922366 B/op	    6420 allocs/op
 PASS
-ok  	github.com/faustbrian/golib/pkg/kafka/benchmarks/clients	184.734s
+ok  	github.com/faustbrian/go-kafka/benchmarks/clients	184.734s

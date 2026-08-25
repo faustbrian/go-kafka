@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 	tcexec "github.com/testcontainers/testcontainers-go/exec"
 	tckafka "github.com/testcontainers/testcontainers-go/modules/kafka"
 	"github.com/twmb/franz-go/pkg/kadm"

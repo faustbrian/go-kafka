@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	kafka "github.com/faustbrian/golib/pkg/kafka"
-	mskiam "github.com/faustbrian/golib/pkg/kafka/adapters/mskiam"
+	kafka "github.com/faustbrian/go-kafka"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
 )
 
 type staticCredentialsProvider struct{}

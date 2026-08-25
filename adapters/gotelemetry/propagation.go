@@ -5,7 +5,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 	"go.opentelemetry.io/otel/propagation"
 )
 

@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
+	kafka "github.com/faustbrian/go-kafka"
 	"go.opentelemetry.io/otel/metric"
 	metricnoop "go.opentelemetry.io/otel/metric/noop"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"

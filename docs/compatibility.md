@@ -5,7 +5,7 @@ recorded through 2026-08-10. Upstream protocol support is not package evidence.
 The [specification decision register](specification-decisions.md) records the
 package interpretations that govern this matrix.
 
-The independently versioned `kafkaservice` module is additive and pre-v1.
+The independently versioned `kafkaservice` module is additive and stable at v1.
 Existing direct producer and consumer construction remains supported. The
 adapter uses the public Kafka record, handler, health, run, and shutdown
 contracts and does not change their wire or settlement semantics.
@@ -85,9 +85,9 @@ floor still does not establish operational support for an untested broker.
 ## Release evidence
 
 On 2026-07-29, commit `2dc6459` passed the repository release dry-run for
-`pkg/kafka`. After module-local tidy, test, and API-compatibility gates, the
+`.`. After module-local tidy, test, and API-compatibility gates, the
 release tool created a fresh temporary module with `GOWORK=off`, resolved
-`github.com/faustbrian/golib/pkg/kafka@v0.0.0` through the local source proxy,
+`github.com/faustbrian/go-kafka@v0.0.0` through the local source proxy,
 and listed the public package successfully. This proves the committed module is
 independently consumable from the repository's release artifact. It does not
 prove a published tag or public Go module proxy resolution.

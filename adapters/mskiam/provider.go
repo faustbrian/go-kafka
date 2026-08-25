@@ -16,7 +16,7 @@ import (
 	"github.com/aws/aws-msk-iam-sasl-signer-go/signer"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
-	kafka "github.com/faustbrian/golib/pkg/kafka"
+	kafka "github.com/faustbrian/go-kafka"
 )
 
 const (

@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 )
 
 // AuthenticationProviderHarness supplies isolated implementations of every

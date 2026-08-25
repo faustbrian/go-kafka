@@ -1,6 +1,6 @@
 goos: darwin
 goarch: arm64
-pkg: github.com/faustbrian/golib/pkg/kafka/benchmarks/clients
+pkg: github.com/faustbrian/go-kafka/benchmarks/clients
 cpu: Apple M4 Max
                                                       │ raw-tls.txt  │
                                                       │    sec/op    │

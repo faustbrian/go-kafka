@@ -6,8 +6,8 @@ import (
 	"log/slog"
 	"time"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
-	golog "github.com/faustbrian/golib/pkg/kafka/adapters/golog"
+	kafka "github.com/faustbrian/go-kafka"
+	golog "github.com/faustbrian/go-kafka/adapters/golog"
 )
 
 func Example() {

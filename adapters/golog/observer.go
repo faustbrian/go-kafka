@@ -11,7 +11,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
+	kafka "github.com/faustbrian/go-kafka"
 )
 
 const (

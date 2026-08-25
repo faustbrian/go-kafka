@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-08-25
+
 ### Changed
 
+- Publish the module from its standalone `github.com/faustbrian/go-kafka/adapters/mskiam` identity while preserving its documented API and behavior.
 - Record signer, credential-refresh, and managed-service support decisions in
   an auditable specification register backed by pinned source snapshots.
 - Require owned sibling modules at local `v0.0.0`; clean external consumers
@@ -50,4 +53,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   web-identity sources, pod token rotation, workload replacement, AWS failure
   redaction, refresh contention, and separate generation/retrieval benchmarks.
 
-[Unreleased]: https://github.com/faustbrian/golib/commits/main/pkg/kafka/adapters/mskiam
+[Unreleased]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv1.0.0...HEAD
+[1.0.0]: https://github.com/faustbrian/go-kafka/releases/tag/adapters%2Fmskiam%2Fv1.0.0

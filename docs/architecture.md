@@ -4,7 +4,7 @@ The module owns client-side Kafka policy, not domain schemas or cluster
 infrastructure.
 
 The independently versioned nested `kafkaservice` module is the integration
-boundary for `github.com/faustbrian/golib/pkg/service`. It imports the root
+boundary for `github.com/faustbrian/go-service`. It imports the root
 Kafka, service, correlation, and optional OpenTelemetry propagation contracts.
 None of those adapter-only dependencies enter this root module, and the
 service module never imports Kafka. The adapter keeps concrete producer and

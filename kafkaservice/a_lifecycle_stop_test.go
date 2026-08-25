@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/correlation"
-	"github.com/faustbrian/golib/pkg/kafka"
-	"github.com/faustbrian/golib/pkg/kafka/kafkaservice"
+	"github.com/faustbrian/go-correlation"
+	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/kafkaservice"
 )
 
 func TestSupportedIdleAdaptersStopWithoutWaitingForWork(t *testing.T) {

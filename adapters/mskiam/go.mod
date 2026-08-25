@@ -1,4 +1,4 @@
-module github.com/faustbrian/golib/pkg/kafka/adapters/mskiam
+module github.com/faustbrian/go-kafka/adapters/mskiam
 
 go 1.26.6
 
@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.43.0
 	github.com/aws/aws-sdk-go-v2/config v1.32.31
 	github.com/aws/smithy-go v1.27.3
-	github.com/faustbrian/golib/pkg/kafka v0.0.0
+	github.com/faustbrian/go-kafka v1.0.0
 )
 
 require (

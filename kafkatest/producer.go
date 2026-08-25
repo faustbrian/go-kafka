@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 )
 
 const operationTimeout = 30 * time.Second

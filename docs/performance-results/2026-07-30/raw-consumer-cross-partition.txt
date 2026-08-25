@@ -1,7 +1,7 @@
 benchmark-broker-runtime=Confluent Local 7.5.0-ccs
 goos: darwin
 goarch: arm64
-pkg: github.com/faustbrian/golib/pkg/kafka/benchmarks/clients
+pkg: github.com/faustbrian/go-kafka/benchmarks/clients
 cpu: Apple M4 Max
 BenchmarkEquivalentCrossPartitionConsumerHandling/sequential/128B/none/golib-policy-16         	      10	  16603292 ns/op	   0.08 MB/s	         1.000 commits/op	       256.0 handler-rounds/record	         8.000 partitions/op	         8.000 records/op	   29818 B/op	     315 allocs/op
 BenchmarkEquivalentCrossPartitionConsumerHandling/sequential/128B/none/golib-policy-16         	      10	  10510592 ns/op	   0.12 MB/s	         1.000 commits/op	       256.0 handler-rounds/record	         8.000 partitions/op	         8.000 records/op	   28800 B/op	     307 allocs/op
@@ -324,4 +324,4 @@ BenchmarkEquivalentCrossPartitionConsumerHandling/parallel/1024B/snappy/raw-fran
 BenchmarkEquivalentCrossPartitionConsumerHandling/parallel/1024B/snappy/raw-franz-go-16        	      10	   1851367 ns/op	   4.57 MB/s	         1.000 commits/op	       256.0 handler-rounds/record	         8.000 partitions/op	         8.000 records/op	   29792 B/op	     214 allocs/op
 BenchmarkEquivalentCrossPartitionConsumerHandling/parallel/1024B/snappy/raw-franz-go-16        	      10	   1682708 ns/op	   5.03 MB/s	         1.000 commits/op	       256.0 handler-rounds/record	         8.000 partitions/op	         8.000 records/op	   28128 B/op	     208 allocs/op
 PASS
-ok  	github.com/faustbrian/golib/pkg/kafka/benchmarks/clients	47.519s
+ok  	github.com/faustbrian/go-kafka/benchmarks/clients	47.519s

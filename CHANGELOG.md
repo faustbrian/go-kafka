@@ -4,6 +4,8 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.0 - 2026-08-25
+
 ### Added
 
 - register the exact Apache Kafka, Confluent Local, Testcontainers Ryuk,
@@ -174,6 +176,7 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Publish the module from its standalone `github.com/faustbrian/go-kafka` identity while preserving its documented API and behavior.
 - record the content-matched root Kafka gate set and all nine
   manifest-derived reverse dependencies as current, while keeping untested
   managed-service profiles outside the documented operational support matrix

@@ -1,0 +1,9 @@
+go 1.26.6
+
+use (
+	.
+	./adapters/gotelemetry
+	./adapters/mskiam
+	./benchmarks/clients
+	./kafkaservice
+)

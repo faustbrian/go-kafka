@@ -1,4 +1,4 @@
-module github.com/faustbrian/golib/pkg/kafka
+module github.com/faustbrian/go-kafka
 
 go 1.26.6
 

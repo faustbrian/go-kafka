@@ -97,7 +97,7 @@ environment:
 	\) -print | sed 's|^./||' | LC_ALL=C sort | xargs shasum -a 256
 	@shasum -a 256 ../../../../go.work
 	@$(GO) list -m \
-		github.com/faustbrian/golib/pkg/kafka \
+		github.com/faustbrian/go-kafka \
 		github.com/twmb/franz-go \
 		github.com/segmentio/kafka-go \
 		github.com/IBM/sarama \

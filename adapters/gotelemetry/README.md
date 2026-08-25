@@ -1,7 +1,7 @@
 # Kafka OpenTelemetry adapter
 
 `gotelemetry` is the independently versioned OpenTelemetry adapter for
-[`github.com/faustbrian/golib/pkg/kafka`](../..). The root Kafka module remains
+[`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains
 vendor-neutral and does not import OpenTelemetry.
 
 Use this adapter when Kafka policy observations should become traces and
@@ -353,7 +353,7 @@ client identity.
 
 ## Migration
 
-This module is pre-v1. Span names, kinds, attributes, metric names, units,
+This module follows stable v1 compatibility. Span names, kinds, attributes, metric names, units,
 boundaries, propagation validation, and the convention pin are user-visible
 migration surfaces. Upgrade OpenTelemetry and this adapter together, review
 the changelog, update dashboards and sampling rules, and revalidate allowlists.

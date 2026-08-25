@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
+	kafka "github.com/faustbrian/go-kafka"
 )
 
 func TestObserverRejectsImpossibleSettlementCounts(t *testing.T) {

@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/IBM/sarama"
-	policy "github.com/faustbrian/golib/pkg/kafka"
+	policy "github.com/faustbrian/go-kafka"
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 

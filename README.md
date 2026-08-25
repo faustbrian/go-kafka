@@ -1,6 +1,16 @@
 # kafka
 
-`kafka` is the pre-v1 bounded first-party Apache Kafka client policy for Go
+[![CI](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml)
+[![CodeQL](https://img.shields.io/badge/CodeQL-required-blue)](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-100%25_required-blue)](CONTRIBUTING.md#verification)
+[![Mutation](https://img.shields.io/badge/mutation-100%25_required-blue)](CONTRIBUTING.md#verification)
+[![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
+[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-kafka.svg)](https://pkg.go.dev/github.com/faustbrian/go-kafka)
+[![Release](https://img.shields.io/github/v/release/faustbrian/go-kafka?sort=semver)](https://github.com/faustbrian/go-kafka/releases)
+[![Go](https://img.shields.io/badge/go-1.26.6-00ADD8?logo=go)](https://go.dev/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+`kafka` is the stable v1 bounded first-party Apache Kafka client policy for Go
 services. The current implementation is being redesigned; existing draft APIs
 and passing checks are not a release-readiness claim.
 
@@ -482,6 +492,6 @@ that can match the idempotent all-ISR contract; see the
 [performance guide](docs/performance.md) for the current capture and remaining
 matrix.
 
-From the repository root, `make release-dry-run MODULES=pkg/kafka` verifies the
+From the repository root, `make release-dry-run MODULES=.` verifies the
 committed module through a fresh `GOWORK=off` consumer and local source proxy.
 That local proof does not replace published-tag and public-proxy verification.

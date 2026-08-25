@@ -16,9 +16,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/correlation"
-	"github.com/faustbrian/golib/pkg/kafka"
-	"github.com/faustbrian/golib/pkg/kafka/kafkaservice"
+	"github.com/faustbrian/go-correlation"
+	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/kafkaservice"
 )
 
 const serviceKafkaImage = "apache/kafka:4.3.1@" +

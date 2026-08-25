@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 )
 
 // RunInspectorConformance proves bounded cluster, topic, consumer-group lag,

@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 )
 
 func ExampleProducer_PublishRecord() {

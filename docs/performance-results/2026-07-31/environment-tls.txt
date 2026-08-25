@@ -22,7 +22,7 @@ d2613e5afed904ee2775f64ca4db55e8fd2f8f120a9230e220514e6db7d34a64  resource_bench
 126f45f36ea24627cfc4c09ec076176c6c1be4b4359f828f89ace1b53933784a  transaction_processor_benchmark_test.go
 8ef988de548f9fdf6471dce4a5d9fc553cedaf6108c5f094e81a6499c70f71a5  transaction_producer_benchmark_test.go
 32bb3340bcab21a80be0cc7af381896289bbd2b6cd0fd4943eff27df102f43e5  ../../../../go.work
-github.com/faustbrian/golib/pkg/kafka
+github.com/faustbrian/go-kafka
 github.com/twmb/franz-go v1.21.5
 github.com/segmentio/kafka-go v0.4.51
 github.com/IBM/sarama v1.60.1

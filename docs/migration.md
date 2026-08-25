@@ -1,6 +1,6 @@
 # Migration, deprecation, and upgrades
 
-The module is pre-v1. Delivery semantics, defaults, record ownership, error
+The module follows stable v1 compatibility. Delivery semantics, defaults, record ownership, error
 identity, ordering, offset settlement, transaction behavior, replay behavior,
 metrics, and configuration are still treated as compatibility-sensitive
 contracts. A pre-v1 version number is not permission to change them silently.

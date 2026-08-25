@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/IBM/sarama"
-	policy "github.com/faustbrian/golib/pkg/kafka"
+	policy "github.com/faustbrian/go-kafka"
 	segmentkafka "github.com/segmentio/kafka-go"
 	"github.com/testcontainers/testcontainers-go"
 	tcexec "github.com/testcontainers/testcontainers-go/exec"

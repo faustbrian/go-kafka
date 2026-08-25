@@ -22,7 +22,7 @@ import (
 
 	"github.com/aws/aws-msk-iam-sasl-signer-go/signer"
 	"github.com/aws/aws-sdk-go-v2/aws"
-	mskiam "github.com/faustbrian/golib/pkg/kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
 )
 
 type sourceCredentials struct {

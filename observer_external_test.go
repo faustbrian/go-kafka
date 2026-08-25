@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 )
 
 func TestObservationFailureFormattingRedactsObserverCause(t *testing.T) {

@@ -8,9 +8,9 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/correlation"
-	"github.com/faustbrian/golib/pkg/kafka"
-	"github.com/faustbrian/golib/pkg/kafka/kafkaservice"
+	"github.com/faustbrian/go-correlation"
+	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/kafkaservice"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/trace"
 )

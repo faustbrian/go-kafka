@@ -18,8 +18,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
-	mskiam "github.com/faustbrian/golib/pkg/kafka/adapters/mskiam"
+	kafka "github.com/faustbrian/go-kafka"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
 )
 
 const (
@@ -389,8 +389,8 @@ func reportMSKRuntime(t *testing.T, config mskCompatibilityConfig) {
 		versions[info.Main.Path] = info.Main.Version
 		for _, dependency := range info.Deps {
 			switch dependency.Path {
-			case "github.com/faustbrian/golib/pkg/kafka",
-				"github.com/faustbrian/golib/pkg/kafka/adapters/mskiam",
+			case "github.com/faustbrian/go-kafka",
+				"github.com/faustbrian/go-kafka/adapters/mskiam",
 				"github.com/aws/aws-msk-iam-sasl-signer-go",
 				"github.com/aws/aws-sdk-go-v2",
 				"github.com/twmb/franz-go",

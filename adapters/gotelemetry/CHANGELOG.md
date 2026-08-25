@@ -4,6 +4,8 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.0 - 2026-08-25
+
 ### Fixed
 
 - make documentation and specification checks work on stock CI runners without
@@ -60,6 +62,7 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Publish the module from its standalone `github.com/faustbrian/go-kafka/adapters/gotelemetry` identity while preserving its documented API and behavior.
 - select and record OpenTelemetry messaging semantic conventions 1.44.0,
   retaining explicit completion-observer boundaries for cluster identity,
   create/client-send spans, and creation-context links

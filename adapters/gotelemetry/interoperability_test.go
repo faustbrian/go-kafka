@@ -15,8 +15,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
-	"github.com/faustbrian/golib/pkg/kafka/adapters/gotelemetry"
+	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/adapters/gotelemetry"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 	metricnoop "go.opentelemetry.io/otel/metric/noop"

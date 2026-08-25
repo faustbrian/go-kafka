@@ -1,6 +1,6 @@
 goos: darwin
 goarch: arm64
-pkg: github.com/faustbrian/golib/pkg/kafka
+pkg: github.com/faustbrian/go-kafka
 cpu: Apple M4 Max
                                                                                      │ docs/performance-results/2026-08-10/raw-consumer-transaction-policy-overhead.txt │
                                                                                      │                                      sec/op                                      │

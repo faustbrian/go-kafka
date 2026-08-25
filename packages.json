@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "repository": "github.com/faustbrian/go-kafka",
+  "packages": [
+    {
+      "module_directory": ".",
+      "directory": ".",
+      "name": "kafka",
+      "import_path": "github.com/faustbrian/go-kafka",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": ".",
+      "directory": "adapters/golog",
+      "name": "golog",
+      "import_path": "github.com/faustbrian/go-kafka/adapters/golog",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": "adapters/gotelemetry",
+      "directory": ".",
+      "name": "gotelemetry",
+      "import_path": "github.com/faustbrian/go-kafka/adapters/gotelemetry",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": "adapters/mskiam",
+      "directory": ".",
+      "name": "mskiam",
+      "import_path": "github.com/faustbrian/go-kafka/adapters/mskiam",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": "benchmarks/clients",
+      "directory": ".",
+      "name": "clients",
+      "import_path": "github.com/faustbrian/go-kafka/benchmarks/clients",
+      "kind": "harness",
+      "production": false,
+      "executable": false,
+      "coverage_required": false,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": "kafkaservice",
+      "directory": ".",
+      "name": "kafkaservice",
+      "import_path": "github.com/faustbrian/go-kafka/kafkaservice",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": ".",
+      "directory": "kafkatest",
+      "name": "kafkatest",
+      "import_path": "github.com/faustbrian/go-kafka/kafkatest",
+      "kind": "test support",
+      "production": false,
+      "executable": true,
+      "coverage_required": false,
+      "build_required": true,
+      "build_tags": []
+    }
+  ]
+}

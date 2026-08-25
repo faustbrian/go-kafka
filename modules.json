@@ -1,0 +1,689 @@
+{
+  "schema_version": 1,
+  "repository": "github.com/faustbrian/go-kafka",
+  "go_version": "1.26.6",
+  "modules": [
+    {
+      "directory": ".",
+      "module_path": "github.com/faustbrian/go-kafka",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": ".",
+          "directory": ".",
+          "name": "kafka",
+          "import_path": "github.com/faustbrian/go-kafka",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        },
+        {
+          "module_directory": ".",
+          "directory": "adapters/golog",
+          "name": "golog",
+          "import_path": "github.com/faustbrian/go-kafka/adapters/golog",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        },
+        {
+          "module_directory": ".",
+          "directory": "kafkatest",
+          "name": "kafkatest",
+          "import_path": "github.com/faustbrian/go-kafka/kafkatest",
+          "kind": "test support",
+          "production": false,
+          "executable": true,
+          "coverage_required": false,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "`kafka` is the stable v1 bounded first-party Apache Kafka client policy for Go services.",
+      "lifecycle": "stable",
+      "kind": "public library",
+      "releasable": true,
+      "family": "integration-and-data-movement",
+      "family_label": "Integration And Data Movement",
+      "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
+      "family_order": 7,
+      "version": "v1.0.0",
+      "tag_prefix": "v",
+      "owned_dependencies": [],
+      "reverse_owned_dependencies": [
+        "github.com/faustbrian/go-cloudevents/adapters/golib",
+        "github.com/faustbrian/go-event-sourcing/adapters/gokafka",
+        "github.com/faustbrian/go-event-sourcing/adapters/gotelemetry",
+        "github.com/faustbrian/go-kafka/adapters/gotelemetry",
+        "github.com/faustbrian/go-kafka/adapters/mskiam",
+        "github.com/faustbrian/go-kafka/benchmarks/clients",
+        "github.com/faustbrian/go-kafka/kafkaservice",
+        "github.com/faustbrian/go-transactional-outbox/adapters/gokafka",
+        "github.com/faustbrian/go-service/integration/adoption"
+      ],
+      "external_runtime_dependencies": [
+        "github.com/containerd/errdefs",
+        "github.com/klauspost/compress",
+        "github.com/moby/moby/api",
+        "github.com/moby/moby/client",
+        "github.com/pierrec/lz4/v4",
+        "github.com/testcontainers/testcontainers-go",
+        "github.com/testcontainers/testcontainers-go/modules/kafka",
+        "github.com/twmb/franz-go",
+        "github.com/twmb/franz-go/pkg/kadm",
+        "github.com/twmb/franz-go/pkg/kmsg"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [
+        "Apache Kafka 3.7.2 and 4.3.1 KRaft fixtures",
+        "Apache Kafka 4.3.1 test-only LocalTieredStorage fixture",
+        "Confluent Local 7.5.0 fixture",
+        "Testcontainers Ryuk 0.14.0 resource reaper"
+      ],
+      "specifications": [
+        "Apache Kafka protocol and client semantics",
+        "implemented Kafka Improvement Proposals"
+      ],
+      "conformance_corpora": [
+        "Apache Kafka 3.7.2 and 4.3.1 multi-broker KRaft matrix",
+        "Pinned TLS, mTLS, PLAIN, SCRAM, and OAUTHBEARER broker fixtures",
+        "Producer, consumer-group, transaction, replay, and inspection failure matrix",
+        "franz-go, kafka-go, and Sarama equivalent-behavior comparison matrix"
+      ],
+      "provenance": [
+        "specification/manifest.json"
+      ],
+      "goal_files": [
+        ".ai/GOAL.md",
+        ".ai/GOAL_HARDEN.md"
+      ],
+      "goal_status": "implementation-evidence-inventoried",
+      "goal_evidence": [
+        {
+          "file": ".ai/GOAL.md",
+          "requirements_sha256": "f75e25cb12cb06e1854505ebc87a7f60eceb2b3e077b42a929075c7abc137046",
+          "implementation_evidence": [
+            "CHANGELOG.md",
+            "README.md",
+            "docs/README.md",
+            "docs/api.md",
+            "docs/architecture.md",
+            "docs/compatibility.md",
+            "docs/performance.md",
+            "docs/security.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        },
+        {
+          "file": ".ai/GOAL_HARDEN.md",
+          "requirements_sha256": "0bb88473fc4fca7820caf921a8ae52a70a2ceb0379d74f47f9837676f55db49c",
+          "implementation_evidence": [
+            "CHANGELOG.md",
+            "README.md",
+            "docs/README.md",
+            "docs/api.md",
+            "docs/architecture.md",
+            "docs/compatibility.md",
+            "docs/performance.md",
+            "docs/security.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        }
+      ],
+      "gates": {
+        "api_compatibility": true,
+        "benchmarks": true,
+        "conformance": true,
+        "coverage": true,
+        "documentation": true,
+        "fuzz": true,
+        "lint": true,
+        "mutation": true,
+        "race": true,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "adapters/gotelemetry",
+      "module_path": "github.com/faustbrian/go-kafka/adapters/gotelemetry",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": "adapters/gotelemetry",
+          "directory": ".",
+          "name": "gotelemetry",
+          "import_path": "github.com/faustbrian/go-kafka/adapters/gotelemetry",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "`gotelemetry` is the independently versioned OpenTelemetry adapter for [`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains vendor-neutral and does not import OpenTelemetry.",
+      "lifecycle": "stable",
+      "kind": "adapter",
+      "releasable": true,
+      "family": "integration-and-data-movement",
+      "family_label": "Integration And Data Movement",
+      "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
+      "family_order": 7,
+      "version": "v1.0.0",
+      "tag_prefix": "adapters/gotelemetry/v",
+      "owned_dependencies": [
+        "github.com/faustbrian/go-kafka"
+      ],
+      "reverse_owned_dependencies": [],
+      "external_runtime_dependencies": [
+        "go.opentelemetry.io/otel",
+        "go.opentelemetry.io/otel/metric",
+        "go.opentelemetry.io/otel/sdk",
+        "go.opentelemetry.io/otel/sdk/metric",
+        "go.opentelemetry.io/otel/trace"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [
+        "Apache Kafka 4.3.1"
+      ],
+      "specifications": [
+        "OpenTelemetry semantic conventions 1.44.0 for Kafka messaging spans and metrics",
+        "OpenTelemetry Go API and SDK 1.44.0"
+      ],
+      "conformance_corpora": [
+        "Pinned OpenTelemetry 1.44.0 Kafka messaging span and metric source matrix",
+        "Adapter mapping, propagation, cardinality, provider-failure, and lifecycle evidence"
+      ],
+      "provenance": [
+        "adapters/gotelemetry/specification/manifest.json"
+      ],
+      "goal_files": [
+        "adapters/gotelemetry/.ai/GOAL.md",
+        "adapters/gotelemetry/.ai/GOAL_HARDEN.md"
+      ],
+      "goal_status": "implementation-evidence-inventoried",
+      "goal_evidence": [
+        {
+          "file": "adapters/gotelemetry/.ai/GOAL.md",
+          "requirements_sha256": "b3c36ca149e6f658b160bc567afc09aa9bc31e95abee47f374968df127fdf46e",
+          "implementation_evidence": [
+            "adapters/gotelemetry/CHANGELOG.md",
+            "adapters/gotelemetry/README.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        },
+        {
+          "file": "adapters/gotelemetry/.ai/GOAL_HARDEN.md",
+          "requirements_sha256": "484ebab0c8c886d7167bab54a6e404766ea53b6ad36b9cbe882753d1022db271",
+          "implementation_evidence": [
+            "adapters/gotelemetry/CHANGELOG.md",
+            "adapters/gotelemetry/README.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        }
+      ],
+      "gates": {
+        "api_compatibility": true,
+        "benchmarks": true,
+        "conformance": true,
+        "coverage": true,
+        "documentation": true,
+        "fuzz": true,
+        "lint": true,
+        "mutation": true,
+        "race": true,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "adapters/mskiam",
+      "module_path": "github.com/faustbrian/go-kafka/adapters/mskiam",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": "adapters/mskiam",
+          "directory": ".",
+          "name": "mskiam",
+          "import_path": "github.com/faustbrian/go-kafka/adapters/mskiam",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "`mskiam` is the independently versioned Amazon MSK IAM authentication adapter for [`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains AWS-independent.",
+      "lifecycle": "stable",
+      "kind": "adapter",
+      "releasable": true,
+      "family": "integration-and-data-movement",
+      "family_label": "Integration And Data Movement",
+      "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
+      "family_order": 7,
+      "version": "v1.0.0",
+      "tag_prefix": "adapters/mskiam/v",
+      "owned_dependencies": [
+        "github.com/faustbrian/go-kafka"
+      ],
+      "reverse_owned_dependencies": [],
+      "external_runtime_dependencies": [
+        "github.com/aws/aws-msk-iam-sasl-signer-go",
+        "github.com/aws/aws-sdk-go-v2",
+        "github.com/aws/aws-sdk-go-v2/config",
+        "github.com/aws/smithy-go"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [
+        "AWS MSK IAM SASL Signer for Go v1.0.4",
+        "AWS SDK for Go v2 v1.43.0"
+      ],
+      "specifications": [
+        "AWS MSK IAM SASL/OAUTHBEARER signer contract v1.0.4",
+        "AWS SDK for Go v2 credential-provider contract v1.43.0"
+      ],
+      "conformance_corpora": [
+        "Pinned AWS signer and SDK source archives plus reviewed AWS guidance snapshots",
+        "Signer-output, credential-refresh, expiry, redaction, and compatibility-boundary evidence"
+      ],
+      "provenance": [
+        "adapters/mskiam/specification/manifest.json"
+      ],
+      "goal_files": [
+        "adapters/mskiam/.ai/GOAL.md",
+        "adapters/mskiam/.ai/GOAL_HARDEN.md"
+      ],
+      "goal_status": "implementation-evidence-inventoried",
+      "goal_evidence": [
+        {
+          "file": "adapters/mskiam/.ai/GOAL.md",
+          "requirements_sha256": "4a968518658302f2e039c28f682493d11487616ab19127252f6cc7c2ab96a1d8",
+          "implementation_evidence": [
+            "adapters/mskiam/CHANGELOG.md",
+            "adapters/mskiam/README.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        },
+        {
+          "file": "adapters/mskiam/.ai/GOAL_HARDEN.md",
+          "requirements_sha256": "3fcd52386568df72965fa4dd05205b66f8653c2ab49c7c106bddd58c03f4233c",
+          "implementation_evidence": [
+            "adapters/mskiam/CHANGELOG.md",
+            "adapters/mskiam/README.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        }
+      ],
+      "gates": {
+        "api_compatibility": true,
+        "benchmarks": true,
+        "conformance": true,
+        "coverage": true,
+        "documentation": true,
+        "fuzz": true,
+        "lint": true,
+        "mutation": true,
+        "race": true,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "benchmarks/clients",
+      "module_path": "github.com/faustbrian/go-kafka/benchmarks/clients",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": "benchmarks/clients",
+          "directory": ".",
+          "name": "clients",
+          "import_path": "github.com/faustbrian/go-kafka/benchmarks/clients",
+          "kind": "harness",
+          "production": false,
+          "executable": false,
+          "coverage_required": false,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "This non-releasable module isolates comparison clients and container tooling from the Kafka policy module. It records end-to-end broker measurements only where the candidates can provide the same observable contract. It is not a source of production support claims or a substitute for fault evidence.",
+      "lifecycle": "internal",
+      "kind": "benchmark harness",
+      "releasable": false,
+      "version": "unreleased",
+      "tag_prefix": "benchmarks/clients/v",
+      "owned_dependencies": [
+        "github.com/faustbrian/go-kafka"
+      ],
+      "reverse_owned_dependencies": [],
+      "external_runtime_dependencies": [
+        "github.com/IBM/sarama",
+        "github.com/moby/moby/api",
+        "github.com/segmentio/kafka-go",
+        "github.com/testcontainers/testcontainers-go",
+        "github.com/testcontainers/testcontainers-go/modules/kafka",
+        "github.com/twmb/franz-go",
+        "github.com/twmb/franz-go/pkg/kadm",
+        "github.com/xdg-go/scram"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [
+        "integration"
+      ],
+      "interoperability_tools": [
+        "franz-go v1.21.5",
+        "kafka-go v0.4.51",
+        "IBM/Sarama v1.60.1",
+        "Confluent Local 7.5.0 and Apache Kafka 4.3.1 fixtures"
+      ],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
+      "goal_files": [],
+      "goal_status": "not-applicable",
+      "goal_evidence": [],
+      "gates": {
+        "api_compatibility": false,
+        "benchmarks": false,
+        "conformance": false,
+        "coverage": false,
+        "documentation": true,
+        "fuzz": false,
+        "lint": true,
+        "mutation": false,
+        "race": false,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "kafkaservice",
+      "module_path": "github.com/faustbrian/go-kafka/kafkaservice",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": "kafkaservice",
+          "directory": ".",
+          "name": "kafkaservice",
+          "import_path": "github.com/faustbrian/go-kafka/kafkaservice",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "`kafkaservice` is the independently versioned integration between [`github.com/faustbrian/go-kafka`](..) and `github.com/faustbrian/go-service`. The root Kafka production package does not import service, correlation, or OpenTelemetry APIs.",
+      "lifecycle": "stable",
+      "kind": "public library",
+      "releasable": true,
+      "family": "integration-and-data-movement",
+      "family_label": "Integration And Data Movement",
+      "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
+      "family_order": 7,
+      "version": "v1.0.0",
+      "tag_prefix": "kafkaservice/v",
+      "owned_dependencies": [
+        "github.com/faustbrian/go-cli",
+        "github.com/faustbrian/go-correlation",
+        "github.com/faustbrian/go-identifier",
+        "github.com/faustbrian/go-kafka",
+        "github.com/faustbrian/go-service"
+      ],
+      "reverse_owned_dependencies": [
+        "github.com/faustbrian/go-service/integration/adoption"
+      ],
+      "external_runtime_dependencies": [
+        "go.opentelemetry.io/otel",
+        "go.opentelemetry.io/otel/trace"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [
+        "Apache Kafka 4.3.1"
+      ],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
+      "goal_files": [
+        "kafkaservice/.ai/GOAL.md",
+        "kafkaservice/.ai/GOAL_HARDEN.md"
+      ],
+      "goal_status": "implementation-evidence-inventoried",
+      "goal_evidence": [
+        {
+          "file": "kafkaservice/.ai/GOAL.md",
+          "requirements_sha256": "92002c27aa253b394c348aa9beaba7571b663f12b759c49c130372b436b2b024",
+          "implementation_evidence": [
+            "kafkaservice/CHANGELOG.md",
+            "kafkaservice/README.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        },
+        {
+          "file": "kafkaservice/.ai/GOAL_HARDEN.md",
+          "requirements_sha256": "259c305250b3dfd0ddcf8ffa84db0697ac2b0963bbc1ff2c78f4ed70d8f60382",
+          "implementation_evidence": [
+            "kafkaservice/CHANGELOG.md",
+            "kafkaservice/README.md"
+          ],
+          "verification_gates": [
+            "format-check",
+            "tidy-check",
+            "safety",
+            "vet",
+            "test",
+            "race",
+            "coverage",
+            "lint",
+            "staticcheck",
+            "vulnerability",
+            "secrets",
+            "licenses",
+            "sbom",
+            "fuzz",
+            "mutation",
+            "nilaway",
+            "docs",
+            "api",
+            "conformance",
+            "interoperability",
+            "benchmark"
+          ],
+          "implementation_status": "implemented-requires-fresh-verification"
+        }
+      ],
+      "gates": {
+        "api_compatibility": true,
+        "benchmarks": true,
+        "conformance": false,
+        "coverage": true,
+        "documentation": true,
+        "fuzz": true,
+        "lint": true,
+        "mutation": true,
+        "race": true,
+        "security": true,
+        "tests": true
+      }
+    }
+  ]
+}

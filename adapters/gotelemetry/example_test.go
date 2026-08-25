@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
-	gotelemetry "github.com/faustbrian/golib/pkg/kafka/adapters/gotelemetry"
+	kafka "github.com/faustbrian/go-kafka"
+	gotelemetry "github.com/faustbrian/go-kafka/adapters/gotelemetry"
 	"go.opentelemetry.io/otel/metric"
 	metricnoop "go.opentelemetry.io/otel/metric/noop"
 	"go.opentelemetry.io/otel/trace"

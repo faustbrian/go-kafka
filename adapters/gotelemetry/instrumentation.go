@@ -13,7 +13,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
+	kafka "github.com/faustbrian/go-kafka"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/metric"
@@ -25,7 +25,7 @@ const (
 	// OpenTelemetry messaging convention selected for this adapter's mapping.
 	MessagingSemanticConventionVersion = "1.44.0"
 
-	instrumentationName = "github.com/faustbrian/golib/pkg/kafka/adapters/gotelemetry"
+	instrumentationName = "github.com/faustbrian/go-kafka/adapters/gotelemetry"
 	maxAllowedValues    = 128
 	maxTopicLength      = 249
 	maxIdentityLength   = 255

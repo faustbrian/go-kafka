@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 	franzoauth "github.com/twmb/franz-go/pkg/sasl/oauth"
 )
 

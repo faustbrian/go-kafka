@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/kafka"
+	"github.com/faustbrian/go-kafka"
 )
 
 // ErrInvalidHarness reports that a conformance fixture is incomplete or

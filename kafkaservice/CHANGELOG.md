@@ -4,6 +4,8 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.0 - 2026-08-25
+
 ### Fixed
 
 - Retry the documented transient Kafka observer-reentry fence during the
@@ -12,6 +14,7 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Publish the module from its standalone `github.com/faustbrian/go-kafka/kafkaservice` identity while preserving its documented API and behavior.
 - Document lifecycle ordering, Kubernetes SIGTERM, duplicate and ambiguous
   delivery windows, API adoption, compatibility, migration, and FAQ guidance.
 - Stop retaining obsolete Cobra command-line dependencies after the CLI module

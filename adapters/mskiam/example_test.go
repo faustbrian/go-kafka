@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	kafka "github.com/faustbrian/golib/pkg/kafka"
-	mskiam "github.com/faustbrian/golib/pkg/kafka/adapters/mskiam"
+	kafka "github.com/faustbrian/go-kafka"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
 )
 
 func Example() {

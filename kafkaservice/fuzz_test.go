@@ -5,9 +5,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/faustbrian/golib/pkg/correlation"
-	"github.com/faustbrian/golib/pkg/kafka"
-	"github.com/faustbrian/golib/pkg/kafka/kafkaservice"
+	"github.com/faustbrian/go-correlation"
+	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/kafkaservice"
 )
 
 func FuzzHandlerCorrelationBoundary(fuzz *testing.F) {

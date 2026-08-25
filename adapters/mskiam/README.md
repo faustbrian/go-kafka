@@ -1,7 +1,7 @@
 # Kafka Amazon MSK IAM adapter
 
 `mskiam` is the independently versioned Amazon MSK IAM authentication adapter
-for [`github.com/faustbrian/golib/pkg/kafka`](../..). The root Kafka module
+for [`github.com/faustbrian/go-kafka`](../..). The root Kafka module
 remains AWS-independent.
 
 Use this adapter only with Amazon MSK clusters whose IAM access control is
@@ -54,7 +54,7 @@ OAUTHBEARER and rejects a plaintext transport.
 - `ProviderError` exposes stable categories through `errors.Is` while discarding
   arbitrary provider and signer diagnostics.
 
-See the compiled [package documentation](https://pkg.go.dev/github.com/faustbrian/golib/pkg/kafka/adapters/mskiam)
+See the compiled [package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam)
 for the complete exported API.
 
 ## Adoption and tradeoffs

@@ -1,10 +1,10 @@
-module github.com/faustbrian/golib/pkg/kafka/benchmarks/clients
+module github.com/faustbrian/go-kafka/benchmarks/clients
 
 go 1.26.6
 
 require (
 	github.com/IBM/sarama v1.60.1
-	github.com/faustbrian/golib/pkg/kafka v0.0.0
+	github.com/faustbrian/go-kafka v1.0.0
 	github.com/moby/moby/api v1.54.2
 	github.com/segmentio/kafka-go v0.4.51
 	github.com/testcontainers/testcontainers-go v0.43.0

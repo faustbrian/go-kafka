@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	mskiam "github.com/faustbrian/golib/pkg/kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
 )
 
 func TestProviderIsSafeForConcurrentTokenGeneration(t *testing.T) {
