@@ -57,7 +57,7 @@ OAUTHBEARER and rejects a plaintext transport.
 See the compiled [package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam)
 for the complete exported API.
 
-## Adoption and tradeoffs
+## When to use this adapter
 
 Adopt this module when an AWS IAM identity must authenticate directly to an
 IAM-enabled MSK cluster through the root Kafka client. Keep generic OAuth token
