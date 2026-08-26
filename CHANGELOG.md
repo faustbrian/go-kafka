@@ -6,6 +6,9 @@ All notable changes to this module are documented here.
 
 ### Documentation
 
+- Align maintained documentation with the stable v1 release contract and
+  remove obsolete candidate or verdict wording.
+
 - Replace archived monorepo links and completed execution artifacts with a
   standalone, human-oriented documentation structure.
 

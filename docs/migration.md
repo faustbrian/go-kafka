@@ -2,8 +2,7 @@
 
 The module follows stable v1 compatibility. Delivery semantics, defaults, record ownership, error
 identity, ordering, offset settlement, transaction behavior, replay behavior,
-metrics, and configuration are still treated as compatibility-sensitive
-contracts. A pre-v1 version number is not permission to change them silently.
+metrics, and configuration are compatibility-sensitive contracts.
 
 ## Adopt from raw franz-go
 
@@ -49,7 +48,7 @@ Do not rerun unrelated repository modules or invalidate expensive evidence only
 because Git history changed. Reuse is valid only when the complete gate-input
 fingerprint proves identity.
 
-## Breaking pre-v1 changes
+## Breaking changes
 
 A breaking correction must include:
 
@@ -68,8 +67,8 @@ complete migration.
 
 ## Deprecation policy
 
-Before v1, prefer one direct correction over a long-lived unsafe alias. When a
-safe transition can be supported, a deprecation must name the replacement,
+Within v1, incompatible corrections require a new major release. When a safe
+transition can be supported, a deprecation must name the replacement,
 reason, semantic difference, and earliest removal release in public Go docs and
 the changelog. Deprecated behavior must remain tested until removal.
 
