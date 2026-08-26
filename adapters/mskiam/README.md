@@ -10,10 +10,13 @@ through AWS's supported Go signer. It does not implement SigV4, Kafka SASL, or
 credential discovery. It performs one bounded invalidation and retrieval when a
 refresh-capable credential provider returns credentials too close to expiry.
 
-## Five-minute setup
+## Install
 
-The zero credential-provider choice loads the AWS SDK v2 default credential
-chain once and retains its concurrency-safe refreshing provider:
+```sh
+go get github.com/faustbrian/go-kafka/adapters/mskiam@v1
+```
+
+## Quick start
 
 ```go
 provider, err := mskiam.New(ctx, mskiam.Config{
@@ -37,267 +40,26 @@ producer, err := kafka.NewProducer(kafka.ProducerConfig{
 })
 ```
 
-Use the `BootstrapBrokerStringSaslIam` value returned by Amazon MSK rather than
-constructing broker endpoints. The root Kafka module requires verified TLS for
-OAUTHBEARER and rejects a plaintext transport.
+The compiling examples in this module contain complete imports and setup.
 
-## API reference
+## Guarantees and limitations
 
-- `Config` requires `Region`; `TokenTimeout` is optional and
-  `CredentialsProvider` selects an explicit caller-owned AWS SDK v2 provider.
-- `Config.Validate` checks region, timeout, and typed-nil provider bounds without
-  loading credentials.
-- `New` validates configuration, loads the default AWS credential chain when
-  needed, and returns a concurrency-safe `Provider`.
-- `Provider.Token` implements `kafka.OAuthBearerProvider` and creates one fresh,
-  owned token for each authentication session.
-- `ProviderError` exposes stable categories through `errors.Is` while discarding
-  arbitrary provider and signer diagnostics.
+The [complete guide](docs/reference.md) defines ownership, failure semantics,
+bounds, concurrency, security, and unsupported behavior. Do not infer
+additional guarantees beyond the documented module boundary.
 
-See the compiled [package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam)
-for the complete exported API.
+## Documentation
 
-## When to use this adapter
+- [Documentation index](docs/README.md)
+- [Complete technical guide](docs/reference.md)
+- [Go API reference](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam)
+- [Parent package documentation](../../docs/README.md)
 
-Adopt this module when an AWS IAM identity must authenticate directly to an
-IAM-enabled MSK cluster through the root Kafka client. Keep generic OAuth token
-issuers and non-AWS Kafka clients outside this adapter.
+## Compatibility and support
 
-The default chain provides workload-identity rotation with minimal wiring. An
-explicit provider gives callers source selection and test control, but also
-makes its concurrency, cancellation, caching, and rotation behavior
-caller-owned. Token generation is deliberately per authentication session;
-there is no adapter token cache or proactive refresh goroutine. Concurrent
-near-expiry requests share one adapter-coordinated invalidation and refreshed
-credential result, including a redacted failure, so a shared cache is not
-refreshed by every caller in the same request cohort.
+This module follows Semantic Versioning. Report vulnerabilities through the
+[parent security policy](../../SECURITY.md).
 
-## Credential selection and rotation
+## License
 
-When `CredentialsProvider` is nil, `New` uses
-`config.LoadDefaultConfig(ctx, config.WithRegion(...))`. The AWS SDK default
-chain can select environment, web-identity, shared-profile, process, ECS
-container, EKS pod-identity, or EC2 instance-role credentials according to SDK
-precedence. Its credential cache refreshes expiring credentials on demand.
-
-For ECS, prefer a task IAM role. Do not copy access keys into task definitions,
-environment files, broker URLs, logs, or application configuration. EKS
-workloads should prefer pod identity or a narrowly scoped web-identity role.
-
-Applications needing a deliberately selected source can supply any current
-AWS SDK v2 `aws.CredentialsProvider`:
-
-```go
-provider, err := mskiam.New(ctx, mskiam.Config{
-    Region:              "eu-north-1",
-    CredentialsProvider: credentialsProvider,
-    TokenTimeout:        5 * time.Second,
-})
-```
-
-The supplied provider remains caller-owned. It must be concurrency-safe, honor
-context cancellation, and rotate credentials. Wrap providers that do not cache
-with `aws.NewCredentialsCache` before construction.
-
-## Token and deadline policy
-
-- AWS region is required and must use canonical lowercase region syntax.
-- Token generation defaults to 5 seconds and is configurable from 100
-  milliseconds through 1 minute.
-- The root Kafka client applies its own bounded credential deadline as an outer
-  limit.
-- Every authentication session asks the AWS signer for a fresh token.
-- The effective `kafka.OAuthBearerToken` expiry is the earlier of the signer
-  expiry and the AWS credential expiry.
-- Credentials with 30 seconds or less remaining validity are invalidated and
-  retrieved once more when the provider exposes the AWS SDK cache invalidation
-  contract; concurrent callers share that refresh transition, and providers
-  without invalidation support fail closed.
-- Tokens with 30 seconds or less remaining validity, more than 20 minutes of
-  lifetime, malformed URL-safe base64, or more than 1 MiB are rejected.
-- Signer timestamps outside a five-minute tolerance of the adapter clock are
-  rejected. This detects inconsistent signer output; it cannot prove the host
-  clock is synchronized with Amazon MSK.
-- Cancellation stops waiting only when the selected AWS credential provider
-  and signer honor the supplied context; the supported AWS SDK path does.
-- The provider starts no goroutines. It performs no proactive refresh.
-
-The signer currently issues 15-minute tokens. Credential lifetime and token
-lifetime are different: an AWS credential provider may refresh the underlying
-role credentials before signing, and the adapter never reports a token as valid
-beyond the credential used to sign it.
-
-### Token transition model
-
-| State | Success transition | Failure transition |
-| --- | --- | --- |
-| credential retrieval | validate credential fields and lifetime | redacted retrieval, invalid-credential, cancellation, timeout, or panic category |
-| near-expiry credential | coordinate one invalidation and refresh | fail closed when refresh is unsupported, invalid, canceled, or still near expiry |
-| signer call | receive token bytes and signer expiry | redacted signer, cancellation, timeout, or panic category |
-| validation | bind URL shape, region, timestamp, lifetime, and size | malformed or expired token category |
-| return | copy token bytes and cap expiry at credential expiry | no partial token is returned |
-
-Every transition is synchronous and context-bounded. The adapter creates only
-the per-call deadline timer, starts no goroutine, and leaves credential-provider
-ownership and shutdown with the caller.
-
-## Failure and redaction
-
-Configuration, credential-chain loading, credential retrieval, signer failure,
-provider panic, cancellation, timeout, expiry, and malformed signer results
-have stable error categories. `ErrMalformedToken` and `ErrTokenExpired` retain
-`ErrInvalidToken` compatibility. `ProviderError.Error` and `GoString` never
-render the AWS SDK or signer diagnostic. Arbitrary provider and signer causes
-are not retained in returned errors; `context.Canceled` and
-`context.DeadlineExceeded` identity remain available through `errors.Is`.
-
-The adapter never logs. It does not enable or mutate the signer's process-wide
-`AwsDebugCreds` flag, and token generation fails closed before the signer call
-when that flag is enabled. Applications must configure the flag before starting
-concurrent work and leave it disabled for the process lifetime; changing the
-upstream global concurrently is a data race. Access keys, secret keys, session
-tokens, signed tokens, credential endpoints, and provider diagnostics must not
-be exported to logs, traces, metrics, panic output, or fixtures.
-
-## IAM authorization
-
-MSK IAM performs both authentication and authorization. A valid signed token
-does not grant Kafka access. Use least-privilege `kafka-cluster` permissions
-scoped to the exact cluster, topic, group, and transactional-ID resources:
-
-- producers require connect, topic description, and write permissions;
-  idempotent production with topic-scoped writes additionally requires the
-  cluster-level `kafka-cluster:WriteDataIdempotently` action and access to the
-  transactional-ID resources required by AWS's IAM implementation;
-- consumers additionally require group description/alteration and read
-  permissions;
-- transactions require transactional-ID description and alteration, and IAM
-  transaction termination requires Kafka 3.8 or later because earlier broker
-  versions do not expose the internal `WriteTxnMarkers` action through IAM;
-  use SCRAM or mTLS with appropriate Kafka ACLs on earlier versions; and
-- inspection may require dynamic cluster or topic configuration description.
-
-Do not grant `kafka-cluster:*` merely to make authentication pass. Apache Kafka
-ACLs do not authorize IAM identities.
-
-## Compatibility status
-
-Observable signer, credential, and managed-service support choices are recorded
-in the [specification decision register](docs/specification-decisions.md), with
-exact upstream pins in `specification/manifest.json`.
-
-This adapter pins:
-
-- `aws-msk-iam-sasl-signer-go` v1.0.4;
-- AWS SDK for Go v2 v1.43.0 and config v1.32.31;
-- `franz-go` v1.21.5 through the root Kafka module; and
-- Go 1.26.5.
-
-AWS documents non-Java IAM clients for MSK Kafka 2.7.1 and newer. That protocol
-floor is not an operational support claim. Local tests prove signing, root
-provider interoperability, default-chain selection, expiry, cancellation,
-environment/profile/ECS/EKS credential-source fixtures, pod-identity token
-rotation, workload replacement, refresh contention, panic containment, race
-safety, and redaction. No Amazon MSK Provisioned or Serverless cluster has yet
-been exercised by repository CI, so both remain **unverified**, not supported.
-
-Primary references:
-
-- [Configure clients for IAM access control](https://docs.aws.amazon.com/msk/latest/developerguide/configure-clients-for-iam-access-control.html)
-- [IAM access control](https://docs.aws.amazon.com/msk/latest/developerguide/iam-access-control.html)
-- [IAM action and resource semantics](https://docs.aws.amazon.com/msk/latest/developerguide/kafka-actions.html)
-- [AWS SDK credential providers](https://docs.aws.amazon.com/sdkref/latest/guide/standardized-credentials.html)
-- [AWS MSK IAM SASL Signer for Go](https://github.com/aws/aws-msk-iam-sasl-signer-go)
-
-## FAQ
-
-### Does this adapter authorize Kafka operations?
-
-No. It creates the AWS-supported authentication token. IAM policies remain the
-authorization source, and the adapter never evaluates or grants permissions.
-
-### Does it implement SigV4 or SASL/OAUTHBEARER?
-
-No. AWS's signer owns signing and the root Kafka module owns SASL. This adapter
-only composes credentials, bounded token generation, validation, and expiry.
-
-### Should applications cache the returned token?
-
-No. Give the provider to `kafka.NewOAuthBearerAuthentication`; the Kafka client
-requests a fresh token for each authentication session. The current franz-go
-callback consumes the token value for that session; it does not schedule a
-proactive reconnect from `ExpiresAt`.
-
-### Can one provider be shared by producers and consumers?
-
-Yes, when the selected credentials provider is concurrency-safe. The retained
-AWS SDK default provider satisfies that requirement; explicit providers must
-satisfy it themselves.
-
-### Are MSK Provisioned and Serverless verified in CI?
-
-No. The signer and Kafka adapter seams are locally verified, but live
-Provisioned and Serverless clusters are both explicitly unverified.
-
-## Direct compatibility evidence
-
-The opt-in `make msk-interoperability` gate exercises the root policy client
-against one already-provisioned IAM-enabled MSK cluster. It fails when any
-input is absent; it never skips and does not create, mutate, or delete topics,
-clusters, IAM policies, networking, or credentials. The supplied topics must
-be isolated fixtures provisioned by an operator before the run.
-
-Set every variable below. Do not place credentials in these variables; the
-adapter uses the normal AWS SDK credential chain.
-
-The runner also requires AWS CLI v2. It uses read-only
-`describe-cluster-v2` and `get-bootstrap-brokers` calls to verify the supplied
-cluster ARN, mode, active state, Kafka version, IAM profile, and bootstrap
-addresses before opening a Kafka client. The report records the exact CLI
-version but never records the broker addresses.
-
-| Variable | Contract |
-| --- | --- |
-| `GOLIB_MSK_MODE` | Exactly `provisioned` or `serverless` |
-| `GOLIB_MSK_REGION` | Canonical AWS Region used by the signer |
-| `GOLIB_MSK_CLUSTER_ARN` | Exact cluster identity retained in the report |
-| `GOLIB_MSK_KAFKA_VERSION` | Exact version that must match the live MSK control plane |
-| `GOLIB_MSK_BROKERS` | Ordered, comma-separated IAM bootstrap brokers with no duplicates |
-| `GOLIB_MSK_DATA_TOPIC` | Existing isolated topic for synchronous, batch, asynchronous, consumer, and replay evidence |
-| `GOLIB_MSK_TRANSACTION_SOURCE_TOPIC` | Existing isolated transaction source topic |
-| `GOLIB_MSK_TRANSACTION_OUTPUT_TOPIC` | Existing isolated transaction output topic |
-| `GOLIB_MSK_GROUP_ID` | Unique fixture group containing the run ID |
-| `GOLIB_MSK_TRANSACTIONAL_ID` | Unique fixture transaction owner containing the run ID |
-| `GOLIB_MSK_RUN_ID` | Printable, whitespace-free identity unique to this run |
-| `GOLIB_MSK_TRANSACTIONS` | Exactly `required` or `unsupported`; an unsupported declaration must produce a reviewed definite rejection |
-| `GOLIB_MSK_TRANSACTION_ERROR_CATEGORY` | Required only for `unsupported`; exact expected `authorization` or `permanent` rejection category |
-| `GOLIB_MSK_TIMEOUT` | Overall bound from one through 30 minutes |
-| `GOLIB_MSK_REPORT` | Absolute output path outside disposable build caches |
-
-The JSON-lines report records mode, Region, cluster ARN, control-plane-verified
-Kafka version, run identity, AWS CLI version, and exact client dependency versions without recording
-bootstrap brokers, credentials, tokens, record keys, or payloads. The gate
-proves verified TLS with IAM, bounded inspection, idempotent all-ISR single,
-batch, and asynchronous production, cooperative consumer settlement, exact
-direct-partition replay, and commit, abort, read-committed processing, or one
-explicit definite negative transaction profile. A timeout, retryable failure,
-ambiguous outcome, or unexpected category never proves lack of support.
-
-This gate is only the client-side core of the direct run. The operator must
-separately retain IAM-denial, task-role rotation, rolling replacement, endpoint
-interruption or maintenance, latency, allocation, leak, quota, and cleanup
-evidence described in the root
-[`docs/aws-msk-ecs.md`](../../docs/aws-msk-ecs.md) matrix. A successful core
-run alone does not change either MSK mode from unverified to supported.
-
-## Verification
-
-```sh
-make check
-```
-
-The local module contract covers formatting, vet, tests, race detection, exact
-statement coverage, fuzz smoke, signer interoperability, allocation-reporting
-generation, contention, and external-retrieval benchmarks, and documentation.
-Repository gates additionally enforce mutation, API compatibility,
-vulnerability, secrets, licenses, SBOM, provenance, and clean-consumer checks.
+MIT. See [LICENSE](LICENSE).

@@ -37,6 +37,12 @@
 - [Runnable consumer retry example](../consumer_batch_failure_example_test.go)
 - [Runnable replay checkpoint example](../replay_example_test.go)
 
+## Optional modules
+
+- [OpenTelemetry adapter](../adapters/gotelemetry/docs/README.md)
+- [Amazon MSK IAM adapter](../adapters/mskiam/docs/README.md)
+- [Service lifecycle adapter](../kafkaservice/docs/README.md)
+
 ## Maintainers
 
 - [Contributing](../CONTRIBUTING.md)
