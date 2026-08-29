@@ -14,6 +14,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"strings"
 	"sync/atomic"
 	"testing"
@@ -77,6 +78,28 @@ func newTestTLSCertificate(t *testing.T) tls.Certificate {
 	server.Close()
 
 	return certificate
+}
+
+func tlsConfigWithField(t *testing.T, name string, value any) *tls.Config {
+	t.Helper()
+
+	config := &tls.Config{}
+	field := reflect.ValueOf(config).Elem().FieldByName(name)
+	if !field.IsValid() || !field.CanSet() {
+		t.Fatalf("tls.Config field %q is missing or not settable", name)
+	}
+	provided := reflect.ValueOf(value)
+	if !provided.IsValid() || provided.Type() != field.Type() {
+		t.Fatalf(
+			"tls.Config field %q has type %s, value has type %T",
+			name,
+			field.Type(),
+			value,
+		)
+	}
+	field.Set(provided)
+
+	return config
 }
 
 func newTestTrustAnchor(t *testing.T, serial int64) *x509.Certificate {
@@ -1449,6 +1472,9 @@ func TestClientSecurityRejectsUnboundedOrBypassingTLSMaterial(t *testing.T) {
 		) (*tls.Certificate, error) {
 			return &tls.Certificate{}, nil
 		}}},
+		{TLS: tlsConfigWithField(t, "NameToCertificate", map[string]*tls.Certificate{
+			"broker": {},
+		})},
 		{TLS: &tls.Config{GetCertificate: func(
 			*tls.ClientHelloInfo,
 		) (*tls.Certificate, error) {
@@ -1461,6 +1487,8 @@ func TestClientSecurityRejectsUnboundedOrBypassingTLSMaterial(t *testing.T) {
 		}}},
 		{TLS: &tls.Config{ClientAuth: tls.RequestClientCert}},
 		{TLS: &tls.Config{ClientCAs: x509.NewCertPool()}},
+		{TLS: tlsConfigWithField(t, "PreferServerCipherSuites", true)},
+		{TLS: tlsConfigWithField(t, "SessionTicketKey", [32]byte{1})},
 		{TLS: &tls.Config{UnwrapSession: func(
 			[]byte,
 			tls.ConnectionState,
