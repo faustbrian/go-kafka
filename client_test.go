@@ -1449,6 +1449,7 @@ func TestClientSecurityRejectsUnboundedOrBypassingTLSMaterial(t *testing.T) {
 		) (*tls.Certificate, error) {
 			return &tls.Certificate{}, nil
 		}}},
+		//lint:ignore SA1019 Keep this deprecated field in the hostile-input matrix.
 		{TLS: &tls.Config{NameToCertificate: map[string]*tls.Certificate{"broker": {}}}},
 		{TLS: &tls.Config{GetCertificate: func(
 			*tls.ClientHelloInfo,
@@ -1462,7 +1463,9 @@ func TestClientSecurityRejectsUnboundedOrBypassingTLSMaterial(t *testing.T) {
 		}}},
 		{TLS: &tls.Config{ClientAuth: tls.RequestClientCert}},
 		{TLS: &tls.Config{ClientCAs: x509.NewCertPool()}},
+		//lint:ignore SA1019 Keep this deprecated field in the hostile-input matrix.
 		{TLS: &tls.Config{PreferServerCipherSuites: true}},
+		//lint:ignore SA1019 Keep this deprecated field in the hostile-input matrix.
 		{TLS: &tls.Config{SessionTicketKey: [32]byte{1}}},
 		{TLS: &tls.Config{UnwrapSession: func(
 			[]byte,
