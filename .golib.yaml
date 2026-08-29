@@ -28,13 +28,13 @@ api:
       path: api/baseline.txt
     - module: adapters/gotelemetry
       mode: apidiff
-      path: api/baseline.txt
+      path: adapters/gotelemetry/api/baseline.txt
     - module: adapters/mskiam
       mode: apidiff
-      path: api/baseline.txt
+      path: adapters/mskiam/api/baseline.txt
     - module: kafkaservice
       mode: apidiff
-      path: api/baseline.txt
+      path: kafkaservice/api/baseline.txt
 operations:
   - module: .
     gate: test
