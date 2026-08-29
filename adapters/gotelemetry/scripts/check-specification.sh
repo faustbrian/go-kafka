@@ -61,4 +61,4 @@ awk -v version="v${version}" '
     }
 ' "${module_root}/go.mod"
 
-grep -qF -- "semantic conventions **${version}**" "${module_root}/README.md"
+grep -qF -- "semantic conventions **${version}**" "${module_root}/docs/reference.md"

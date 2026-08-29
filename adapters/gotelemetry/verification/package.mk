@@ -3,7 +3,7 @@ GO ?= go
 .PHONY: package-contract conformance interoperability specification
 
 package-contract:
-	./scripts/check-docs.sh
+	bash scripts/check-docs.sh
 	./scripts/check-specification.sh
 
 specification:

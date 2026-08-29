@@ -3,11 +3,18 @@ GO ?= go
 .PHONY: package-contract conformance interoperability msk-interoperability specification
 
 package-contract:
-	./scripts/check-docs.sh
-	./scripts/check-specification.sh
+	test -s README.md
+	test -s CHANGELOG.md
+	test -s LICENSE
+	grep -q '^## API reference$$' docs/reference.md
+	grep -q '^## When to use this adapter$$' docs/reference.md
+	grep -q '^## FAQ$$' docs/reference.md
+	$(GO) doc .
+	$(GO) test -run '^Example$$' .
+	bash scripts/check-specification.sh
 
 specification:
-	./scripts/check-specification.sh
+	bash scripts/check-specification.sh
 
 conformance:
 	$(GO) test -count=1 -run '^TestProviderGeneratesOwnedExpiringMSKIAMToken$$' ./...
