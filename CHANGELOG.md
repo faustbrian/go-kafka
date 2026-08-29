@@ -12,6 +12,12 @@ All notable changes to this module are documented here.
 - Replace archived monorepo links and completed execution artifacts with a
   standalone, human-oriented documentation structure.
 
+### Changed
+
+- Replace copied repository tooling with the checksum-verified
+  `go-library-tools` v1.0.7 contract while retaining package-owned operations
+  and migrated mutation evidence.
+
 ## 1.0.0 - 2026-08-25
 
 ### Changed
