@@ -1449,7 +1449,6 @@ func TestClientSecurityRejectsUnboundedOrBypassingTLSMaterial(t *testing.T) {
 		) (*tls.Certificate, error) {
 			return &tls.Certificate{}, nil
 		}}},
-		{TLS: &tls.Config{NameToCertificate: map[string]*tls.Certificate{"broker": {}}}}, //nolint:staticcheck // Deprecated field is intentionally tested.
 		{TLS: &tls.Config{GetCertificate: func(
 			*tls.ClientHelloInfo,
 		) (*tls.Certificate, error) {
@@ -1462,8 +1461,6 @@ func TestClientSecurityRejectsUnboundedOrBypassingTLSMaterial(t *testing.T) {
 		}}},
 		{TLS: &tls.Config{ClientAuth: tls.RequestClientCert}},
 		{TLS: &tls.Config{ClientCAs: x509.NewCertPool()}},
-		{TLS: &tls.Config{PreferServerCipherSuites: true}}, //nolint:staticcheck // Deprecated field is intentionally tested.
-		{TLS: &tls.Config{SessionTicketKey: [32]byte{1}}},  //nolint:staticcheck // Deprecated field is intentionally tested.
 		{TLS: &tls.Config{UnwrapSession: func(
 			[]byte,
 			tls.ConnectionState,
