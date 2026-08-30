@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "decisions": [
+    {
+      "id": "KAFKA-OTEL-DEC-001",
+      "authoritative_sources": [
+        "otel-semconv-144"
+      ],
+      "executable_evidence": [
+        "TestEveryObservationHasAnExactPublicSpanAndDurationContract",
+        "TestCompletionObservationsDoNotClaimUnprovedMessagingOperations"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzObserverValidation"
+      ],
+      "interoperability_evidence": [
+
+      ],
+      "interoperability_classification": "not assessed",
+      "differential_evidence": [
+        "adapters/gotelemetry/specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Completion, poll, and record observations use span kind NONE unless the root observation proves the complete standard operation."
+      ]
+    },
+    {
+      "id": "KAFKA-OTEL-DEC-002",
+      "authoritative_sources": [
+        "otel-semconv-144"
+      ],
+      "executable_evidence": [
+        "TestStandardMetricsUseOnlyPinnedConventionDimensions",
+        "TestTraceContextPropagationRejectsInvalidOrAmbiguousFields"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzAttributePolicyValidate",
+        "FuzzTraceContextPropagation"
+      ],
+      "interoperability_evidence": [
+
+      ],
+      "interoperability_classification": "not assessed",
+      "differential_evidence": [
+        "adapters/gotelemetry/specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Standard dimensions are allowlisted; canonical traceparent and tracestate values reject ambiguity, clear stale owned fields, and preserve unrelated headers."
+      ]
+    },
+    {
+      "id": "KAFKA-OTEL-DEC-003",
+      "authoritative_sources": [
+        "otel-go-144"
+      ],
+      "executable_evidence": [
+        "TestAdapterProductionStartsNoGoroutines",
+        "TestObserverContainsHostileProviderPanicsAndClosesStartedSpan"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzHostileProviders"
+      ],
+      "interoperability_evidence": [
+
+      ],
+      "interoperability_classification": "not assessed",
+      "differential_evidence": [
+        "adapters/gotelemetry/specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Construction requires explicit providers, installs no globals, starts no goroutines, never shuts down caller state, and contains provider panics."
+      ]
+    }
+  ]
+}

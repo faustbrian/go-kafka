@@ -59,12 +59,13 @@ additional guarantees beyond the documented module boundary.
 
 - [Documentation index](docs/README.md)
 - [Complete technical guide](docs/reference.md)
+- [Specification decision register](docs/specification-decisions.md)
 - [Go API reference](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/gotelemetry)
 - [Parent package documentation](../../docs/README.md)
 
 ## Compatibility and support
 
-This module follows Semantic Versioning. Report vulnerabilities through the
+This module follows its [compatibility policy](COMPATIBILITY.md). Report vulnerabilities through the
 [parent security policy](../../SECURITY.md).
 
 ## License

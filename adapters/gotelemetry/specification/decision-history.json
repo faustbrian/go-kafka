@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "KAFKA-OTEL-DEC-001",
+      "digests": [
+        "d362738340cab3e5fe46a98b1b5ada8311b1f09a81db9888ac4cb5ae2292c731"
+      ]
+    },
+    {
+      "id": "KAFKA-OTEL-DEC-002",
+      "digests": [
+        "0008db30bf7af660c609405faadea2f5d366ea1564172a37f9a0c1da30f86463"
+      ]
+    },
+    {
+      "id": "KAFKA-OTEL-DEC-003",
+      "digests": [
+        "f6c97b3949856b5eb9bc59cb86c92bf44f15932240fa2b159704b5c50574567c"
+      ]
+    }
+  ]
+}

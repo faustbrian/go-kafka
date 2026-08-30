@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-08-30",
+  "review_interval_days": 90,
+  "authorities": [
+    {
+      "id": "kafka-431-protocol",
+      "kind": "specification",
+      "version": "Apache Kafka 4.3.1",
+      "url": "https://raw.githubusercontent.com/apache/kafka/4.3.1/docs/design/protocol.md",
+      "sha256": "72b6a24918308bd753cb295cce7429ee699ad2c3f26bf730f4d09d6ca4b1d8b5",
+      "specifications": [
+        "Apache Kafka protocol and client semantics"
+      ]
+    },
+    {
+      "id": "kafka-kip-98",
+      "kind": "specification",
+      "version": "KIP-98 accepted",
+      "url": "https://cwiki.apache.org/confluence/rest/api/content/66854913?expand=body.storage%2Cversion",
+      "sha256": "7fd54881d7ccced6e1301a318569a322a51636ad445e714eced9b7dec403aed1",
+      "specifications": [
+        "implemented Kafka Improvement Proposals"
+      ]
+    },
+    {
+      "id": "kafka-kip-345",
+      "kind": "specification",
+      "version": "KIP-345 accepted",
+      "url": "https://cwiki.apache.org/confluence/rest/api/content/87300241?expand=body.storage%2Cversion",
+      "sha256": "60fcefd5909bd936ab6e8aa4d6cbb4860de2ec184e3511c108338da42ed2206d",
+      "specifications": [
+        "implemented Kafka Improvement Proposals"
+      ]
+    },
+    {
+      "id": "kafka-kip-392",
+      "kind": "specification",
+      "version": "KIP-392 accepted",
+      "url": "https://cwiki.apache.org/confluence/rest/api/content/95653762?expand=body.storage%2Cversion",
+      "sha256": "2c4a811cf4183b1630d803319cbd19a5121513da219fc38b4bd47836f1276321",
+      "specifications": [
+        "implemented Kafka Improvement Proposals"
+      ]
+    },
+    {
+      "id": "kafka-kip-429",
+      "kind": "specification",
+      "version": "KIP-429 accepted",
+      "url": "https://cwiki.apache.org/confluence/rest/api/content/103090108?expand=body.storage%2Cversion",
+      "sha256": "c0b4d2424f2ddc59081a1224fdf2ef98c1bfe447541c6743cb650caa03c7fd3d",
+      "specifications": [
+        "implemented Kafka Improvement Proposals"
+      ]
+    },
+    {
+      "id": "kafka-kip-447",
+      "kind": "specification",
+      "version": "KIP-447 accepted",
+      "url": "https://cwiki.apache.org/confluence/rest/api/content/103093950?expand=body.storage%2Cversion",
+      "sha256": "e1c49f8e69b636e46fa4530d66b297bd5aea40d52c32ee3292499ab46e9fd299",
+      "specifications": [
+        "implemented Kafka Improvement Proposals"
+      ]
+    },
+    {
+      "id": "kafka-kip-848",
+      "kind": "specification",
+      "version": "KIP-848 accepted",
+      "url": "https://cwiki.apache.org/confluence/rest/api/content/217387038?expand=body.storage%2Cversion",
+      "sha256": "17bbbce1c8c5960c36ea05c59ae8ab3e3e38245e3e1144ab8f170287b46e1b55",
+      "specifications": [
+        "implemented Kafka Improvement Proposals"
+      ]
+    },
+    {
+      "id": "kafka-releases",
+      "kind": "releases",
+      "version": "",
+      "url": "https://kafka.apache.org/downloads",
+      "sha256": "056ad304bfc28946f11138f1135d66503fe5717e4c556da73deb371db8f56c99",
+      "specifications": [
+        "Apache Kafka protocol and client semantics",
+        "implemented Kafka Improvement Proposals"
+      ]
+    }
+  ]
+}

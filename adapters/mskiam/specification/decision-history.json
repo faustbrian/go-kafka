@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "KAFKA-MSKIAM-DEC-001",
+      "digests": [
+        "5f8cd5cd8d519a88e4832b0867e5d9916b2fcdb6b9b8e2b86d0c98d8f3bcc2ce"
+      ]
+    },
+    {
+      "id": "KAFKA-MSKIAM-DEC-002",
+      "digests": [
+        "e51dd436929da094226bb8d4e74fd9d0c69ed0ca9f07db14e23701d54707b6ad"
+      ]
+    },
+    {
+      "id": "KAFKA-MSKIAM-DEC-003",
+      "digests": [
+        "39ba631e84cbd70fb6285f2ba9617128347fe856059ad5c0b9cd16599a927cce"
+      ]
+    }
+  ]
+}

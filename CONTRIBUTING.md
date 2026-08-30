@@ -24,6 +24,11 @@ the affected stable decision entries, and complete the Specification Decisions
 section of the pull request template. An unresolved interpretation or stale
 source pin is release-blocking; peer behavior cannot silently select policy.
 
+Review the affected [root](docs/specification-decisions.md),
+[OpenTelemetry](adapters/gotelemetry/docs/specification-decisions.md), or
+[MSK IAM](adapters/mskiam/docs/specification-decisions.md) register before
+changing observable protocol or provider behavior.
+
 Required mutation gates must finish with zero surviving viable mutants.
 
 Do not add package-local workflows, permanent replacements, machine-specific

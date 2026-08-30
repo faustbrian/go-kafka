@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-08-30",
+  "review_interval_days": 90,
+  "authorities": [
+    {
+      "id": "otel-semconv-144",
+      "kind": "specification",
+      "version": "OpenTelemetry semantic conventions v1.44.0",
+      "url": "https://raw.githubusercontent.com/open-telemetry/semantic-conventions/e10a930844c6951757a43b849d364f7d056ac32b/docs/messaging/kafka.md",
+      "sha256": "ecdd39f4c01ae4b0e1725ceff885404d42e58c162dfc622c8f719fd76c8e16d4",
+      "specifications": [
+        "OpenTelemetry semantic conventions 1.44.0 for Kafka messaging spans and metrics"
+      ]
+    },
+    {
+      "id": "otel-semconv-releases",
+      "kind": "releases",
+      "version": "",
+      "url": "https://github.com/open-telemetry/semantic-conventions/releases.atom",
+      "sha256": "3d8cf1d64b674f8da0b05d4224cd64c5b5d0e3ed3c0d89bec272389dd8749e51",
+      "specifications": [
+        "OpenTelemetry semantic conventions 1.44.0 for Kafka messaging spans and metrics"
+      ]
+    },
+    {
+      "id": "otel-go-144",
+      "kind": "specification",
+      "version": "OpenTelemetry Go v1.44.0",
+      "url": "https://raw.githubusercontent.com/open-telemetry/opentelemetry-go/b62d92831b2dd142f5a0cc89c828270274196877/go.mod",
+      "sha256": "f466441934839f12a009415b4c16a77d221e1aa5d767f878e2af5888f1ad839f",
+      "specifications": [
+        "OpenTelemetry Go API and SDK 1.44.0"
+      ]
+    },
+    {
+      "id": "otel-go-releases",
+      "kind": "releases",
+      "version": "",
+      "url": "https://github.com/open-telemetry/opentelemetry-go/releases.atom",
+      "sha256": "f56b15ffc4341ba249bf4501b3439debd511033be60470083eea496f64345ff3",
+      "specifications": [
+        "OpenTelemetry Go API and SDK 1.44.0"
+      ]
+    }
+  ]
+}
