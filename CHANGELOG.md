@@ -15,7 +15,7 @@ All notable changes to this module are documented here.
 ### Changed
 
 - Replace copied repository tooling with the checksum-verified
-  `go-library-tools` v1.0.7 contract while retaining package-owned operations
+  `go-library-tools` v1.0.13 contract while retaining package-owned operations
   and migrated mutation evidence.
 
 ## 1.0.0 - 2026-08-25
