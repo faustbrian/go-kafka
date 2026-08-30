@@ -7,7 +7,7 @@ client convenience. Exact source revisions, image digests, and tool versions
 are pinned in [`specification/manifest.json`](../specification/manifest.json).
 
 Statuses are `resolved`, `unresolved`, or `superseded`. A resolved decision is
-part of the pre-v1 compatibility contract and requires public API, security,
+part of the stable v1 compatibility contract and requires public API, security,
 resource, wire, broker-evidence, adapter, and changelog review when changed.
 
 ## KAFKA-DEC-001: Protocol implementation and version negotiation boundary

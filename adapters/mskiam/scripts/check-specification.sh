@@ -20,8 +20,8 @@ jq -e '
     .sources[3].snapshot_sha256 == "bd806ae3f9af1fdd892b478e0c72fc38014c4e7eccd54d84eab0fb91509286d6"
 ' "${manifest}" >/dev/null
 
-grep -qF -- 'aws-msk-iam-sasl-signer-go' "${module_root}/README.md"
-grep -qF -- 'docs/specification-decisions.md' "${module_root}/README.md"
+grep -qF -- 'aws-msk-iam-sasl-signer-go' "${module_root}/docs/reference.md"
+grep -qF -- 'specification-decisions.md' "${module_root}/docs/README.md"
 
 GOWORK=off go test -count=1 -run \
     '^(TestProviderGeneratesOwnedExpiringMSKIAMToken|TestTokenRejectsInvalidSignerResults|TestProviderRefreshesExpiringCredentialsAndCapsTokenExpiry|TestMSKCompatibilityConfigRejectsUnboundedInputs|TestMSKControlPlaneValidation)$' \

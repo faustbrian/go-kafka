@@ -1,0 +1,274 @@
+schema_version: 1
+tool_version: v1.0.7
+tool_checksums_sha256: beb57df2dff76b4a0044af843398baecab55a3d420986d9be7c9b14ca88befef
+manifest:
+  modules: modules.json
+  packages: packages.json
+evidence:
+  root: .verification
+mutation:
+  root: .verification/mutation
+  imports:
+    - module: .
+      archive: .verification/mutation/bootstrap/root.zip
+      ledger: .verification/mutation/migration-ledger.json
+    - module: adapters/gotelemetry
+      archive: .verification/mutation/bootstrap/adapters-gotelemetry.zip
+      ledger: .verification/mutation/migration-ledger.json
+    - module: adapters/mskiam
+      archive: .verification/mutation/bootstrap/adapters-mskiam.zip
+      ledger: .verification/mutation/migration-ledger.json
+    - module: kafkaservice
+      archive: .verification/mutation/bootstrap/kafkaservice.zip
+      ledger: .verification/mutation/migration-ledger.json
+api:
+  baselines:
+    - module: .
+      mode: apidiff
+      path: api/baseline.txt
+    - module: adapters/gotelemetry
+      mode: apidiff
+      path: adapters/gotelemetry/api/baseline.txt
+    - module: adapters/mskiam
+      mode: apidiff
+      path: adapters/mskiam/api/baseline.txt
+    - module: kafkaservice
+      mode: apidiff
+      path: kafkaservice/api/baseline.txt
+operations:
+  - module: .
+    gate: test
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: package-contract
+        timeout: 10m
+  - module: .
+    gate: fuzz
+    steps:
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzObservationValidation$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzFetchDecompression$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzTrustAnchors$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzConsumerConfig$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzFailureHandlerConfig$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzBatchFailureHandlerConfig$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzMessageValidation$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzTransactionProcessorConfig$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzReplayConfig$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzReplayTimestampRequest$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzInspectionBrokerMetadata$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzInspectionTopicPolicyConfig$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzInspectionConsumerGroupMetadata$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzInspectionConsumerProtocolGroupMetadata$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [./adapters/golog]
+        fuzz: '^FuzzIdentityPolicyValidate$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [./adapters/golog]
+        fuzz: '^FuzzObserverValidation$'
+        budget: 10000x
+        timeout: 20m
+  - module: .
+    gate: benchmark
+    steps:
+      - type: go-test
+        packages: [./...]
+        benchmark: .
+        budget: 100ms
+        timeout: 20m
+  - module: .
+    gate: conformance
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: conformance
+        timeout: 20m
+  - module: .
+    gate: interoperability
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: interoperability
+        timeout: 20m
+  - module: adapters/gotelemetry
+    gate: test
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: package-contract
+        timeout: 10m
+  - module: adapters/gotelemetry
+    gate: fuzz
+    steps:
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzAttributePolicyValidate$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzHostileProviders$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzObserverValidation$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzTraceContextPropagation$'
+        budget: 10000x
+        timeout: 20m
+  - module: adapters/gotelemetry
+    gate: benchmark
+    steps:
+      - type: go-test
+        packages: [./...]
+        benchmark: .
+        budget: 100ms
+        timeout: 20m
+  - module: adapters/gotelemetry
+    gate: conformance
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: conformance
+        timeout: 20m
+  - module: adapters/gotelemetry
+    gate: interoperability
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: interoperability
+        timeout: 20m
+  - module: adapters/mskiam
+    gate: test
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: package-contract
+        timeout: 10m
+  - module: adapters/mskiam
+    gate: fuzz
+    steps:
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzConfigValidate$'
+        budget: 10000x
+        timeout: 20m
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzTokenResultValidation$'
+        budget: 10000x
+        timeout: 20m
+  - module: adapters/mskiam
+    gate: benchmark
+    steps:
+      - type: go-test
+        packages: [./...]
+        benchmark: .
+        budget: 100ms
+        timeout: 20m
+  - module: adapters/mskiam
+    gate: conformance
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: conformance
+        timeout: 20m
+  - module: adapters/mskiam
+    gate: interoperability
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: interoperability
+        timeout: 20m
+  - module: kafkaservice
+    gate: fuzz
+    steps:
+      - type: go-test
+        packages: [.]
+        fuzz: '^FuzzHandlerCorrelationBoundary$'
+        budget: 10000x
+        timeout: 20m
+  - module: kafkaservice
+    gate: benchmark
+    steps:
+      - type: go-test
+        packages: [./...]
+        benchmark: .
+        budget: 100ms
+        timeout: 20m
+  - module: kafkaservice
+    gate: interoperability
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: interoperability
+        timeout: 20m
+  - module: benchmarks/clients
+    gate: interoperability
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: interoperability
+        timeout: 20m
