@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-08-30",
+  "review_interval_days": 90,
+  "authorities": [
+    {
+      "id": "aws-msk-signer-104",
+      "kind": "specification",
+      "version": "AWS MSK IAM signer v1.0.4",
+      "url": "https://raw.githubusercontent.com/aws/aws-msk-iam-sasl-signer-go/53637de1b411b2a2c8b2ccb8f103fc1d6b761c07/README.md",
+      "sha256": "3e3d436916ddfbb76f1d0042be9fe497de7b87ce5a655f01e218c50b9e7862b4",
+      "specifications": [
+        "AWS MSK IAM SASL/OAUTHBEARER signer contract v1.0.4"
+      ]
+    },
+    {
+      "id": "aws-msk-guide",
+      "kind": "specification",
+      "version": "AWS MSK IAM signer v1.0.4",
+      "url": "https://docs.aws.amazon.com/msk/latest/developerguide/configure-clients-for-iam-access-control.html",
+      "sha256": "d5ed207f7acf19ad3f4894448d21db85b7fe4aabe90e5d07ff9e206d07b52b1d",
+      "specifications": [
+        "AWS MSK IAM SASL/OAUTHBEARER signer contract v1.0.4"
+      ]
+    },
+    {
+      "id": "aws-msk-signer-releases",
+      "kind": "releases",
+      "version": "",
+      "url": "https://github.com/aws/aws-msk-iam-sasl-signer-go/releases.atom",
+      "sha256": "2d3c0a8e9316c459630bc1983c3b8db36c913b1e0b9af1fc8bd8e9d31cacf1dc",
+      "specifications": [
+        "AWS MSK IAM SASL/OAUTHBEARER signer contract v1.0.4"
+      ]
+    },
+    {
+      "id": "aws-sdk-go-v2-1430",
+      "kind": "specification",
+      "version": "AWS SDK for Go v2 v1.43.0",
+      "url": "https://raw.githubusercontent.com/aws/aws-sdk-go-v2/4fef3455fe2dcb5ea3de4e9fbacf889b84c8a255/go.mod",
+      "sha256": "ecdcf8a53fd20c2961d07b7db6f5f059b2e1d678db68662f5b1d3f012a8ff7ae",
+      "specifications": [
+        "AWS SDK for Go v2 credential-provider contract v1.43.0"
+      ]
+    },
+    {
+      "id": "aws-sdk-go-v2-releases",
+      "kind": "releases",
+      "version": "",
+      "url": "https://api.github.com/repos/aws/aws-sdk-go-v2/git/matching-refs/tags/v1.",
+      "sha256": "0f3bb8223651fb832ea5088e236493e686edcb502d391f64cae4996be528182b",
+      "specifications": [
+        "AWS SDK for Go v2 credential-provider contract v1.43.0"
+      ]
+    }
+  ]
+}

@@ -13,8 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Adopt the checksum-verified `go-library-tools` v1.0.7 repository contract
-  while retaining the module's specification and MSK compatibility operations.
+- Register and enforce the adapter's AWS signer, SDK credential, and managed
+  service decisions in the [specification decision
+  register](docs/specification-decisions.md):
+  `KAFKA-MSKIAM-DEC-001 sha256:5f8cd5cd8d519a88e4832b0867e5d9916b2fcdb6b9b8e2b86d0c98d8f3bcc2ce`,
+  `KAFKA-MSKIAM-DEC-002 sha256:e51dd436929da094226bb8d4e74fd9d0c69ed0ca9f07db14e23701d54707b6ad`, and
+  `KAFKA-MSKIAM-DEC-003 sha256:39ba631e84cbd70fb6285f2ba9617128347fe856059ad5c0b9cd16599a927cce`.
+- Adopt the released `go-library-tools` v1.2.0 repository contract and
+  immutable workflow `1f9629e5f27418600460b55a50a5b2fc81697fab` while
+  retaining the module's specification and MSK compatibility operations.
 ## [1.0.0] - 2026-08-25
 
 ### Changed

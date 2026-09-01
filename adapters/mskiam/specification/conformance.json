@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "decisions": [
+    {
+      "id": "KAFKA-MSKIAM-DEC-001",
+      "authoritative_sources": [
+        "aws-msk-signer-104"
+      ],
+      "executable_evidence": [
+        "TestProviderGeneratesOwnedExpiringMSKIAMToken",
+        "TestSignedTokenValidationRejectsEachMalformedField"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzTokenResultValidation"
+      ],
+      "interoperability_evidence": [
+        "adapters/mskiam/msk_compatibility_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "adapters/mskiam/specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "The adapter delegates SigV4 to AWS, then validates the bounded canonical token contract and returns redacted failure categories."
+      ]
+    },
+    {
+      "id": "KAFKA-MSKIAM-DEC-002",
+      "authoritative_sources": [
+        "aws-sdk-go-v2-1430"
+      ],
+      "executable_evidence": [
+        "TestProviderRefreshesExpiringCredentialsAndCapsTokenExpiry",
+        "TestConcurrentNearExpiryCredentialsRefreshOnce"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzConfigValidate"
+      ],
+      "interoperability_evidence": [
+        "adapters/mskiam/msk_compatibility_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "adapters/mskiam/specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Authentication retrieves current SDK credentials, shares one bounded near-expiry refresh cohort, caps token expiry, and isolates caller cancellation."
+      ]
+    },
+    {
+      "id": "KAFKA-MSKIAM-DEC-003",
+      "authoritative_sources": [
+        "aws-msk-guide"
+      ],
+      "executable_evidence": [
+        "TestNewUsesAWSDefaultCredentialChain"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+
+      ],
+      "interoperability_evidence": [
+        "adapters/mskiam/msk_compatibility_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "adapters/mskiam/specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Provisioned and Serverless MSK support remains unverified until the fail-closed live operator gate retains direct service evidence."
+      ]
+    }
+  ]
+}

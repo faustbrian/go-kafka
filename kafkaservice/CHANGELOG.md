@@ -10,8 +10,9 @@ All notable changes to this module are documented here.
 
 ### Changed
 
-- Adopt the checksum-verified `go-library-tools` v1.0.7 repository contract
-  while retaining the module's package-specific interoperability operations.
+- Adopt the released `go-library-tools` v1.2.0 repository contract and
+  immutable workflow `1f9629e5f27418600460b55a50a5b2fc81697fab` while
+  retaining the module's package-specific interoperability operations.
 ## 1.0.0 - 2026-08-25
 
 ### Fixed

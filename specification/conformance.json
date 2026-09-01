@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "decisions": [
+    {
+      "id": "KAFKA-DEC-001",
+      "authoritative_sources": [
+        "kafka-431-protocol"
+      ],
+      "executable_evidence": [
+        "TestClientRolesApplyProtocolAndBoundedEOFRecoveryPolicy",
+        "TestClientRolesRejectInvalidProtocolPolicy"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzObservationValidation"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "franz-go owns wire negotiation; public APIs expose Kafka policy, and MinimumVersion is a downgrade floor rather than a maximum or support claim."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-002",
+      "authoritative_sources": [
+        "kafka-431-protocol"
+      ],
+      "executable_evidence": [
+        "TestNewProducerAppliesBoundedIdempotentDeliveryPolicy",
+        "TestProducerPublishRecordReturnsDeliveryMetadataAndOwnsInput"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzMessageValidation"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Production uses bounded idempotent all-ISR delivery, explicit key or partition policy, owned input bytes, and explicit post-admission ambiguity."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-003",
+      "authoritative_sources": [
+        "kafka-kip-429",
+        "kafka-kip-345",
+        "kafka-kip-392"
+      ],
+      "executable_evidence": [
+        "TestConsumerRunOnceCommitsOnlyContiguousPartitionSuccess",
+        "TestConsumerFencesSettlementAfterAssignmentEpochChanges"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzConsumerConfig"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Processing is partition-sequential, settlement follows handler success, stale assignment epochs cannot settle, and cooperative balancing is the default."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-004",
+      "authoritative_sources": [
+        "kafka-431-protocol"
+      ],
+      "executable_evidence": [
+        "TestFailureHandlerPublishFailureDoesNotResolveSource",
+        "TestFailureHandlerPublishesOwnedDeadLetterMetadata"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzFailureHandlerConfig"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Only definite failure-publication success permits source settlement; partial, failed, canceled, or ambiguous publication leaves the source unsettled."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-005",
+      "authoritative_sources": [
+        "kafka-kip-447",
+        "kafka-kip-98"
+      ],
+      "executable_evidence": [
+        "TestRunTransactionRedactsUnknownCommitOutcome",
+        "TestTransactionProcessorCommitsCompletePollAtomically"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzTransactionProcessorConfig"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Exactly-once language is restricted to compatible Kafka read-process-write effects; ambiguous commit outcomes remain explicit and fatal where reuse is unsafe."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-006",
+      "authoritative_sources": [
+        "kafka-431-protocol"
+      ],
+      "executable_evidence": [
+        "TestInspectorPlansReplayTimestampWindowAsOwnedExactRanges",
+        "TestReplayFailsClosedOnUnexpectedRecordsAndOffsetGaps"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzReplayConfig",
+        "FuzzReplayTimestampRequest"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Replay uses direct exact ranges, never mutates a group, requires side-effect opt-in, and returns incomplete progress for every gap or unsatisfied offset."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-007",
+      "authoritative_sources": [
+        "kafka-kip-848"
+      ],
+      "executable_evidence": [
+        "TestInspectorPreservesRequestAndPartitionFailures",
+        "TestInspectorReadinessUsesHysteresisWithoutAffectingLiveness"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzInspectionConsumerProtocolGroupMetadata"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Inspection is bounded and read-only, preserves partial failures, separates group protocols, and reports liveness, dependency health, and readiness independently."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-008",
+      "authoritative_sources": [
+        "kafka-431-protocol"
+      ],
+      "executable_evidence": [
+        "TestClientSecurityDefaultsToVerifiedTLSAndRequiresExplicitPlaintext",
+        "TestTrustAnchorProviderIsBoundedOwnedRotatingAndPanicSafe"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzTrustAnchors"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Production defaults to verified TLS 1.2 or later; PLAIN requires verified TLS; mTLS, SCRAM, and OAUTHBEARER use bounded caller-owned rotating providers."
+      ]
+    },
+    {
+      "id": "KAFKA-DEC-009",
+      "authoritative_sources": [
+        "kafka-431-protocol"
+      ],
+      "executable_evidence": [
+        "TestObservationValidationRejectsMetadataOutsideThePublicContract",
+        "TestObserverFailuresAreContainedAndReportedInOrder"
+      ],
+      "fixtures": [
+
+      ],
+      "fuzz": [
+        "FuzzObservationValidation"
+      ],
+      "interoperability_evidence": [
+        "integration_apache_test.go"
+      ],
+      "interoperability_classification": "provider agreement",
+      "differential_evidence": [
+        "specification/maintained-peer-differential.md"
+      ],
+      "differential_classification": "deliberate policy difference",
+      "public_behavior": [
+        "Observations are synchronous, immutable, bounded, payload-free, panic-contained, cooperatively timed, and fenced against same-client reentry."
+      ]
+    }
+  ]
+}

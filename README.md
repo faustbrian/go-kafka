@@ -70,6 +70,7 @@ return producer.Publish(ctx, kafka.Message{
 ## Documentation
 
 Start with the [documentation index](docs/README.md), [compatibility matrix](docs/compatibility.md),
+[specification decision register](docs/specification-decisions.md),
 [delivery guarantees](docs/guarantees.md), and [operations guide](docs/operations.md).
 The [detailed reference](docs/reference.md) preserves the complete producer,
 consumer, replay, inspection, and lifecycle contracts.
