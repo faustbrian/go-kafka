@@ -26,9 +26,9 @@ All notable changes to this module are documented here.
   `KAFKA-DEC-007 sha256:d02d909b19d6a9051659b0258c54e6213719400bb649d34a35bbcbafbe143ecd`,
   `KAFKA-DEC-008 sha256:1e611dd133807660d106e295eacfa1711f81c61d3c7f69189c8acc4211d15213`, and
   `KAFKA-DEC-009 sha256:c66f672ebe138e6fd48a34edbea2e27e62dd4f8fd04ca994df1c45b9f3763a77`.
-- Replace copied repository tooling with the checksum-verified
-  `go-library-tools` v1.0.13 contract while retaining package-owned operations
-  and migrated mutation evidence.
+- Use the released `go-library-tools` v1.2.0 CLI and immutable merged
+  workflow at `1f9629e5f27418600460b55a50a5b2fc81697fab` while retaining
+  package-owned operations and migrated mutation evidence.
 
 ## 1.0.0 - 2026-08-25
 

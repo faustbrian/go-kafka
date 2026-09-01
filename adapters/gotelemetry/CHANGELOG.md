@@ -15,8 +15,9 @@ All notable changes to this module are documented here.
   `KAFKA-OTEL-DEC-001 sha256:d362738340cab3e5fe46a98b1b5ada8311b1f09a81db9888ac4cb5ae2292c731`,
   `KAFKA-OTEL-DEC-002 sha256:0008db30bf7af660c609405faadea2f5d366ea1564172a37f9a0c1da30f86463`, and
   `KAFKA-OTEL-DEC-003 sha256:f6c97b3949856b5eb9bc59cb86c92bf44f15932240fa2b159704b5c50574567c`.
-- Adopt the checksum-verified `go-library-tools` v1.0.7 repository contract
-  while retaining the module's specification and interoperability operations.
+- Adopt the released `go-library-tools` v1.2.0 repository contract and
+  immutable workflow `1f9629e5f27418600460b55a50a5b2fc81697fab` while
+  retaining the module's specification and interoperability operations.
 ## 1.0.0 - 2026-08-25
 
 ### Fixed
