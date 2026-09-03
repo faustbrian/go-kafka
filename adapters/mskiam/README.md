@@ -61,6 +61,9 @@ additional guarantees beyond the documented module boundary.
 This module follows its [compatibility policy](COMPATIBILITY.md). Report vulnerabilities through the
 [parent security policy](../../SECURITY.md).
 
+See the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md)
+for package-family selection and companion integrations.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

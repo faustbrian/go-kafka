@@ -75,6 +75,10 @@ Start with the [documentation index](docs/README.md), [compatibility matrix](doc
 The [detailed reference](docs/reference.md) preserves the complete producer,
 consumer, replay, inspection, and lifecycle contracts.
 
+Browse the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md)
+and its [Integration and data movement family](https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/design-language.md#package-families-and-selection)
+to compare Kafka with companion libraries and optional adapters.
+
 ## Development
 
 Run `make check` for the repository contract. Backend and managed-service

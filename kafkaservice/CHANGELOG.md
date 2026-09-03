@@ -10,6 +10,8 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Publish schema-v2 cohesion metadata and versioned ecosystem navigation for
+  the independently released service lifecycle integration.
 - Adopt the released `go-library-tools` v1.2.0 repository contract and
   immutable workflow `1f9629e5f27418600460b55a50a5b2fc81697fab` while
   retaining the module's package-specific interoperability operations.

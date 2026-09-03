@@ -10,6 +10,8 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Publish schema-v2 cohesion metadata and versioned ecosystem navigation for
+  the independently released OpenTelemetry adapter.
 - Register and enforce the adapter's OpenTelemetry decisions in the
   [specification decision register](docs/specification-decisions.md):
   `KAFKA-OTEL-DEC-001 sha256:d362738340cab3e5fe46a98b1b5ada8311b1f09a81db9888ac4cb5ae2292c731`,
