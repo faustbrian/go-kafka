@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "repository": "github.com/faustbrian/go-kafka",
   "go_version": "1.26.6",
   "modules": [
@@ -55,6 +55,93 @@
       "family_order": 7,
       "version": "1.0.0",
       "tag_prefix": "v",
+      "cohesion": {
+        "family": "integration-and-data-movement",
+        "secondary_capabilities": [
+          "eventing-and-messaging",
+          "observability",
+          "resilience-and-admission",
+          "transport-and-networking"
+        ],
+        "responsibility": "Provide bounded first-party Apache Kafka producer, consumer, inspection, replay, and transaction policy over franz-go.",
+        "non_goals": [
+          "Own application schemas, service bootstrap, workflows, or business retry policy.",
+          "Require an observability backend or global runtime."
+        ],
+        "public_package_identifier": "kafka",
+        "primary_entry_packages": [
+          "github.com/faustbrian/go-kafka"
+        ],
+        "package_selection": {
+          "github.com/faustbrian/go-kafka": "Use for bounded Apache Kafka production, consumption, inspection, replay, and transaction behavior with explicit lifecycle ownership."
+        },
+        "lifecycle_status": "active",
+        "maturity": "stable",
+        "construction_styles": [
+          "new-config",
+          "validated-value"
+        ],
+        "lifecycle_styles": [
+          "close",
+          "drain",
+          "run",
+          "shutdown"
+        ],
+        "ownership": {
+          "configuration": "caller",
+          "mutable_inputs": [
+            "borrow",
+            "copy",
+            "transfer"
+          ],
+          "runtime_resources": "package",
+          "background_work": "package"
+        },
+        "optional_owned_dependencies": [],
+        "adapters": [
+          "github.com/faustbrian/go-kafka/adapters/golog",
+          "github.com/faustbrian/go-kafka/adapters/gotelemetry",
+          "github.com/faustbrian/go-kafka/adapters/mskiam",
+          "github.com/faustbrian/go-kafka/kafkaservice"
+        ],
+        "companions": [
+          "github.com/faustbrian/go-kafka/kafkatest"
+        ],
+        "supported_go": {
+          "minimum": "1.26.6",
+          "tested": [
+            "1.26.6"
+          ]
+        },
+        "supported_platforms": [
+          "portable-go"
+        ],
+        "supported_backends": [
+          "apache-kafka"
+        ],
+        "supported_protocols": [
+          "apache-kafka"
+        ],
+        "documentation": {
+          "readme": "README.md",
+          "api": "docs/api.md",
+          "adoption": "docs/consumer.md",
+          "security": "docs/security.md",
+          "compatibility": "docs/compatibility.md",
+          "performance": "docs/performance.md",
+          "examples": "README.md",
+          "faq": "docs/troubleshooting.md",
+          "changelog": "CHANGELOG.md",
+          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka",
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md"
+        },
+        "known_good_compatibility_sets": [],
+        "delivery": {
+          "implementation": "not-started",
+          "hardening": "not-started",
+          "release": "not-started"
+        }
+      },
       "owned_dependencies": [],
       "reverse_owned_dependencies": [
         "github.com/faustbrian/go-cloudevents/adapters/golib",
@@ -146,6 +233,82 @@
       "family_order": 7,
       "version": "1.0.0",
       "tag_prefix": "adapters/gotelemetry/v",
+      "cohesion": {
+        "family": "integration-and-data-movement",
+        "secondary_capabilities": [
+          "eventing-and-messaging",
+          "observability",
+          "protocols-and-schemas"
+        ],
+        "responsibility": "Translate Kafka observation and propagation contracts into OpenTelemetry spans and metrics.",
+        "non_goals": [
+          "Own global providers, SDK export, generic telemetry policy, or Kafka behavior."
+        ],
+        "public_package_identifier": "gotelemetry",
+        "primary_entry_packages": [
+          "github.com/faustbrian/go-kafka/adapters/gotelemetry"
+        ],
+        "package_selection": {
+          "github.com/faustbrian/go-kafka/adapters/gotelemetry": "Use to instrument go-kafka observations and W3C Trace Context propagation with caller-owned OpenTelemetry providers."
+        },
+        "lifecycle_status": "active",
+        "maturity": "stable",
+        "construction_styles": [
+          "new-config",
+          "validated-value"
+        ],
+        "lifecycle_styles": [
+          "stateless"
+        ],
+        "ownership": {
+          "configuration": "caller",
+          "mutable_inputs": [
+            "borrow",
+            "copy"
+          ],
+          "runtime_resources": "caller",
+          "background_work": "none"
+        },
+        "optional_owned_dependencies": [],
+        "adapters": [],
+        "companions": [
+          "github.com/faustbrian/go-telemetry"
+        ],
+        "supported_go": {
+          "minimum": "1.26.6",
+          "tested": [
+            "1.26.6"
+          ]
+        },
+        "supported_platforms": [
+          "portable-go"
+        ],
+        "supported_backends": [],
+        "supported_protocols": [
+          "apache-kafka",
+          "open-telemetry",
+          "w3c-trace-context"
+        ],
+        "documentation": {
+          "readme": "adapters/gotelemetry/README.md",
+          "api": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/gotelemetry",
+          "adoption": "adapters/gotelemetry/docs/README.md",
+          "security": "adapters/gotelemetry/docs/reference.md",
+          "compatibility": "adapters/gotelemetry/COMPATIBILITY.md",
+          "performance": "adapters/gotelemetry/docs/reference.md",
+          "examples": "adapters/gotelemetry/README.md",
+          "faq": "adapters/gotelemetry/docs/reference.md",
+          "changelog": "adapters/gotelemetry/CHANGELOG.md",
+          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/gotelemetry",
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md"
+        },
+        "known_good_compatibility_sets": [],
+        "delivery": {
+          "implementation": "not-started",
+          "hardening": "not-started",
+          "release": "not-started"
+        }
+      },
       "owned_dependencies": [
         "github.com/faustbrian/go-kafka"
       ],
@@ -219,6 +382,80 @@
       "family_order": 7,
       "version": "1.0.0",
       "tag_prefix": "adapters/mskiam/v",
+      "cohesion": {
+        "family": "integration-and-data-movement",
+        "secondary_capabilities": [
+          "cryptography-and-secrets",
+          "eventing-and-messaging",
+          "identity-and-access"
+        ],
+        "responsibility": "Provide Kafka SASL/OAUTHBEARER authentication configuration through AWS MSK IAM credentials and signing.",
+        "non_goals": [
+          "Own credential acquisition policy, global AWS configuration, Kafka client policy, or generic AWS integration."
+        ],
+        "public_package_identifier": "mskiam",
+        "primary_entry_packages": [
+          "github.com/faustbrian/go-kafka/adapters/mskiam"
+        ],
+        "package_selection": {
+          "github.com/faustbrian/go-kafka/adapters/mskiam": "Use when a go-kafka client authenticates to Amazon MSK through the caller-selected AWS credential provider."
+        },
+        "lifecycle_status": "active",
+        "maturity": "stable",
+        "construction_styles": [
+          "load",
+          "new-config"
+        ],
+        "lifecycle_styles": [
+          "stateless"
+        ],
+        "ownership": {
+          "configuration": "caller",
+          "mutable_inputs": [
+            "borrow"
+          ],
+          "runtime_resources": "caller",
+          "background_work": "none"
+        },
+        "optional_owned_dependencies": [],
+        "adapters": [],
+        "companions": [],
+        "supported_go": {
+          "minimum": "1.26.6",
+          "tested": [
+            "1.26.6"
+          ]
+        },
+        "supported_platforms": [
+          "portable-go"
+        ],
+        "supported_backends": [
+          "amazon-msk"
+        ],
+        "supported_protocols": [
+          "aws-msk-iam-sasl",
+          "oauth-2-bearer"
+        ],
+        "documentation": {
+          "readme": "adapters/mskiam/README.md",
+          "api": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam",
+          "adoption": "adapters/mskiam/docs/README.md",
+          "security": "adapters/mskiam/docs/reference.md",
+          "compatibility": "adapters/mskiam/COMPATIBILITY.md",
+          "performance": "adapters/mskiam/docs/reference.md",
+          "examples": "adapters/mskiam/README.md",
+          "faq": "adapters/mskiam/docs/reference.md",
+          "changelog": "adapters/mskiam/CHANGELOG.md",
+          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam",
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md"
+        },
+        "known_good_compatibility_sets": [],
+        "delivery": {
+          "implementation": "not-started",
+          "hardening": "not-started",
+          "release": "not-started"
+        }
+      },
       "owned_dependencies": [
         "github.com/faustbrian/go-kafka"
       ],
@@ -286,6 +523,10 @@
       "lifecycle": "internal",
       "kind": "benchmark harness",
       "releasable": false,
+      "family": "integration-and-data-movement",
+      "family_label": "Integration And Data Movement",
+      "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
+      "family_order": 7,
       "version": "unreleased",
       "tag_prefix": "benchmarks/clients/v",
       "owned_dependencies": [
@@ -361,6 +602,81 @@
       "family_order": 7,
       "version": "1.0.0",
       "tag_prefix": "kafkaservice/v",
+      "cohesion": {
+        "family": "integration-and-data-movement",
+        "secondary_capabilities": [
+          "eventing-and-messaging",
+          "http-and-service-edge",
+          "observability"
+        ],
+        "responsibility": "Bridge go-kafka consumer and producer resources into the explicit go-service lifecycle.",
+        "non_goals": [
+          "Own Kafka backend choice, business retry, acknowledgement, redelivery, dead-letter policy, or a service container."
+        ],
+        "public_package_identifier": "kafkaservice",
+        "primary_entry_packages": [
+          "github.com/faustbrian/go-kafka/kafkaservice"
+        ],
+        "package_selection": {
+          "github.com/faustbrian/go-kafka/kafkaservice": "Use to compose go-kafka resources into go-service startup, run, readiness, and bounded shutdown ordering."
+        },
+        "lifecycle_status": "active",
+        "maturity": "stable",
+        "construction_styles": [
+          "new-options"
+        ],
+        "lifecycle_styles": [
+          "run",
+          "shutdown",
+          "start"
+        ],
+        "ownership": {
+          "configuration": "caller",
+          "mutable_inputs": [
+            "borrow",
+            "copy"
+          ],
+          "runtime_resources": "package",
+          "background_work": "package"
+        },
+        "optional_owned_dependencies": [],
+        "adapters": [],
+        "companions": [],
+        "supported_go": {
+          "minimum": "1.26.6",
+          "tested": [
+            "1.26.6"
+          ]
+        },
+        "supported_platforms": [
+          "portable-go"
+        ],
+        "supported_backends": [
+          "apache-kafka"
+        ],
+        "supported_protocols": [
+          "apache-kafka"
+        ],
+        "documentation": {
+          "readme": "kafkaservice/README.md",
+          "api": "https://pkg.go.dev/github.com/faustbrian/go-kafka/kafkaservice",
+          "adoption": "kafkaservice/docs/README.md",
+          "security": "kafkaservice/docs/reference.md",
+          "compatibility": "kafkaservice/docs/reference.md",
+          "performance": "kafkaservice/docs/reference.md",
+          "examples": "kafkaservice/README.md",
+          "faq": "kafkaservice/docs/reference.md",
+          "changelog": "kafkaservice/CHANGELOG.md",
+          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/kafkaservice",
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.3.0/docs/ecosystem/README.md"
+        },
+        "known_good_compatibility_sets": [],
+        "delivery": {
+          "implementation": "not-started",
+          "hardening": "not-started",
+          "release": "not-started"
+        }
+      },
       "owned_dependencies": [
         "github.com/faustbrian/go-cli",
         "github.com/faustbrian/go-correlation",

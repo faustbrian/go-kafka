@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Publish schema-v2 cohesion metadata and versioned ecosystem navigation for
+  the independently released Amazon MSK IAM adapter.
 - Register and enforce the adapter's AWS signer, SDK credential, and managed
   service decisions in the [specification decision
   register](docs/specification-decisions.md):

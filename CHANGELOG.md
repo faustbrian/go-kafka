@@ -14,6 +14,8 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Publish schema-v2 cohesion metadata, versioned ecosystem navigation, and a
+  repository-local cohesion gate through checksum-pinned tooling and CI.
 - Register and enforce the root module's Kafka protocol and KIP decisions in
   the [specification decision register](docs/specification-decisions.md), with
   separate monitored release authorities and maintained-peer evidence:
