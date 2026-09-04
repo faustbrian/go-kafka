@@ -14,6 +14,12 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Adopt the checksum-verified `go-library-tools` v1.4.0 contract and immutable
+  `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow for authoritative
+  dependency-resolution evidence, including an explicit online specification
+  check in the repository-local CI gate.
+- Reconcile nested modules' v1.0.0 dependency archive checksums with their
+  tags, module proxy, and Go checksum database authorities.
 - Publish schema-v2 cohesion metadata, versioned ecosystem navigation, and a
   repository-local cohesion gate through checksum-pinned tooling and CI.
 - Register and enforce the root module's Kafka protocol and KIP decisions in

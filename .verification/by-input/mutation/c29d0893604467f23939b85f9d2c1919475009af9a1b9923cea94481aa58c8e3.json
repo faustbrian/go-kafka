@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "repository": "github.com/faustbrian/go-kafka",
+  "module": ".",
+  "package": "adapters/golog",
+  "gate": "mutation",
+  "input_digest": "sha256:c29d0893604467f23939b85f9d2c1919475009af9a1b9923cea94481aa58c8e3",
+  "verifier_digest": "sha256:9a9499ff68a8dfd49a0be7995590297a8ee563a1aa226bfd8b9361dc53058108",
+  "result": "passed",
+  "report_digest": "sha256:b9ef3e7bb1408f4f71bc0560a8a6d187b66604afeb0f75fef7f2b5a0c6289b72",
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "arm64",
+    "GOOS": "darwin",
+    "GOVERSION": "go1.26.6",
+    "gremlins_binary_sha256": "sha256:e05bf25d661b16ab96d6f2e17aed481d393930e0f24205cc341b010f887368a0"
+  },
+  "completed_at": "2026-09-04T05:47:43.239453Z"
+}

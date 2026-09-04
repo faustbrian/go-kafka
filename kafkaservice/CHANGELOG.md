@@ -10,6 +10,11 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Adopt the checksum-verified `go-library-tools` v1.4.0 contract and immutable
+  `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow while retaining the
+  module's package-specific interoperability operations.
+- Reconcile root Kafka and supporting v1.0.0 dependency archive checksums with
+  the immutable module authorities used by fresh dependency resolution.
 - Publish schema-v2 cohesion metadata and versioned ecosystem navigation for
   the independently released service lifecycle integration.
 - Adopt the released `go-library-tools` v1.2.0 repository contract and

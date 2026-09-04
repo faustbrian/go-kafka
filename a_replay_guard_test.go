@@ -3,6 +3,7 @@ package kafka
 import (
 	"context"
 	"errors"
+	"sync"
 	"testing"
 	"time"
 
@@ -12,6 +13,73 @@ import (
 )
 
 func TestReplayCriticalGuardsTerminateDeterministically(t *testing.T) {
+	t.Run("shutdown waits for an active replay", func(t *testing.T) {
+		runDone := make(chan struct{})
+		prematureClose := make(chan struct{})
+		backend := &replayShutdownOrderingBackend{
+			runDone:        runDone,
+			prematureClose: prematureClose,
+		}
+		reader := replayReaderWithBackend(backend, nil)
+		reader.running = true
+		reader.runDone = runDone
+
+		waitObserved := make(chan struct{})
+		shutdownContext, cancelShutdown := context.WithCancel(context.Background())
+		ctx := &replayShutdownProbeContext{
+			Context:      shutdownContext,
+			waitObserved: waitObserved,
+		}
+		shutdownDone := make(chan error, 1)
+		go func() {
+			shutdownDone <- reader.Shutdown(ctx)
+		}()
+		runReleased := false
+		shutdownJoined := false
+		t.Cleanup(func() {
+			if !runReleased {
+				close(runDone)
+			}
+			cancelShutdown()
+			if !shutdownJoined {
+				select {
+				case <-shutdownDone:
+				case <-time.After(time.Second):
+				}
+			}
+		})
+
+		select {
+		case <-waitObserved:
+		case err := <-shutdownDone:
+			shutdownJoined = true
+			t.Fatalf("Shutdown() returned before waiting for active replay: %v", err)
+		case <-time.After(time.Second):
+			t.Fatal("Shutdown() did not enter its active-replay wait")
+		}
+
+		close(runDone)
+		runReleased = true
+		select {
+		case err := <-shutdownDone:
+			shutdownJoined = true
+			if err != nil {
+				t.Fatalf("Shutdown() error = %v", err)
+			}
+		case <-time.After(time.Second):
+			cancelShutdown()
+			t.Fatal("Shutdown() did not finish after active replay completed")
+		}
+		select {
+		case <-prematureClose:
+			t.Fatal("Shutdown() closed backend before active replay completed")
+		default:
+		}
+		if backend.closed != 1 {
+			t.Fatalf("backend close count = %d", backend.closed)
+		}
+	})
+
 	t.Run("partition fetch bytes retain the one mebibyte minimum", func(t *testing.T) {
 		config := validReplayConfig()
 		config.FetchMaxBytes = 50 << 20
@@ -71,6 +139,36 @@ func TestReplayCriticalGuardsTerminateDeterministically(t *testing.T) {
 			t.Fatalf("out-of-range replay bounds error = %v", err)
 		}
 	})
+}
+
+type replayShutdownProbeContext struct {
+	context.Context
+	waitObserved chan struct{}
+	once         sync.Once
+}
+
+type replayShutdownOrderingBackend struct {
+	recordingReplayBackend
+	runDone        <-chan struct{}
+	prematureClose chan struct{}
+}
+
+func (backend *replayShutdownOrderingBackend) Close() {
+	select {
+	case <-backend.runDone:
+	default:
+		close(backend.prematureClose)
+	}
+
+	backend.recordingReplayBackend.Close()
+}
+
+func (ctx *replayShutdownProbeContext) Done() <-chan struct{} {
+	ctx.once.Do(func() {
+		close(ctx.waitObserved)
+	})
+
+	return ctx.Context.Done()
 }
 
 func TestReplayTimestampCriticalGuardsTerminateDeterministically(t *testing.T) {

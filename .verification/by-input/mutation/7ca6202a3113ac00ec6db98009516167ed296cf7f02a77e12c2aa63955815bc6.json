@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "repository": "github.com/faustbrian/go-kafka",
+  "module": "kafkaservice",
+  "package": ".",
+  "gate": "mutation",
+  "input_digest": "sha256:7ca6202a3113ac00ec6db98009516167ed296cf7f02a77e12c2aa63955815bc6",
+  "verifier_digest": "sha256:9a9499ff68a8dfd49a0be7995590297a8ee563a1aa226bfd8b9361dc53058108",
+  "result": "passed",
+  "report_digest": "sha256:9cfedb343c122b48c0acd1468a16ca1983f854f950745dd15205e9ede0cac058",
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "arm64",
+    "GOOS": "darwin",
+    "GOVERSION": "go1.26.6",
+    "gremlins_binary_sha256": "sha256:e05bf25d661b16ab96d6f2e17aed481d393930e0f24205cc341b010f887368a0"
+  },
+  "completed_at": "2026-09-04T06:25:51.682763Z"
+}

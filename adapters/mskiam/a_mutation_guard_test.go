@@ -12,8 +12,6 @@ import (
 )
 
 func TestProviderAcceptsExactTokenTimeout(t *testing.T) {
-	t.Parallel()
-
 	now := time.Unix(1_700_000_000, 0)
 	validToken, validExpiry := signedTestToken("eu-north-1", now)
 	provider := testProvider(now, generatorFunc(func(
@@ -40,8 +38,6 @@ func TestNilProviderErrorIsSafeAndRedacted(t *testing.T) {
 }
 
 func TestRegionCharacterAndLengthBoundaries(t *testing.T) {
-	t.Parallel()
-
 	exactLength := "eu-" + strings.Repeat("a", 59) + "-1"
 	if len(exactLength) != maxRegionBytes || !validRegion(exactLength) {
 		t.Fatalf("validRegion() rejected exact length %d", len(exactLength))
