@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 
-.PHONY: check ci cohesion config inventory repository-check workflows
+.PHONY: check ci cohesion config inventory repository-check specification-check workflows
 
 config:
 	golib config validate
@@ -11,6 +11,9 @@ inventory:
 repository-check:
 	golib repository check
 
+specification-check:
+	golib specification check --online
+
 workflows:
 	golib workflows check
 
@@ -20,4 +23,4 @@ check:
 cohesion:
 	golib cohesion check
 
-ci: config inventory cohesion repository-check workflows check
+ci: config inventory cohesion repository-check specification-check workflows check
