@@ -326,64 +326,6 @@ func TestTraceContextPropagationClearsStaleFieldsWithoutSpan(t *testing.T) {
 	}
 }
 
-func TestTraceHeaderCarrierFulfillsTextMapContract(t *testing.T) {
-	carrier := traceHeaderCarrier{headers: []kafka.Header{
-		{Key: "TraceParent", Value: []byte("old")},
-		{Key: "application", Value: []byte("value")},
-		{Key: "TRACEPARENT", Value: []byte("ambiguous")},
-	}}
-	if got := carrier.Get("traceparent"); got != "" {
-		t.Fatalf("Get(duplicate traceparent) = %q", got)
-	}
-	carrier.Set("traceparent", "new")
-	if got := carrier.Get("TRACEPARENT"); got != "new" {
-		t.Fatalf("Get(traceparent) = %q", got)
-	}
-	if got := carrier.Get("missing"); got != "" {
-		t.Fatalf("Get(missing) = %q", got)
-	}
-	if got := carrier.Keys(); !reflect.DeepEqual(
-		got,
-		[]string{"application", "traceparent"},
-	) {
-		t.Fatalf("Keys() = %#v", got)
-	}
-	carrier.Set("tracestate", "vendor=value")
-	if got := carrier.Get("tracestate"); got != "vendor=value" {
-		t.Fatalf("Get(tracestate) = %q", got)
-	}
-}
-
-func TestEqualASCIIFoldMatchesHeaderCaseBoundaries(t *testing.T) {
-	tests := []struct {
-		name  string
-		left  string
-		right string
-		want  bool
-	}{
-		{name: "left A", left: "A", right: "a", want: true},
-		{name: "left Z", left: "Z", right: "z", want: true},
-		{name: "right A", left: "a", right: "A", want: true},
-		{name: "right Z", left: "z", right: "Z", want: true},
-		{name: "before ASCII uppercase", left: "@", right: "`", want: false},
-		{name: "after ASCII uppercase", left: "[", right: "{", want: false},
-		{name: "non-ASCII remains exact", left: "ſ", right: "S", want: false},
-	}
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			if got := equalASCIIFold(test.left, test.right); got != test.want {
-				t.Fatalf(
-					"equalASCIIFold(%q, %q) = %t, want %t",
-					test.left,
-					test.right,
-					got,
-					test.want,
-				)
-			}
-		})
-	}
-}
-
 func retainProducerRecord(record kafka.ProducerRecord) kafka.ProducerRecord {
 	retained := record
 	retained.Key = bytes.Clone(record.Key)
@@ -402,10 +344,30 @@ func retainProducerRecord(record kafka.ProducerRecord) kafka.ProducerRecord {
 func traceHeaderValues(headers []kafka.Header, key string) []string {
 	var values []string
 	for _, header := range headers {
-		if equalASCIIFold(header.Key, key) {
+		if equalASCIIHeader(header.Key, key) {
 			values = append(values, string(header.Value))
 		}
 	}
 
 	return values
+}
+
+func equalASCIIHeader(left, right string) bool {
+	if len(left) != len(right) {
+		return false
+	}
+	for index := range len(left) {
+		leftByte, rightByte := left[index], right[index]
+		if 'A' <= leftByte && leftByte <= 'Z' {
+			leftByte += 'a' - 'A'
+		}
+		if 'A' <= rightByte && rightByte <= 'Z' {
+			rightByte += 'a' - 'A'
+		}
+		if leftByte != rightByte {
+			return false
+		}
+	}
+
+	return true
 }

@@ -198,14 +198,15 @@ exported by this module.
 ## Verification
 
 ```sh
-make check
+golib check --module kafkaservice
 ```
 
-The module contract covers formatting, vet, unit tests, race detection, exact
-statement coverage, fuzz smoke, allocation-reporting publication and
-broker-independent shutdown benchmarks, and documentation. Repository gates
-additionally enforce mutation, API compatibility, security, vulnerability,
-licenses, SBOM, and clean-consumer checks.
+The compatibility module contract covers formatting, vet, unit tests,
+documentation, API compatibility, and security. Canonical adapter evidence is
+reused for unchanged delegated lifecycle behavior. Race, mutation, fuzz,
+benchmark, and interoperability checks run only when the compatibility facade
+introduces a material risk those checks exercise. Repository release checks
+additionally cover vulnerability, licenses, SBOM, and clean-consumer boundaries.
 
 The separate interoperability lane starts the immutable-digest Apache Kafka
 4.3.1 fixture and exercises the concrete root producer and consumer through

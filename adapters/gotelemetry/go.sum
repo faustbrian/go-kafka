@@ -30,6 +30,8 @@ github.com/ebitengine/purego v0.10.0 h1:QIw4xfpWT6GWTzaW5XEKy3HXoqrJGx1ijYHzTF0/
 github.com/ebitengine/purego v0.10.0/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
 github.com/faustbrian/go-kafka v1.0.0 h1:gnYGw1zif6Qa2UcNQB5YTFNzNDTRjBMpVZJmHnFG7bE=
 github.com/faustbrian/go-kafka v1.0.0/go.mod h1:5RqX6tuSHTWu052ZromHx8uRUDqsv07IVesA+/4p664=
+github.com/faustbrian/go-kafka/adapters/otel v1.0.0 h1:JJjJibdwX1BE7Xs0RgIFHuwdI2h0bYLjyM02dPeWT2g=
+github.com/faustbrian/go-kafka/adapters/otel v1.0.0/go.mod h1:fSkfR2HPvWcm7HswkQdZFMSIa7F5l0lfA0GJKRwPBoM=
 github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
 github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
 github.com/go-logr/logr v1.2.2/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=

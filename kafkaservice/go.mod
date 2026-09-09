@@ -14,6 +14,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/faustbrian/go-cli v1.0.0 // indirect
 	github.com/faustbrian/go-identifier v1.0.0 // indirect
+	github.com/faustbrian/go-kafka/adapters/service v1.0.0
 	github.com/jackc/pgx/v5 v5.10.0 // indirect
 	github.com/klauspost/compress v1.18.7 // indirect
 	github.com/pierrec/lz4/v4 v4.1.26 // indirect

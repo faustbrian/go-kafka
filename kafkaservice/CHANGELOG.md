@@ -4,6 +4,8 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.1 - 2026-09-09
+
 ### Documentation
 
 - Move detailed module guidance behind a concise README and documentation index.
@@ -13,6 +15,8 @@ All notable changes to this module are documented here.
 - Deprecate the legacy module path in favor of
   `github.com/faustbrian/go-kafka/adapters/service`; the released API and
   behavior remain available during the compatibility window.
+- Delegate lifecycle behavior to the canonical adapter while preserving the
+  released public types, error identities, and observable behavior.
 
 - Adopt the checksum-verified `go-library-tools` v1.4.0 contract and immutable
   `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow while retaining the

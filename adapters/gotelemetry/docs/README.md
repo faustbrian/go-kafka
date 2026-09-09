@@ -8,7 +8,6 @@
 ## API reference
 
 - [Go package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/gotelemetry)
-- [Specification Decisions](specification-decisions.md)
 
 ## Security and compatibility
 

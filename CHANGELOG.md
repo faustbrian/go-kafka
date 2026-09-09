@@ -4,6 +4,13 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Apply proportional verification guidance and point OpenTelemetry changes to
+  the canonical adapter contract.
+- Replace blanket coverage, mutation, and provenance requirements with
+  risk-selected assurance and reusable immutable evidence.
+
 ## 1.1.0 - 2026-09-09
 
 ### Added

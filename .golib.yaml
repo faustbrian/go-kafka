@@ -12,14 +12,8 @@ mutation:
     - module: .
       archive: .verification/mutation/bootstrap/root.zip
       ledger: .verification/mutation/migration-ledger.json
-    - module: adapters/gotelemetry
-      archive: .verification/mutation/bootstrap/adapters-gotelemetry.zip
-      ledger: .verification/mutation/migration-ledger.json
     - module: adapters/mskiam
       archive: .verification/mutation/bootstrap/adapters-mskiam.zip
-      ledger: .verification/mutation/migration-ledger.json
-    - module: kafkaservice
-      archive: .verification/mutation/bootstrap/kafkaservice.zip
       ledger: .verification/mutation/migration-ledger.json
 api:
   baselines:
@@ -161,51 +155,6 @@ operations:
         makefile: verification/package.mk
         target: package-contract
         timeout: 10m
-  - module: adapters/gotelemetry
-    gate: fuzz
-    steps:
-      - type: go-test
-        packages: [.]
-        fuzz: '^FuzzAttributePolicyValidate$'
-        budget: 10000x
-        timeout: 20m
-      - type: go-test
-        packages: [.]
-        fuzz: '^FuzzHostileProviders$'
-        budget: 10000x
-        timeout: 20m
-      - type: go-test
-        packages: [.]
-        fuzz: '^FuzzObserverValidation$'
-        budget: 10000x
-        timeout: 20m
-      - type: go-test
-        packages: [.]
-        fuzz: '^FuzzTraceContextPropagation$'
-        budget: 10000x
-        timeout: 20m
-  - module: adapters/gotelemetry
-    gate: benchmark
-    steps:
-      - type: go-test
-        packages: [./...]
-        benchmark: .
-        budget: 100ms
-        timeout: 20m
-  - module: adapters/gotelemetry
-    gate: conformance
-    steps:
-      - type: make
-        makefile: verification/package.mk
-        target: conformance
-        timeout: 20m
-  - module: adapters/gotelemetry
-    gate: interoperability
-    steps:
-      - type: make
-        makefile: verification/package.mk
-        target: interoperability
-        timeout: 20m
   - module: adapters/mskiam
     gate: test
     steps:
@@ -262,29 +211,6 @@ operations:
         makefile: verification/package.mk
         target: package-contract
         timeout: 10m
-  - module: kafkaservice
-    gate: fuzz
-    steps:
-      - type: go-test
-        packages: [.]
-        fuzz: '^FuzzHandlerCorrelationBoundary$'
-        budget: 10000x
-        timeout: 20m
-  - module: kafkaservice
-    gate: benchmark
-    steps:
-      - type: go-test
-        packages: [./...]
-        benchmark: .
-        budget: 100ms
-        timeout: 20m
-  - module: kafkaservice
-    gate: interoperability
-    steps:
-      - type: make
-        makefile: verification/package.mk
-        target: interoperability
-        timeout: 20m
   - module: benchmarks/clients
     gate: interoperability
     steps:

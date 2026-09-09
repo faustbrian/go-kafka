@@ -248,7 +248,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.0.0",
+      "version": "1.0.1",
       "tag_prefix": "adapters/gotelemetry/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -327,6 +327,7 @@
         }
       },
       "owned_dependencies": [
+        "github.com/faustbrian/go-kafka/adapters/otel",
         "github.com/faustbrian/go-kafka"
       ],
       "reverse_owned_dependencies": [],
@@ -340,33 +341,24 @@
       "required_services": [],
       "build_tags": [],
       "test_tags": [],
-      "interoperability_tools": [
-        "Apache Kafka 4.3.1"
-      ],
-      "specifications": [
-        "OpenTelemetry semantic conventions 1.44.0 for Kafka messaging spans and metrics",
-        "OpenTelemetry Go API and SDK 1.44.0"
-      ],
-      "conformance_corpora": [
-        "Pinned OpenTelemetry 1.44.0 Kafka messaging span and metric source matrix",
-        "Adapter mapping, propagation, cardinality, provider-failure, and lifecycle evidence"
-      ],
-      "provenance": [
-        "adapters/gotelemetry/specification/manifest.json"
-      ],
+      "interoperability_tools": [],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
       "goal_files": [],
       "goal_status": "not-applicable",
       "goal_evidence": [],
       "gates": {
         "api_compatibility": true,
-        "benchmarks": true,
-        "conformance": true,
-        "coverage": true,
+        "benchmarks": false,
+        "conformance": false,
+        "coverage": false,
         "documentation": true,
-        "fuzz": true,
+        "fuzz": false,
+        "interoperability": false,
         "lint": true,
-        "mutation": true,
-        "race": true,
+        "mutation": false,
+        "race": false,
         "security": true,
         "tests": true
       }
@@ -618,7 +610,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.0.0",
+      "version": "1.0.1",
       "tag_prefix": "kafkaservice/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -700,6 +692,7 @@
         "github.com/faustbrian/go-correlation",
         "github.com/faustbrian/go-identifier",
         "github.com/faustbrian/go-kafka",
+        "github.com/faustbrian/go-kafka/adapters/service",
         "github.com/faustbrian/go-service"
       ],
       "reverse_owned_dependencies": [
@@ -712,9 +705,7 @@
       "required_services": [],
       "build_tags": [],
       "test_tags": [],
-      "interoperability_tools": [
-        "Apache Kafka 4.3.1"
-      ],
+      "interoperability_tools": [],
       "specifications": [],
       "conformance_corpora": [],
       "provenance": [],
@@ -723,14 +714,15 @@
       "goal_evidence": [],
       "gates": {
         "api_compatibility": true,
-        "benchmarks": true,
+        "benchmarks": false,
         "conformance": false,
-        "coverage": true,
+        "coverage": false,
         "documentation": true,
-        "fuzz": true,
+        "fuzz": false,
+        "interoperability": false,
         "lint": true,
-        "mutation": true,
-        "race": true,
+        "mutation": false,
+        "race": false,
         "security": true,
         "tests": true
       }
