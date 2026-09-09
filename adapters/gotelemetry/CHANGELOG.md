@@ -10,6 +10,10 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Deprecate the legacy module path in favor of
+  `github.com/faustbrian/go-kafka/adapters/otel`; the released API and behavior
+  remain available during the compatibility window.
+
 - Adopt the checksum-verified `go-library-tools` v1.4.0 contract and immutable
   `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow while retaining the
   module's specification and interoperability operations.

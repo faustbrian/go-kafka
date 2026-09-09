@@ -3,7 +3,7 @@
 The module owns client-side Kafka policy, not domain schemas or cluster
 infrastructure.
 
-The independently versioned nested `kafkaservice` module is the integration
+The independently versioned nested `adapters/service` module is the integration
 boundary for `github.com/faustbrian/go-service`. It imports the root
 Kafka, service, correlation, and optional OpenTelemetry propagation contracts.
 None of those adapter-only dependencies enter this root module, and the
@@ -38,9 +38,9 @@ keeps retry, settlement, and topic policy in Kafka.
 - `ObserverPolicy` exposes ordered, payload-free producer delivery, consumer
   processing/commit/poll, and copied broker connection/request/throttle/
   disconnect metadata without exporting franz-go hooks or making observation
-  part of Kafka correctness. The root module's `adapters/golog` package maps
+  part of Kafka correctness. The root module's `adapters/slog` package maps
   those stable observations to `log/slog`; the independently versioned
-  `adapters/gotelemetry` module maps them to OpenTelemetry and separately owns
+  `adapters/otel` module maps them to OpenTelemetry and separately owns
   an explicit bounded W3C record-header propagation policy. Neither adapter
   changes Kafka delivery or settlement.
 

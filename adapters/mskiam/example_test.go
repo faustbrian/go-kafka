@@ -9,7 +9,7 @@ import (
 )
 
 func Example() {
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:              "eu-north-1",
 		CredentialsProvider: staticCredentialsProvider{},
 		TokenTimeout:        5 * time.Second,

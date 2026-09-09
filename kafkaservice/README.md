@@ -1,4 +1,7 @@
-# Kafka service integration
+# Kafka service integration (compatibility path)
+
+> Deprecated: use `github.com/faustbrian/go-kafka/adapters/service`. This
+> module remains supported during the published migration window.
 
 `kafkaservice` is the independently versioned integration between
 [`github.com/faustbrian/go-kafka`](..) and

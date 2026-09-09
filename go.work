@@ -4,6 +4,8 @@ use (
 	.
 	./adapters/gotelemetry
 	./adapters/mskiam
+	./adapters/otel
+	./adapters/service
 	./benchmarks/clients
 	./kafkaservice
 )

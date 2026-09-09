@@ -85,6 +85,42 @@
       "coverage_required": false,
       "build_required": true,
       "build_tags": []
+    },
+    {
+      "module_directory": ".",
+      "directory": "adapters/slog",
+      "name": "kafkaslog",
+      "import_path": "github.com/faustbrian/go-kafka/adapters/slog",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": "adapters/otel",
+      "directory": ".",
+      "name": "kafkaotel",
+      "import_path": "github.com/faustbrian/go-kafka/adapters/otel",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
+    },
+    {
+      "module_directory": "adapters/service",
+      "directory": ".",
+      "name": "kafkaservice",
+      "import_path": "github.com/faustbrian/go-kafka/adapters/service",
+      "kind": "public",
+      "production": true,
+      "executable": true,
+      "coverage_required": true,
+      "build_required": true,
+      "build_tags": []
     }
   ]
 }

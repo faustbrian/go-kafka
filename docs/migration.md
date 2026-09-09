@@ -67,6 +67,20 @@ complete migration.
 
 ## Deprecation policy
 
+The target-oriented adapter paths are additive replacements:
+
+| Compatibility path | Canonical path |
+| --- | --- |
+| `github.com/faustbrian/go-kafka/adapters/golog` | `github.com/faustbrian/go-kafka/adapters/slog` |
+| `github.com/faustbrian/go-kafka/adapters/gotelemetry` | `github.com/faustbrian/go-kafka/adapters/otel` |
+| `github.com/faustbrian/go-kafka/kafkaservice` | `github.com/faustbrian/go-kafka/adapters/service` |
+
+Change only the import path and package alias (`golog` to `kafkaslog` and
+`gotelemetry` to `kafkaotel`); the exported construction, ownership, lifecycle,
+and error-classification contracts remain compatible. The old paths remain
+supported for the longer of 180 days after successor public availability and
+two subsequently published stable owner-module minor releases.
+
 Within v1, incompatible corrections require a new major release. When a safe
 transition can be supported, a deprecation must name the replacement,
 reason, semantic difference, and earliest removal release in public Go docs and

@@ -103,7 +103,7 @@ separately for those concerns.
 
 Services should compose concrete producers and consumers through
 the independently versioned
-[`kafkaservice`](../kafkaservice) module; see the
+[`adapters/service`](../adapters/service) module; see the
 [service integration guide](service-integration.md). The adapter retains
 the exact Kafka client, keeps startup and readiness policy explicit, drains
 accepted publishes before closing an owned producer, supervises consumer
@@ -221,16 +221,16 @@ across partition workers and franz-go broker goroutines, execute before the
 rebalance gate is released, and cannot re-enter mutating or lifecycle
 operations on the consumer. See the
 [observability guide](observability.md). The independently versioned
-[`adapters/gotelemetry`](../adapters/gotelemetry) module maps these stable events
+[`adapters/otel`](../adapters/otel) module maps these stable events
 to OpenTelemetry with deny-by-default topic, group, and client attributes; it
 does not install providers. Its separate `TraceContextPropagation` value
 injects and extracts only bounded W3C `traceparent` and `tracestate` record
 headers without baggage, global propagators, or caller-record mutation; the
 completion observer itself still does not propagate context.
-The independently versioned `kafkaservice` module separately accepts only the
+The independently versioned `adapters/service` module separately accepts only the
 OpenTelemetry propagation contract for explicit record headers. The
 standard-library
-[`adapters/golog`](../adapters/golog) package maps the same observations to fixed
+[`adapters/slog`](../adapters/slog) package maps the same observations to fixed
 `log/slog` records. It also denies client, topic, and group identities unless
 they are present in copied bounded allowlists. Adapter-generated fields never
 contain payloads, headers, credentials, broker endpoints, or application error

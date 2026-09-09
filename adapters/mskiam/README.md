@@ -19,7 +19,7 @@ go get github.com/faustbrian/go-kafka/adapters/mskiam@v1
 ## Quick start
 
 ```go
-provider, err := mskiam.New(ctx, mskiam.Config{
+provider, err := mskiam.Load(ctx, mskiam.Config{
     Region:       "eu-north-1",
     TokenTimeout: 5 * time.Second,
 })

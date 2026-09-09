@@ -7,11 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add context-aware `Load(ctx, Config)` as the explicit AWS configuration and
+  credential-loading operation; `New` remains source compatible and delegates
+  exactly to `Load`.
+
 ### Documentation
 
 - Move detailed module guidance behind a concise README and documentation index.
 
 ### Changed
+
+- Review the pinned AWS SDK v2 credential-provider contract against the current
+  upstream v1 release feed and refresh its monitored response digest.
 
 - Adopt the checksum-verified `go-library-tools` v1.4.0 contract and immutable
   `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow while retaining the

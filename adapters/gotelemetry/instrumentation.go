@@ -1,6 +1,8 @@
 // Package gotelemetry translates bounded kafka observations into OpenTelemetry
 // spans and metrics and provides explicit bounded W3C record-header
 // propagation without recording record data or arbitrary application errors.
+//
+// Deprecated: use github.com/faustbrian/go-kafka/adapters/otel.
 package gotelemetry
 
 import (

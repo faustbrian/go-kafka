@@ -1,5 +1,7 @@
 // Package kafkaservice composes explicit Kafka resources with service
 // lifecycle and correlation boundaries.
+//
+// Deprecated: use github.com/faustbrian/go-kafka/adapters/service.
 package kafkaservice
 
 import (

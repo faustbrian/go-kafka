@@ -1,4 +1,7 @@
-# Kafka slog adapter
+# Kafka slog adapter (compatibility path)
+
+> Deprecated: use `github.com/faustbrian/go-kafka/adapters/slog`. This path
+> remains source compatible during the published migration window.
 
 `golog` translates stable, payload-free `kafka.Observation` values into fixed
 structured records through Go's standard `log/slog` API. It is part of the root
