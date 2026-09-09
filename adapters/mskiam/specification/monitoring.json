@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-08-30",
+  "reviewed_at": "2026-09-09",
   "review_interval_days": 90,
   "authorities": [
     {
@@ -48,7 +48,7 @@
       "kind": "releases",
       "version": "",
       "url": "https://api.github.com/repos/aws/aws-sdk-go-v2/git/matching-refs/tags/v1.",
-      "sha256": "0f3bb8223651fb832ea5088e236493e686edcb502d391f64cae4996be528182b",
+      "sha256": "9a7ded47cf1a4c8d42ca27b012fe59e6281cf3ce7455f587a6faf14bc31a168d",
       "specifications": [
         "AWS SDK for Go v2 credential-provider contract v1.43.0"
       ]

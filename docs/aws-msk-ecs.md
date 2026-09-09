@@ -42,7 +42,7 @@ Kafka package.
 The default AWS SDK v2 chain is the preferred ECS path:
 
 ```go
-provider, err := mskiam.New(ctx, mskiam.Config{
+provider, err := mskiam.Load(ctx, mskiam.Config{
     Region:       "eu-north-1",
     TokenTimeout: 5 * time.Second,
 })

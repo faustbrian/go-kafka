@@ -1,4 +1,7 @@
-# Kafka OpenTelemetry adapter
+# Kafka OpenTelemetry adapter (compatibility path)
+
+> Deprecated: use `github.com/faustbrian/go-kafka/adapters/otel`. This module
+> remains supported during the published migration window.
 
 `gotelemetry` is the independently versioned OpenTelemetry adapter for
 [`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains

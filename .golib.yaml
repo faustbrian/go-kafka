@@ -32,6 +32,12 @@ api:
     - module: adapters/mskiam
       mode: apidiff
       path: adapters/mskiam/api/baseline.txt
+    - module: adapters/otel
+      mode: apidiff
+      path: adapters/otel/api/baseline.txt
+    - module: adapters/service
+      mode: apidiff
+      path: adapters/service/api/baseline.txt
     - module: kafkaservice
       mode: apidiff
       path: kafkaservice/api/baseline.txt
@@ -117,12 +123,12 @@ operations:
         budget: 10000x
         timeout: 20m
       - type: go-test
-        packages: [./adapters/golog]
+        packages: [./adapters/slog]
         fuzz: '^FuzzIdentityPolicyValidate$'
         budget: 10000x
         timeout: 20m
       - type: go-test
-        packages: [./adapters/golog]
+        packages: [./adapters/slog]
         fuzz: '^FuzzObserverValidation$'
         budget: 10000x
         timeout: 20m
@@ -242,6 +248,20 @@ operations:
         makefile: verification/package.mk
         target: interoperability
         timeout: 20m
+  - module: adapters/otel
+    gate: test
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: package-contract
+        timeout: 10m
+  - module: adapters/service
+    gate: test
+    steps:
+      - type: make
+        makefile: verification/package.mk
+        target: package-contract
+        timeout: 10m
   - module: kafkaservice
     gate: fuzz
     steps:

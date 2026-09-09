@@ -4,6 +4,14 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Added
+
+- Add the canonical `adapters/slog` package and keep `adapters/golog` as a
+  deprecated source-compatible facade.
+- Register the canonical independently versioned `adapters/otel` and
+  `adapters/service` successor modules without removing their released import
+  paths.
+
 ### Documentation
 
 - Align maintained documentation with the stable v1 release contract and

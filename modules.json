@@ -43,6 +43,18 @@
           "coverage_required": false,
           "build_required": true,
           "build_tags": []
+        },
+        {
+          "module_directory": ".",
+          "directory": "adapters/slog",
+          "name": "kafkaslog",
+          "import_path": "github.com/faustbrian/go-kafka/adapters/slog",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
         }
       ],
       "purpose": "`kafka` is the stable v1 bounded first-party Apache Kafka client policy for Go services.",
@@ -102,6 +114,9 @@
           "github.com/faustbrian/go-kafka/adapters/golog",
           "github.com/faustbrian/go-kafka/adapters/gotelemetry",
           "github.com/faustbrian/go-kafka/adapters/mskiam",
+          "github.com/faustbrian/go-kafka/adapters/otel",
+          "github.com/faustbrian/go-kafka/adapters/service",
+          "github.com/faustbrian/go-kafka/adapters/slog",
           "github.com/faustbrian/go-kafka/kafkaservice"
         ],
         "companions": [
@@ -149,6 +164,8 @@
         "github.com/faustbrian/go-event-sourcing/adapters/gotelemetry",
         "github.com/faustbrian/go-kafka/adapters/gotelemetry",
         "github.com/faustbrian/go-kafka/adapters/mskiam",
+        "github.com/faustbrian/go-kafka/adapters/otel",
+        "github.com/faustbrian/go-kafka/adapters/service",
         "github.com/faustbrian/go-kafka/benchmarks/clients",
         "github.com/faustbrian/go-kafka/kafkaservice",
         "github.com/faustbrian/go-transactional-outbox/adapters/gokafka",
@@ -249,7 +266,7 @@
           "github.com/faustbrian/go-kafka/adapters/gotelemetry"
         ],
         "package_selection": {
-          "github.com/faustbrian/go-kafka/adapters/gotelemetry": "Use to instrument go-kafka observations and W3C Trace Context propagation with caller-owned OpenTelemetry providers."
+          "github.com/faustbrian/go-kafka/adapters/gotelemetry": "Use the compatibility path to instrument go-kafka observations and W3C Trace Context propagation; new consumers should select adapters/otel."
         },
         "lifecycle_status": "active",
         "maturity": "stable",
@@ -567,6 +584,7 @@
         "coverage": false,
         "documentation": true,
         "fuzz": false,
+        "interoperability": false,
         "lint": true,
         "mutation": false,
         "race": false,
@@ -618,7 +636,7 @@
           "github.com/faustbrian/go-kafka/kafkaservice"
         ],
         "package_selection": {
-          "github.com/faustbrian/go-kafka/kafkaservice": "Use to compose go-kafka resources into go-service startup, run, readiness, and bounded shutdown ordering."
+          "github.com/faustbrian/go-kafka/kafkaservice": "Use the compatibility path for go-service lifecycle composition; new consumers should select adapters/service."
         },
         "lifecycle_status": "active",
         "maturity": "stable",
@@ -713,6 +731,288 @@
         "lint": true,
         "mutation": true,
         "race": true,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "adapters/otel",
+      "module_path": "github.com/faustbrian/go-kafka/adapters/otel",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": "adapters/otel",
+          "directory": ".",
+          "name": "kafkaotel",
+          "import_path": "github.com/faustbrian/go-kafka/adapters/otel",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "`kafkaotel` is the canonical independently versioned OpenTelemetry adapter for `github.com/faustbrian/go-kafka`. The root Kafka module remains vendor-neutral.",
+      "lifecycle": "stable",
+      "kind": "adapter",
+      "releasable": true,
+      "family": "integration-and-data-movement",
+      "family_label": "Integration And Data Movement",
+      "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
+      "family_order": 7,
+      "version": "1.0.0",
+      "tag_prefix": "adapters/otel/v",
+      "cohesion": {
+        "family": "integration-and-data-movement",
+        "secondary_capabilities": [
+          "eventing-and-messaging",
+          "observability",
+          "protocols-and-schemas"
+        ],
+        "responsibility": "Translate Kafka observation and propagation contracts into OpenTelemetry spans and metrics.",
+        "non_goals": [
+          "Own global providers, SDK export, generic telemetry policy, or Kafka behavior."
+        ],
+        "public_package_identifier": "kafkaotel",
+        "primary_entry_packages": [
+          "github.com/faustbrian/go-kafka/adapters/otel"
+        ],
+        "package_selection": {
+          "github.com/faustbrian/go-kafka/adapters/otel": "Use to instrument go-kafka observations and W3C Trace Context propagation with caller-owned OpenTelemetry providers."
+        },
+        "lifecycle_status": "active",
+        "maturity": "stable",
+        "construction_styles": [
+          "new-config",
+          "validated-value"
+        ],
+        "lifecycle_styles": [
+          "stateless"
+        ],
+        "ownership": {
+          "configuration": "caller",
+          "mutable_inputs": [
+            "borrow",
+            "copy"
+          ],
+          "runtime_resources": "caller",
+          "background_work": "none"
+        },
+        "optional_owned_dependencies": [],
+        "adapters": [],
+        "companions": [
+          "github.com/faustbrian/go-telemetry"
+        ],
+        "supported_go": {
+          "minimum": "1.26.6",
+          "tested": [
+            "1.26.6"
+          ]
+        },
+        "supported_platforms": [
+          "portable-go"
+        ],
+        "supported_backends": [],
+        "supported_protocols": [
+          "apache-kafka",
+          "open-telemetry",
+          "w3c-trace-context"
+        ],
+        "documentation": {
+          "readme": "adapters/otel/README.md",
+          "api": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/otel",
+          "adoption": "adapters/otel/docs/README.md",
+          "security": "adapters/otel/docs/reference.md",
+          "compatibility": "adapters/otel/COMPATIBILITY.md",
+          "performance": "adapters/otel/docs/reference.md",
+          "examples": "adapters/otel/README.md",
+          "faq": "adapters/otel/docs/reference.md",
+          "changelog": "adapters/otel/CHANGELOG.md",
+          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/otel",
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+        },
+        "known_good_compatibility_sets": [],
+        "delivery": {
+          "implementation": "in-progress",
+          "hardening": "in-progress",
+          "release": "not-started"
+        }
+      },
+      "owned_dependencies": [
+        "github.com/faustbrian/go-kafka"
+      ],
+      "reverse_owned_dependencies": [],
+      "external_runtime_dependencies": [
+        "go.opentelemetry.io/otel",
+        "go.opentelemetry.io/otel/metric",
+        "go.opentelemetry.io/otel/sdk",
+        "go.opentelemetry.io/otel/sdk/metric",
+        "go.opentelemetry.io/otel/trace"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
+      "goal_files": [],
+      "goal_status": "not-applicable",
+      "goal_evidence": [],
+      "gates": {
+        "api_compatibility": true,
+        "benchmarks": false,
+        "conformance": false,
+        "coverage": true,
+        "documentation": true,
+        "fuzz": false,
+        "interoperability": false,
+        "lint": true,
+        "mutation": false,
+        "race": false,
+        "security": true,
+        "tests": true
+      }
+    },
+    {
+      "directory": "adapters/service",
+      "module_path": "github.com/faustbrian/go-kafka/adapters/service",
+      "go_version": "1.26.6",
+      "packages": [
+        {
+          "module_directory": "adapters/service",
+          "directory": ".",
+          "name": "kafkaservice",
+          "import_path": "github.com/faustbrian/go-kafka/adapters/service",
+          "kind": "public",
+          "production": true,
+          "executable": true,
+          "coverage_required": true,
+          "build_required": true,
+          "build_tags": []
+        }
+      ],
+      "purpose": "`kafkaservice` is the canonical independently versioned integration between `github.com/faustbrian/go-kafka` and `github.com/faustbrian/go-service`.",
+      "lifecycle": "stable",
+      "kind": "public library",
+      "releasable": true,
+      "family": "integration-and-data-movement",
+      "family_label": "Integration And Data Movement",
+      "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
+      "family_order": 7,
+      "version": "1.0.0",
+      "tag_prefix": "adapters/service/v",
+      "cohesion": {
+        "family": "integration-and-data-movement",
+        "secondary_capabilities": [
+          "eventing-and-messaging",
+          "http-and-service-edge",
+          "observability"
+        ],
+        "responsibility": "Bridge go-kafka consumer and producer resources into the explicit go-service lifecycle.",
+        "non_goals": [
+          "Own Kafka backend choice, business retry, acknowledgement, redelivery, dead-letter policy, or a service container."
+        ],
+        "public_package_identifier": "kafkaservice",
+        "primary_entry_packages": [
+          "github.com/faustbrian/go-kafka/adapters/service"
+        ],
+        "package_selection": {
+          "github.com/faustbrian/go-kafka/adapters/service": "Use to compose go-kafka resources into go-service startup, run, readiness, and bounded shutdown ordering."
+        },
+        "lifecycle_status": "active",
+        "maturity": "stable",
+        "construction_styles": [
+          "new-options"
+        ],
+        "lifecycle_styles": [
+          "run",
+          "shutdown",
+          "start"
+        ],
+        "ownership": {
+          "configuration": "caller",
+          "mutable_inputs": [
+            "borrow",
+            "copy"
+          ],
+          "runtime_resources": "package",
+          "background_work": "package"
+        },
+        "optional_owned_dependencies": [],
+        "adapters": [],
+        "companions": [],
+        "supported_go": {
+          "minimum": "1.26.6",
+          "tested": [
+            "1.26.6"
+          ]
+        },
+        "supported_platforms": [
+          "portable-go"
+        ],
+        "supported_backends": [
+          "apache-kafka"
+        ],
+        "supported_protocols": [
+          "apache-kafka"
+        ],
+        "documentation": {
+          "readme": "adapters/service/README.md",
+          "api": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/service",
+          "adoption": "adapters/service/docs/README.md",
+          "security": "adapters/service/docs/reference.md",
+          "compatibility": "adapters/service/docs/reference.md",
+          "performance": "adapters/service/docs/reference.md",
+          "examples": "adapters/service/README.md",
+          "faq": "adapters/service/docs/reference.md",
+          "changelog": "adapters/service/CHANGELOG.md",
+          "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/service",
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+        },
+        "known_good_compatibility_sets": [],
+        "delivery": {
+          "implementation": "in-progress",
+          "hardening": "in-progress",
+          "release": "not-started"
+        }
+      },
+      "owned_dependencies": [
+        "github.com/faustbrian/go-cli",
+        "github.com/faustbrian/go-correlation",
+        "github.com/faustbrian/go-identifier",
+        "github.com/faustbrian/go-kafka",
+        "github.com/faustbrian/go-service"
+      ],
+      "reverse_owned_dependencies": [
+        "github.com/faustbrian/go-service/integration/adoption"
+      ],
+      "external_runtime_dependencies": [
+        "go.opentelemetry.io/otel",
+        "go.opentelemetry.io/otel/trace"
+      ],
+      "required_services": [],
+      "build_tags": [],
+      "test_tags": [],
+      "interoperability_tools": [],
+      "specifications": [],
+      "conformance_corpora": [],
+      "provenance": [],
+      "goal_files": [],
+      "goal_status": "not-applicable",
+      "goal_evidence": [],
+      "gates": {
+        "api_compatibility": true,
+        "benchmarks": false,
+        "conformance": false,
+        "coverage": true,
+        "documentation": true,
+        "fuzz": false,
+        "interoperability": false,
+        "lint": true,
+        "mutation": false,
+        "race": false,
         "security": true,
         "tests": true
       }

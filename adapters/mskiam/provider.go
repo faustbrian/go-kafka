@@ -149,9 +149,9 @@ type credentialRefreshResult struct {
 	err         error
 }
 
-// New validates configuration before loading the default AWS credential chain.
-// It creates no Kafka client, connection, or background goroutine.
-func New(ctx context.Context, adapterConfig Config) (*Provider, error) {
+// Load validates configuration before loading the default AWS credential
+// chain. It creates no Kafka client, connection, or background goroutine.
+func Load(ctx context.Context, adapterConfig Config) (*Provider, error) {
 	if ctx == nil {
 		return nil, ErrContextRequired
 	}
@@ -188,6 +188,13 @@ func New(ctx context.Context, adapterConfig Config) (*Provider, error) {
 	provider.refreshGate <- struct{}{}
 
 	return provider, nil
+}
+
+// New delegates to Load for compatibility.
+//
+// Deprecated: use Load.
+func New(ctx context.Context, adapterConfig Config) (*Provider, error) {
+	return Load(ctx, adapterConfig)
 }
 
 // String returns a stable redacted representation.

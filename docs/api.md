@@ -126,9 +126,9 @@ Inspector observations add only bounded broker, topic, consumer-group, member,
 and partition aggregates plus dependency-health and readiness hysteresis
 state. They never copy broker hosts, cluster IDs, inspected target names,
 member identities, assignments, or lag coordinates.
-`adapters/golog` emits fixed standard-library `log/slog` records from this
+`adapters/slog` emits fixed standard-library `log/slog` records from this
 contract. Its copied client, topic, and group allowlists deny every identity by
-default. `adapters/gotelemetry` supplies the independently versioned
+default. `adapters/otel` supplies the independently versioned
 OpenTelemetry mapping and a separate immutable `TraceContextPropagation`
 policy. That policy injects or extracts only W3C `traceparent` and `tracestate`
 through owned producer records and borrowed consumed records, validates the

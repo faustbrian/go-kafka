@@ -39,9 +39,9 @@
 
 ## Optional modules
 
-- [OpenTelemetry adapter](../adapters/gotelemetry/docs/README.md)
+- [OpenTelemetry adapter](../adapters/otel/docs/README.md)
 - [Amazon MSK IAM adapter](../adapters/mskiam/docs/README.md)
-- [Service lifecycle adapter](../kafkaservice/docs/README.md)
+- [Service lifecycle adapter](../adapters/service/docs/README.md)
 
 ## Maintainers
 

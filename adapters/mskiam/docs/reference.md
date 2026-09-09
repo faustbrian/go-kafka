@@ -19,7 +19,7 @@ The zero credential-provider choice loads the AWS SDK v2 default credential
 chain once and retains its concurrency-safe refreshing provider:
 
 ```go
-provider, err := mskiam.New(ctx, mskiam.Config{
+provider, err := mskiam.Load(ctx, mskiam.Config{
     Region:       "eu-north-1",
     TokenTimeout: 5 * time.Second,
 })
@@ -91,7 +91,7 @@ Applications needing a deliberately selected source can supply any current
 AWS SDK v2 `aws.CredentialsProvider`:
 
 ```go
-provider, err := mskiam.New(ctx, mskiam.Config{
+provider, err := mskiam.Load(ctx, mskiam.Config{
     Region:              "eu-north-1",
     CredentialsProvider: credentialsProvider,
     TokenTimeout:        5 * time.Second,
