@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-09
+
 ### Added
 
 - Add context-aware `Load(ctx, Config)` as the explicit AWS configuration and
@@ -84,5 +86,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   web-identity sources, pod token rotation, workload replacement, AWS failure
   redaction, refresh contention, and separate generation/retrieval benchmarks.
 
-[Unreleased]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv1.0.0...HEAD
+[Unreleased]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv1.1.0...HEAD
+[1.1.0]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv1.0.0...adapters%2Fmskiam%2Fv1.1.0
 [1.0.0]: https://github.com/faustbrian/go-kafka/releases/tag/adapters%2Fmskiam%2Fv1.0.0

@@ -4,6 +4,8 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.0 - 2026-09-09
+
 ### Added
 
 - Add `github.com/faustbrian/go-kafka/adapters/otel` as the canonical
@@ -17,8 +19,8 @@ All notable changes to this module are documented here.
 ### Changed
 
 - Adopt the checksum-verified `go-library-tools` v1.4.0 contract and immutable
-  `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow while retaining the
-  module's specification and interoperability operations.
+  `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow with proportional
+  canonical-path verification.
 - Reconcile the root Kafka v1.0.0 archive checksum with the immutable module
   authorities used by fresh dependency resolution.
 - Publish schema-v2 cohesion metadata and versioned ecosystem navigation for
