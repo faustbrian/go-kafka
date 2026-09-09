@@ -1058,3 +1058,28 @@ func attributeMap(values []attribute.KeyValue) map[string]any {
 
 	return result
 }
+
+func metricAttributeSets(t *testing.T, data metricdata.Aggregation) []attribute.Set {
+	t.Helper()
+
+	switch current := data.(type) {
+	case metricdata.Sum[int64]:
+		sets := make([]attribute.Set, 0, len(current.DataPoints))
+		for _, point := range current.DataPoints {
+			sets = append(sets, point.Attributes)
+		}
+
+		return sets
+	case metricdata.Histogram[float64]:
+		sets := make([]attribute.Set, 0, len(current.DataPoints))
+		for _, point := range current.DataPoints {
+			sets = append(sets, point.Attributes)
+		}
+
+		return sets
+	default:
+		t.Fatalf("unexpected aggregation %T", data)
+
+		return nil
+	}
+}

@@ -4,6 +4,8 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.1 - 2026-09-09
+
 ### Documentation
 
 - Move detailed module guidance behind a concise README and documentation index.
@@ -13,6 +15,8 @@ All notable changes to this module are documented here.
 - Deprecate the legacy module path in favor of
   `github.com/faustbrian/go-kafka/adapters/otel`; the released API and behavior
   remain available during the compatibility window.
+- Delegate the compatibility path to the canonical adapter while preserving
+  the released public types, error identities, and observable behavior.
 
 - Adopt the checksum-verified `go-library-tools` v1.4.0 contract and immutable
   `531e4db50fd81a7201257a7b488a0cf22d333aca` workflow while retaining the
@@ -21,8 +25,8 @@ All notable changes to this module are documented here.
   authorities used by fresh dependency resolution.
 - Publish schema-v2 cohesion metadata and versioned ecosystem navigation for
   the independently released OpenTelemetry adapter.
-- Register and enforce the adapter's OpenTelemetry decisions in the
-  [specification decision register](docs/specification-decisions.md):
+- Register and enforce the adapter's OpenTelemetry decisions in the historical
+  specification decision register:
   `KAFKA-OTEL-DEC-001 sha256:d362738340cab3e5fe46a98b1b5ada8311b1f09a81db9888ac4cb5ae2292c731`,
   `KAFKA-OTEL-DEC-002 sha256:0008db30bf7af660c609405faadea2f5d366ea1564172a37f9a0c1da30f86463`, and
   `KAFKA-OTEL-DEC-003 sha256:f6c97b3949856b5eb9bc59cb86c92bf44f15932240fa2b159704b5c50574567c`.

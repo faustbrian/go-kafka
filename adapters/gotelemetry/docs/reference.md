@@ -241,12 +241,12 @@ never made a telemetry attribute by this adapter; applications must still
 ensure vendor trace-state values are appropriate for every broker and
 downstream trust boundary.
 
-The interoperability gate publishes an injected record through the root
-producer, consumes and settles it through the root consumer, and extracts the
-same remote span context after a pinned Apache Kafka 4.3.1 broker preserves the
-headers. This proves the Kafka-to-Kafka propagation boundary only; it does not
-prove tracing for external side effects or make the completion observer
-propagate.
+The released v1.0.0 compatibility evidence published an injected record
+through the root producer, consumed and settled it through the root consumer,
+and extracted the same remote span context after an Apache Kafka 4.3.1 broker
+preserved the headers. The canonical adapter retains that behavior. This proves
+the Kafka-to-Kafka propagation boundary only; it does not prove tracing for
+external side effects or make the completion observer propagate.
 
 ## Failure and lifecycle behavior
 
@@ -392,15 +392,17 @@ and shut-down or no-op providers do not turn a Kafka success into a failure.
 
 ## Verification
 
-Observable interpretation choices are recorded in the
-[specification decision register](../docs/specification-decisions.md), with exact
-upstream pins in `specification/manifest.json`.
+Observable interpretation is owned and tested by the canonical
+`github.com/faustbrian/go-kafka/adapters/otel` adapter.
 
 ```sh
-make check
+golib check --module adapters/gotelemetry
 ```
 
-The module gate covers formatting, vet, unit tests, race detection, exact
-statement coverage, fuzz smoke, benchmarks, and documentation. Repository
-release gates additionally enforce mutation, API compatibility, security,
-vulnerability, license, SBOM, provenance, and clean-consumer checks.
+The compatibility module gate covers formatting, vet, unit tests,
+documentation, API compatibility, and security. Canonical adapter evidence is
+reused for unchanged delegated behavior. Race, mutation, fuzz, benchmark,
+conformance, and interoperability checks run only when the compatibility
+facade introduces a material risk those checks exercise. Repository release
+checks additionally cover vulnerability, license, SBOM, provenance, and
+clean-consumer boundaries.
