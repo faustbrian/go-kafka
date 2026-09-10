@@ -240,8 +240,8 @@
           "build_tags": []
         }
       ],
-      "purpose": "`gotelemetry` is the independently versioned OpenTelemetry adapter for [`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains vendor-neutral and does not import OpenTelemetry.",
-      "lifecycle": "stable",
+      "purpose": "`gotelemetry` preserves the released OpenTelemetry adapter import path and behavior while consumers migrate to the canonical `adapters/otel` successor.",
+      "lifecycle": "deprecated",
       "kind": "adapter",
       "releasable": true,
       "family": "integration-and-data-movement",
@@ -257,7 +257,7 @@
           "observability",
           "protocols-and-schemas"
         ],
-        "responsibility": "Translate Kafka observation and propagation contracts into OpenTelemetry spans and metrics.",
+        "responsibility": "Preserve the released OpenTelemetry adapter path and behavior while delegating to the canonical adapters/otel successor.",
         "non_goals": [
           "Own global providers, SDK export, generic telemetry policy, or Kafka behavior."
         ],
@@ -266,9 +266,9 @@
           "github.com/faustbrian/go-kafka/adapters/gotelemetry"
         ],
         "package_selection": {
-          "github.com/faustbrian/go-kafka/adapters/gotelemetry": "Use the compatibility path to instrument go-kafka observations and W3C Trace Context propagation; new consumers should select adapters/otel."
+          "github.com/faustbrian/go-kafka/adapters/gotelemetry": "Use only as the deprecated compatibility facade while migrating to adapters/otel."
         },
-        "lifecycle_status": "active",
+        "lifecycle_status": "deprecated",
         "maturity": "stable",
         "construction_styles": [
           "new-config",
@@ -602,8 +602,8 @@
           "build_tags": []
         }
       ],
-      "purpose": "`kafkaservice` is the independently versioned integration between [`github.com/faustbrian/go-kafka`](..) and `github.com/faustbrian/go-service`. The root Kafka production package does not import service, correlation, or OpenTelemetry APIs.",
-      "lifecycle": "stable",
+      "purpose": "`kafkaservice` preserves the released service-integration import path and behavior while consumers migrate to the canonical `adapters/service` successor.",
+      "lifecycle": "deprecated",
       "kind": "public library",
       "releasable": true,
       "family": "integration-and-data-movement",
@@ -619,7 +619,7 @@
           "http-and-service-edge",
           "observability"
         ],
-        "responsibility": "Bridge go-kafka consumer and producer resources into the explicit go-service lifecycle.",
+        "responsibility": "Preserve the released service-integration path and behavior while delegating to the canonical adapters/service successor.",
         "non_goals": [
           "Own Kafka backend choice, business retry, acknowledgement, redelivery, dead-letter policy, or a service container."
         ],
@@ -628,9 +628,9 @@
           "github.com/faustbrian/go-kafka/kafkaservice"
         ],
         "package_selection": {
-          "github.com/faustbrian/go-kafka/kafkaservice": "Use the compatibility path for go-service lifecycle composition; new consumers should select adapters/service."
+          "github.com/faustbrian/go-kafka/kafkaservice": "Use only as the deprecated compatibility facade while migrating to adapters/service."
         },
-        "lifecycle_status": "active",
+        "lifecycle_status": "deprecated",
         "maturity": "stable",
         "construction_styles": [
           "new-options"
