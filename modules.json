@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "repository": "github.com/faustbrian/go-kafka",
-  "go_version": "1.26.6",
+  "go_version": "1.27.0",
   "modules": [
     {
       "directory": ".",
       "module_path": "github.com/faustbrian/go-kafka",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": ".",
@@ -123,7 +123,7 @@
           "github.com/faustbrian/go-kafka/kafkatest"
         ],
         "supported_go": {
-          "minimum": "1.26.6",
+          "minimum": "1.27.0",
           "tested": [
             "1.27.0"
           ]
@@ -225,7 +225,7 @@
     {
       "directory": "adapters/gotelemetry",
       "module_path": "github.com/faustbrian/go-kafka/adapters/gotelemetry",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": "adapters/gotelemetry",
@@ -292,7 +292,7 @@
           "github.com/faustbrian/go-telemetry"
         ],
         "supported_go": {
-          "minimum": "1.26.6",
+          "minimum": "1.27.0",
           "tested": [
             "1.27.0"
           ]
@@ -366,7 +366,7 @@
     {
       "directory": "adapters/mskiam",
       "module_path": "github.com/faustbrian/go-kafka/adapters/mskiam",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": "adapters/mskiam",
@@ -430,7 +430,7 @@
         "adapters": [],
         "companions": [],
         "supported_go": {
-          "minimum": "1.26.6",
+          "minimum": "1.27.0",
           "tested": [
             "1.27.0"
           ]
@@ -513,7 +513,7 @@
     {
       "directory": "benchmarks/clients",
       "module_path": "github.com/faustbrian/go-kafka/benchmarks/clients",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": "benchmarks/clients",
@@ -587,7 +587,7 @@
     {
       "directory": "kafkaservice",
       "module_path": "github.com/faustbrian/go-kafka/kafkaservice",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": "kafkaservice",
@@ -653,7 +653,7 @@
         "adapters": [],
         "companions": [],
         "supported_go": {
-          "minimum": "1.26.6",
+          "minimum": "1.27.0",
           "tested": [
             "1.27.0"
           ]
@@ -730,7 +730,7 @@
     {
       "directory": "adapters/otel",
       "module_path": "github.com/faustbrian/go-kafka/adapters/otel",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": "adapters/otel",
@@ -797,7 +797,7 @@
           "github.com/faustbrian/go-telemetry"
         ],
         "supported_go": {
-          "minimum": "1.26.6",
+          "minimum": "1.27.0",
           "tested": [
             "1.27.0"
           ]
@@ -870,7 +870,7 @@
     {
       "directory": "adapters/service",
       "module_path": "github.com/faustbrian/go-kafka/adapters/service",
-      "go_version": "1.26.6",
+      "go_version": "1.27.0",
       "packages": [
         {
           "module_directory": "adapters/service",
@@ -936,7 +936,7 @@
         "adapters": [],
         "companions": [],
         "supported_go": {
-          "minimum": "1.26.6",
+          "minimum": "1.27.0",
           "tested": [
             "1.27.0"
           ]

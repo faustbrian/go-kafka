@@ -14,7 +14,7 @@ contracts and does not change their wire or settlement semantics.
 
 | Input | Exact version or identity | Verification |
 | --- | --- | --- |
-| Go toolchain and module language | Go 1.27.0, `go 1.26.6` | `go version`, `go env`, and `go.mod` |
+| Go toolchain and module language | Go 1.27.0, `go 1.27.0` | `go version`, `go env`, and `go.mod` |
 | Host used for baseline | Darwin arm64, Apple M4 Max | Go environment and benchmark output |
 | Container runtime | Docker Desktop engine 29.6.2, API 1.55 | Benchmark environment capture on 2026-07-30 |
 | franz-go | v1.21.5, tag target `1ba5fd24f949a335dbc7caaef1d6037e132ef23e` | Go module proxy plus upstream tag; latest stable rechecked on 2026-08-11 |
