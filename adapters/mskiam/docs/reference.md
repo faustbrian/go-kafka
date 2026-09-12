@@ -194,7 +194,7 @@ This adapter pins:
 - `aws-msk-iam-sasl-signer-go` v1.0.4;
 - AWS SDK for Go v2 v1.43.0 and config v1.32.31;
 - `franz-go` v1.21.5 through the root Kafka module; and
-- Go 1.26.5.
+- Go 1.27.0.
 
 AWS documents non-Java IAM clients for MSK Kafka 2.7.1 and newer. That protocol
 floor is not an operational support claim. Local tests prove signing, root
