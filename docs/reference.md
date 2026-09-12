@@ -5,7 +5,7 @@ Start with the root README and documentation index.
 
 ## Requirements
 
-- Go 1.26.5 or later
+- Go 1.27.0 or later
 - an explicitly tested Apache Kafka version; franz-go protocol support alone is
   not a package compatibility claim
 - verified TLS 1.2 or later by default
