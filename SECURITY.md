@@ -1,5 +1,8 @@
 # Security
 
+The [versioned threat model](docs/threat-model-v1.md) describes the package
+trust boundaries and residual deployment risks.
+
 Report vulnerabilities privately through the repository security process.
 Do not include credentials, payloads, authorization material, or production
 broker addresses in reports, tests, logs, or fixtures.

@@ -1,5 +1,8 @@
 # Security
 
+The [versioned threat model](threat-model-v1.md) records the trust boundaries,
+repo-owned controls, and deployment responsibilities for this package family.
+
 Verified TLS is the zero-value transport policy. `ClientSecurity{}` uses system
 roots, enforces TLS 1.2 or newer, and performs normal certificate and hostname
 verification. Caller-provided `tls.Config` values are cloned and validation
