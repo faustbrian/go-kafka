@@ -15,10 +15,15 @@ require (
 	github.com/faustbrian/go-cli v1.0.0 // indirect
 	github.com/faustbrian/go-identifier v1.0.0 // indirect
 	github.com/jackc/pgx/v5 v5.10.0 // indirect
-	github.com/klauspost/compress v1.18.7 // indirect
-	github.com/pierrec/lz4/v4 v4.1.26 // indirect
+	github.com/klauspost/compress v1.19.1 // indirect
+	github.com/moby/moby/api v1.55.0 // indirect
+	github.com/moby/moby/client v0.5.0 // indirect
+	github.com/pierrec/lz4/v4 v4.1.27 // indirect
+	github.com/testcontainers/testcontainers-go v0.44.0 // indirect
 	github.com/twmb/franz-go v1.21.5 // indirect
 	github.com/twmb/franz-go/pkg/kadm v1.18.0 // indirect
 	github.com/twmb/franz-go/pkg/kmsg v1.13.1 // indirect
 	golang.org/x/crypto v0.55.0 // indirect
+	golang.org/x/mod v0.38.0 // indirect
+	golang.org/x/sync v0.22.0 // indirect
 )
