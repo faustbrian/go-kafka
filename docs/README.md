@@ -34,6 +34,7 @@
 - [Troubleshooting, FAQ, and glossary](troubleshooting.md)
 - [Amazon MSK and ECS deployment guidance](aws-msk-ecs.md)
 - [Security](security.md)
+- [Threat model v1](threat-model-v1.md)
 - [Runnable consumer retry example](../consumer_batch_failure_example_test.go)
 - [Runnable replay checkpoint example](../replay_example_test.go)
 
