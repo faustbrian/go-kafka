@@ -6,6 +6,10 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Adopt Testcontainers core 0.44.0 with Moby API 1.55 and client 0.5
+  for Docker-backed Kafka fixtures. Retain Kafka helper module 0.43.0
+  and the pinned resource reaper; public Kafka APIs are unchanged.
+
 - Retry rebalance-fixture shutdown while a consumer observer is active,
   within the existing shutdown deadline; retain the public reentry guard.
 
