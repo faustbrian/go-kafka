@@ -4,6 +4,11 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Changed
+
+- Refresh compression dependencies and select OpenTelemetry 1.45.0 APIs for
+  caller-supplied propagation through the supported service adapter.
+
 ## 1.0.1 - 2026-09-09
 
 ### Documentation
