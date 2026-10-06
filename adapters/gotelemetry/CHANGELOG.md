@@ -4,6 +4,12 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Changed
+
+- Adopt OpenTelemetry 1.45.0 histogram exemplar sampling and context-retention
+  fixes while preserving caller-owned providers and the legacy scope.
+- Select the SDK release containing upstream endpoint-logging security fixes.
+
 ## 1.0.1 - 2026-09-09
 
 ### Documentation

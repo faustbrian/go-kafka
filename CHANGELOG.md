@@ -4,6 +4,14 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Changed
+
+- Retry rebalance-fixture shutdown while a consumer observer is active,
+  within the existing shutdown deadline; retain the public reentry guard.
+
+- Refresh compression dependencies and raise OpenTelemetry SDK test-support
+  requirements to 1.45.0, including upstream endpoint-logging security fixes.
+
 ### Documentation
 
 - Apply proportional verification guidance and point OpenTelemetry changes to
