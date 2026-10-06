@@ -96,6 +96,10 @@ func FuzzObservationValidation(f *testing.F) {
 }
 
 func FuzzFetchDecompression(f *testing.F) {
+	for _, name := range []string{"empty", "overlap", "multiblock", "stored"} {
+		frame := referenceLZ4Frame(f, name)
+		f.Add(uint8(kgo.CodecLz4), uint32(len(referenceLZ4Plaintext(name))), frame)
+	}
 	f.Add(uint8(kgo.CodecNone), uint32(4), []byte("1234"))
 	f.Add(uint8(kgo.CodecGzip), uint32(1<<20), []byte("malformed"))
 	f.Add(uint8(kgo.CodecSnappy), uint32(1<<20), []byte{
