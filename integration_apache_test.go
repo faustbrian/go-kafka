@@ -1164,24 +1164,9 @@ func shutdownApacheKafkaRebalanceConsumer(
 	)
 	defer cancel()
 
-	const maximumAttempts = 3
-	var shutdownErr error
-	for attempt := range maximumAttempts {
-		shutdownErr = consumer.Shutdown(ctx)
-		if shutdownErr == nil {
-			return
-		}
-		if !errors.Is(shutdownErr, kafka.ErrConsumerShutdownIncomplete) ||
-			ctx.Err() != nil || attempt == maximumAttempts-1 {
-			break
-		}
-
-		retryDelay := time.NewTimer(100 * time.Millisecond)
-		select {
-		case <-retryDelay.C:
-		case <-ctx.Done():
-			retryDelay.Stop()
-		}
+	shutdownErr := kafka.ShutdownConsumerForRebalanceTest(ctx, consumer.Shutdown)
+	if shutdownErr == nil {
+		return
 	}
 
 	t.Fatalf("shutdown rebalance consumer child: %v", shutdownErr)

@@ -2,7 +2,9 @@ package kafka
 
 import (
 	"context"
+	"errors"
 	"net"
+	"time"
 
 	"github.com/twmb/franz-go/pkg/kgo"
 )
@@ -48,4 +50,33 @@ func BufferedConsumerRecordsForTest(consumer *Consumer) int64 {
 	}
 
 	return backend.BufferedFetchRecords()
+}
+
+// ShutdownConsumerForRebalanceTest applies the broker fixture shutdown policy
+// without adding coordination helpers to the production API.
+func ShutdownConsumerForRebalanceTest(
+	ctx context.Context,
+	shutdown func(context.Context) error,
+) error {
+	var shutdownErr error
+	for {
+		if ctx.Err() != nil {
+			return errors.Join(shutdownErr, ctx.Err())
+		}
+		shutdownErr = shutdown(ctx)
+		if shutdownErr == nil {
+			return nil
+		}
+		if !errors.Is(shutdownErr, ErrConsumerShutdownIncomplete) &&
+			!errors.Is(shutdownErr, ErrObserverReentry) {
+			return shutdownErr
+		}
+		retryDelay := time.NewTimer(100 * time.Millisecond)
+		select {
+		case <-retryDelay.C:
+		case <-ctx.Done():
+			retryDelay.Stop()
+			return errors.Join(shutdownErr, ctx.Err())
+		}
+	}
 }
