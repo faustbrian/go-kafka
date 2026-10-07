@@ -17,7 +17,7 @@ require (
 	github.com/faustbrian/go-identifier v1.0.0 // indirect
 	github.com/jackc/pgx/v5 v5.10.0 // indirect
 	github.com/klauspost/compress v1.20.1 // indirect
-	github.com/moby/moby/api v1.55.0 // indirect
+	github.com/moby/moby/api v1.56.1 // indirect
 	github.com/moby/moby/client v0.5.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.33 // indirect
 	github.com/testcontainers/testcontainers-go v0.44.0 // indirect

@@ -17,7 +17,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/klauspost/compress v1.20.1 // indirect
-	github.com/moby/moby/api v1.55.0 // indirect
+	github.com/moby/moby/api v1.56.1 // indirect
 	github.com/moby/moby/client v0.5.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.33 // indirect
 	github.com/testcontainers/testcontainers-go v0.44.0 // indirect
