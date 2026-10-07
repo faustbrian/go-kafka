@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Align Docker fixture dependencies with Moby client v0.6.1, API v1.56.1,
+  and connections v0.8.1 while retaining the Kafka runtime contracts.
+
 - Select klauspost/compress v1.20.1 for Snappy and Zstd transport, retaining
   the current LZ4 selection and bounded Kafka codec contracts.
 
