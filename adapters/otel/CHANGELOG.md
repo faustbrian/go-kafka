@@ -6,6 +6,9 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Select klauspost/compress v1.20.1 for Snappy and Zstd transport, retaining
+  the current LZ4 selection and bounded Kafka codec contracts.
+
 - Adopt OpenTelemetry 1.45.0 histogram exemplar sampling and context-retention
   fixes while preserving caller-owned providers and instrumentation identity.
 - Select the SDK release containing upstream endpoint-logging security fixes.
