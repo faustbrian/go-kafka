@@ -6,6 +6,9 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Select klauspost/compress v1.20.1 for Snappy and Zstd transport, retaining
+  the current LZ4 selection and bounded Kafka codec contracts.
+
 - Refresh compression dependencies and select OpenTelemetry 1.45.0 APIs for
   caller-supplied propagation.
 

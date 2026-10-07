@@ -4,7 +4,7 @@ go 1.27.0
 
 require (
 	github.com/containerd/errdefs v1.0.0
-	github.com/klauspost/compress v1.19.1
+	github.com/klauspost/compress v1.20.1
 	github.com/moby/moby/api v1.55.0
 	github.com/moby/moby/client v0.5.0
 	github.com/pierrec/lz4/v4 v4.1.33

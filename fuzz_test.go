@@ -3,6 +3,7 @@ package kafka
 import (
 	"context"
 	"errors"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -96,6 +97,18 @@ func FuzzObservationValidation(f *testing.F) {
 }
 
 func FuzzFetchDecompression(f *testing.F) {
+	for _, seed := range []struct {
+		name  string
+		codec kgo.CompressionCodecType
+	}{
+		{"snappy", kgo.CodecSnappy}, {"zstd", kgo.CodecZstd},
+	} {
+		frame, err := os.ReadFile("testdata/compress/baseline-" + seed.name + ".bin")
+		if err != nil {
+			f.Fatal(err)
+		}
+		f.Add(uint8(seed.codec), uint32(len("Kafka-compatible record payload\n")*4096-1), frame)
+	}
 	for _, name := range []string{"empty", "overlap", "multiblock", "stored"} {
 		frame := referenceLZ4Frame(f, name)
 		f.Add(uint8(kgo.CodecLz4), uint32(len(referenceLZ4Plaintext(name))), frame)
