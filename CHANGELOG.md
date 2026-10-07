@@ -6,6 +6,9 @@ All notable changes to this module are documented here.
 
 ### Changed
 
+- Select LZ4 v4.1.33 while retaining modern Kafka framing, bounded fetch
+  decompression and explicit producer codec selection.
+
 - Adopt Testcontainers core 0.44.0 with Moby API 1.55 and client 0.5
   for Docker-backed Kafka fixtures. Retain Kafka helper module 0.43.0
   and the pinned resource reaper; public Kafka APIs are unchanged.

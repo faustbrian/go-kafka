@@ -7,7 +7,7 @@ require (
 	github.com/klauspost/compress v1.19.1
 	github.com/moby/moby/api v1.55.0
 	github.com/moby/moby/client v0.5.0
-	github.com/pierrec/lz4/v4 v4.1.27
+	github.com/pierrec/lz4/v4 v4.1.33
 	github.com/testcontainers/testcontainers-go v0.44.0
 	github.com/testcontainers/testcontainers-go/modules/kafka v0.43.0
 	github.com/twmb/franz-go v1.21.5
