@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Select klauspost/compress v1.20.1 for Snappy and Zstd transport, retaining
+  the current LZ4 selection and bounded Kafka codec contracts.
+
 - Refresh the indirect compression and OpenTelemetry API dependency graph
   used alongside the AWS MSK IAM adapter.
 
