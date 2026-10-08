@@ -65,7 +65,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.1.0",
+      "version": "1.1.1",
       "tag_prefix": "v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -248,7 +248,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.0.1",
+      "version": "1.0.2",
       "tag_prefix": "adapters/gotelemetry/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -389,7 +389,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.1.0",
+      "version": "1.1.1",
       "tag_prefix": "adapters/mskiam/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -610,7 +610,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.0.1",
+      "version": "1.0.2",
       "tag_prefix": "kafkaservice/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -753,7 +753,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.0.0",
+      "version": "1.0.1",
       "tag_prefix": "adapters/otel/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -893,7 +893,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "1.0.0",
+      "version": "1.0.1",
       "tag_prefix": "adapters/service/v",
       "cohesion": {
         "family": "integration-and-data-movement",

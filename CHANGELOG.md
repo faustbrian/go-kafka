@@ -4,7 +4,18 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.1.1 - 2026-10-08
+
 ### Changed
+
+- Align the released verification CLI with the pinned v1.8.5 workflow.
+  Ordinary CI uses bounded local checks; release rehearsal still executes
+  the complete declared module gates, including facade-specific policies.
+
+- Raise the minimum supported Go version from 1.26.6 to 1.27.0.
+  Use Go 1.27 or later to adopt this maintenance release.
+- Select Testcontainers Kafka helper v0.44.0 with core v0.44.0,
+  superseding the earlier intermediate helper v0.43.0 selection.
 
 - Align Docker fixture dependencies with Moby client v0.6.1, API v1.56.1,
   and connections v0.8.1 while retaining the Kafka runtime contracts.

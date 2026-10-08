@@ -4,7 +4,12 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 1.0.1 - 2026-10-08
+
 ### Changed
+
+- Raise the minimum supported Go version from 1.26.6 to 1.27.0.
+  Use Go 1.27 or later to adopt this maintenance release.
 
 - Align Docker fixture dependencies with Moby client v0.6.1, API v1.56.1,
   and connections v0.8.1 while retaining the Kafka runtime contracts.
