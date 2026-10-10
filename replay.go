@@ -604,7 +604,9 @@ func replayRemainingOverflows(
 	var total uint64
 	for _, replayRange := range ranges {
 		remaining, _ := bits.Sub64(
+			// #nosec G115 -- range validation requires nonnegative ordered start and end offsets
 			uint64(replayRange.EndOffset),
+			// #nosec G115 -- normalized checkpoints stay within their matching nonnegative range
 			uint64(next[replayPartition{
 				topic: replayRange.Topic, partition: replayRange.Partition,
 			}]),

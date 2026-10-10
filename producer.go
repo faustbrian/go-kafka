@@ -662,8 +662,10 @@ func producerRetryBackoffDuration(
 	mixed = (mixed ^ (mixed >> 30)) * 0xbf58476d1ce4e5b9
 	mixed = (mixed ^ (mixed >> 27)) * 0x94d049bb133111eb
 	mixed ^= mixed >> 31
+	// #nosec G115 -- validated backoff bounds and capped growth keep upper >= lower and at most 5s
 	spread := uint64(upper-lower) + 1
 
+	// #nosec G115 -- modulo jitter is at most the nonnegative spread and fits the capped duration
 	return lower + time.Duration(mixed%spread)
 }
 

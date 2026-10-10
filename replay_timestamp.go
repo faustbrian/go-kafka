@@ -249,7 +249,9 @@ func (inspector *Inspector) buildReplayTimestampPlan(
 		}
 		remaining := endOffset - startOffset
 		totalRemaining, carry := bits.Add64(
+			// #nosec G115 -- the accumulated total is admitted only through checked addition capped at MaxInt64
 			uint64(plan.TotalRemaining),
+			// #nosec G115 -- validated nonnegative ordered offsets make remaining nonnegative
 			uint64(remaining),
 			0,
 		)

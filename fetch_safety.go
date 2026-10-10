@@ -117,6 +117,7 @@ func (decompressor *boundedDecompressor) initializePools() {
 			nil,
 			zstd.WithDecoderLowmem(true),
 			zstd.WithDecoderConcurrency(1),
+			// #nosec G115 -- normalization requires a positive batch limit capped at 512MiB
 			zstd.WithDecoderMaxMemory(uint64(decompressor.maximumBytes)),
 		)
 
