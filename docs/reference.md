@@ -418,10 +418,12 @@ and [`replay_example_test.go`](../replay_example_test.go).
 
 ## Development
 
-Run `make check`. `make conformance` exercises the public `kafkatest` producer,
+Run `make check` for bounded checks or `make check-full` for full qualification.
+`make -f verification/package.mk conformance` exercises the public `kafkatest` producer,
 consumer, transaction, replay, inspector, authentication-provider, and observer
 contracts against the pinned single-broker fixture and deterministic provider
-implementations. With Docker available, `make integration` exercises the
+implementations. With Docker available, explicitly selected
+`GOWORK=off go test -tags=integration -count=1 -timeout=20m ./...` exercises the
 package against one pinned Confluent Local 7.5.0 broker and three pinned Apache
 Kafka 4.3.1 combined KRaft broker/controller nodes. Separate pinned Apache
 Kafka 4.3.1 fixtures prove verified TLS 1.2 and 1.3, mutual TLS, PLAIN,

@@ -79,10 +79,12 @@ to compare Kafka with companion libraries and optional adapters.
 
 ## Development
 
-Run `golib check --module <directory>` for the affected module contract. Use
-`make check` for repository-wide changes and releases. Backend and
-managed-service changes must also pass the applicable integration and
-interoperability gates.
+Use Go 1.27.2 and the verified public Tools v2.1.3 binary; public minima remain
+Go 1.27.0. `make check` and `make ci` select bounded checks; `make check-full`
+selects the unchanged full campaigns. Backend and managed-service changes
+also need their affected real integration/interoperability evidence. See
+[contributing](CONTRIBUTING.md#verification) for standalone tests, seed versus
+active fuzzing, optional mutation, nested modules and tooling installation.
 
 ## License
 

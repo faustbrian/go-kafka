@@ -1,26 +1,33 @@
 SHELL := /usr/bin/env bash
+GOLIB ?= golib
 
-.PHONY: check ci cohesion config inventory repository-check specification-check workflows
+.PHONY: check check-full ci cohesion config inventory repository-check specification-check specification-check-online workflows
 
 config:
-	golib config validate
+	$(GOLIB) config validate
 
 inventory:
-	golib inventory
+	$(GOLIB) inventory
 
 repository-check:
-	golib repository check
+	$(GOLIB) repository check
 
 specification-check:
-	golib specification check --online
+	$(GOLIB) specification check
+
+specification-check-online:
+	$(GOLIB) specification check --online
 
 workflows:
-	golib workflows check
+	$(GOLIB) workflows check
 
 check:
-	golib check --all
+	$(GOLIB) check --local --all
+
+check-full:
+	$(GOLIB) check --all
 
 cohesion:
-	golib cohesion check
+	$(GOLIB) cohesion check
 
 ci: config inventory cohesion repository-check specification-check workflows check
