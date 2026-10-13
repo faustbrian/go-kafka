@@ -7,7 +7,8 @@ import (
 	kafkaotel "github.com/faustbrian/go-kafka/adapters/otel"
 )
 
-// TraceContextPropagation copies only W3C Trace Context fields between Kafka records.
+// TraceContextPropagation delegates the canonical owned W3C header policy,
+// excluding baggage and global propagators; remote context is not authentication.
 type TraceContextPropagation struct {
 	canonical kafkaotel.TraceContextPropagation
 }
@@ -30,7 +31,8 @@ func (policy TraceContextPropagation) Inject(
 	return policy.canonical.Inject(ctx, record)
 }
 
-// Extract returns a context containing a remote W3C trace context from record.
+// Extract reads borrowed headers without retaining them. Invalid traceparent or
+// case-insensitive duplicate W3C fields leave ctx unchanged; baggage is excluded.
 func (policy TraceContextPropagation) Extract(
 	ctx context.Context,
 	record kafka.ConsumedRecord,

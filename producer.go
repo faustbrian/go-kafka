@@ -1,5 +1,33 @@
 // Package kafka provides bounded Apache Kafka producer and consumer
 // composition for Go services.
+//
+// NewProducer, NewConsumer, NewInspector and NewReplayReader compose explicit
+// policy over franz-go v1.21.5. Broker support and KIP interpretation are pinned
+// in specification/manifest.json and docs/specification-decisions.md: Apache
+// Kafka 3.7.2/4.3.1 fixtures, KIP-429/345/392 group policy, KIP-447 transaction
+// scope and KIP-848 inspection are separate from universal broker conformance.
+//
+// Producer bytes are copied before retention; consumed/replayed bytes are
+// borrowed for synchronous callbacks unless Retain is used. Providers, handlers,
+// observers and private-key/SDK resources remain caller-owned collaborators.
+// Do not mutate inputs during admission or construction. Client lifecycle gates
+// coordinate reuse, but context deadlines cannot forcibly stop trusted callbacks
+// or an underlying context-free Close. Construct clients through their New
+// functions; zero client structs are not usable.
+//
+// All-ISR receipt is not external-effect completion. Post-handler source commits
+// can fail after effects occur, and Kafka-only transaction uncertainty must be
+// reconciled rather than blindly retried. Replay is an explicitly opted-in,
+// single-use exact-offset reader with externally persisted checkpoints; it is
+// not general log restoration in the presence of gaps or retention.
+//
+// Production defaults to verified TLS. Identifiers, topic allowlists and trace
+// correlation do not authenticate callers or replace broker ACLs. Redacted error
+// text does not redact unwrapped causes, metadata or application payloads.
+// Applications own credentials, network policy, broker/topic administration,
+// effect idempotency, callback cooperation, retention and diagnostics. Optional
+// IAM, logging, OpenTelemetry and service adapters have distinct package/API
+// boundaries and add only their documented dependency and ownership contracts.
 package kafka
 
 import (
@@ -16,56 +44,103 @@ import (
 )
 
 var (
-	ErrBrokersRequired           = errors.New("kafka: at least one broker is required")
-	ErrTooManyBrokers            = errors.New("kafka: broker count exceeds configured limit")
-	ErrInvalidBroker             = errors.New("kafka: broker address is invalid")
-	ErrDuplicateBroker           = errors.New("kafka: broker address is duplicated")
-	ErrClientIDRequired          = errors.New("kafka: client ID is required")
-	ErrClientIDTooLarge          = errors.New("kafka: client ID exceeds configured limit")
-	ErrInvalidClientID           = errors.New("kafka: client ID is invalid")
-	ErrTopicRequired             = errors.New("kafka: topic is required")
-	ErrTopicTooLarge             = errors.New("kafka: topic exceeds configured limit")
-	ErrInvalidTopic              = errors.New("kafka: topic name is invalid")
-	ErrTopicNotAllowed           = errors.New("kafka: topic is outside producer allowlist")
+	// ErrBrokersRequired reports that at least one broker is required.
+	ErrBrokersRequired = errors.New("kafka: at least one broker is required")
+	// ErrTooManyBrokers reports that broker count exceeds configured limit.
+	ErrTooManyBrokers = errors.New("kafka: broker count exceeds configured limit")
+	// ErrInvalidBroker reports that broker address is invalid.
+	ErrInvalidBroker = errors.New("kafka: broker address is invalid")
+	// ErrDuplicateBroker reports that broker address is duplicated.
+	ErrDuplicateBroker = errors.New("kafka: broker address is duplicated")
+	// ErrClientIDRequired reports that client ID is required.
+	ErrClientIDRequired = errors.New("kafka: client ID is required")
+	// ErrClientIDTooLarge reports that client ID exceeds configured limit.
+	ErrClientIDTooLarge = errors.New("kafka: client ID exceeds configured limit")
+	// ErrInvalidClientID reports that client ID is invalid.
+	ErrInvalidClientID = errors.New("kafka: client ID is invalid")
+	// ErrTopicRequired reports that topic is required.
+	ErrTopicRequired = errors.New("kafka: topic is required")
+	// ErrTopicTooLarge reports that topic exceeds configured limit.
+	ErrTopicTooLarge = errors.New("kafka: topic exceeds configured limit")
+	// ErrInvalidTopic reports that topic name is invalid.
+	ErrInvalidTopic = errors.New("kafka: topic name is invalid")
+	// ErrTopicNotAllowed reports that topic is outside producer allowlist.
+	ErrTopicNotAllowed = errors.New("kafka: topic is outside producer allowlist")
+	// ErrInvalidPartitionSelection reports that producer partition selection is
+	// invalid.
 	ErrInvalidPartitionSelection = errors.New(
 		"kafka: producer partition selection is invalid",
 	)
-	ErrKeyRequired          = errors.New("kafka: record key is required by producer policy")
-	ErrKeyTooLarge          = errors.New("kafka: key exceeds configured limit")
-	ErrValueTooLarge        = errors.New("kafka: value exceeds configured limit")
-	ErrTooManyHeaders       = errors.New("kafka: header count exceeds configured limit")
-	ErrHeaderKeyRequired    = errors.New("kafka: header key is required")
-	ErrHeaderKeyTooLarge    = errors.New("kafka: header key exceeds configured limit")
-	ErrHeaderValueTooLarge  = errors.New("kafka: header value exceeds configured limit")
-	ErrHeadersTooLarge      = errors.New("kafka: headers exceed aggregate configured limit")
+	// ErrKeyRequired reports that record key is required by producer policy.
+	ErrKeyRequired = errors.New("kafka: record key is required by producer policy")
+	// ErrKeyTooLarge reports that key exceeds configured limit.
+	ErrKeyTooLarge = errors.New("kafka: key exceeds configured limit")
+	// ErrValueTooLarge reports that value exceeds configured limit.
+	ErrValueTooLarge = errors.New("kafka: value exceeds configured limit")
+	// ErrTooManyHeaders reports that header count exceeds configured limit.
+	ErrTooManyHeaders = errors.New("kafka: header count exceeds configured limit")
+	// ErrHeaderKeyRequired reports that header key is required.
+	ErrHeaderKeyRequired = errors.New("kafka: header key is required")
+	// ErrHeaderKeyTooLarge reports that header key exceeds configured limit.
+	ErrHeaderKeyTooLarge = errors.New("kafka: header key exceeds configured limit")
+	// ErrHeaderValueTooLarge reports that header value exceeds configured limit.
+	ErrHeaderValueTooLarge = errors.New("kafka: header value exceeds configured limit")
+	// ErrHeadersTooLarge reports that headers exceed aggregate configured limit.
+	ErrHeadersTooLarge = errors.New("kafka: headers exceed aggregate configured limit")
+	// ErrInvalidMessageLimits reports unsupported record-field/count bounds.
 	ErrInvalidMessageLimits = errors.New(
 		"kafka: all message limits must be positive",
 	)
+	// ErrInvalidProducerConfig reports that producer configuration is outside
+	// bounded limits.
 	ErrInvalidProducerConfig = errors.New(
 		"kafka: producer configuration is outside bounded limits",
 	)
+	// ErrInvalidCompressionPreference reports that producer compression
+	// preference is invalid.
 	ErrInvalidCompressionPreference = errors.New(
 		"kafka: producer compression preference is invalid",
 	)
-	ErrTransactionsDisabled      = errors.New("kafka: producer transactions are disabled")
-	ErrTransactionRequired       = errors.New("kafka: transaction callback is required")
-	ErrTransactionPanic          = errors.New("kafka: transaction callback panicked")
-	ErrTransactionClosed         = errors.New("kafka: transaction is closed")
+	// ErrTransactionsDisabled reports that producer transactions are disabled.
+	ErrTransactionsDisabled = errors.New("kafka: producer transactions are disabled")
+	// ErrTransactionRequired reports that transaction callback is required.
+	ErrTransactionRequired = errors.New("kafka: transaction callback is required")
+	// ErrTransactionPanic reports that transaction callback panicked.
+	ErrTransactionPanic = errors.New("kafka: transaction callback panicked")
+	// ErrTransactionClosed reports that transaction is closed.
+	ErrTransactionClosed = errors.New("kafka: transaction is closed")
+	// ErrTransactionOutcomeUnknown reports that transaction commit outcome is
+	// unknown.
 	ErrTransactionOutcomeUnknown = errors.New(
 		"kafka: transaction commit outcome is unknown",
 	)
+	// ErrDeliveryResultMissing reports that producer omitted a delivery result.
 	ErrDeliveryResultMissing = errors.New("kafka: producer omitted a delivery result")
+	// ErrDeliveryResultInvalid reports that producer returned inconsistent
+	// delivery results.
 	ErrDeliveryResultInvalid = errors.New("kafka: producer returned inconsistent delivery results")
-	ErrRecordsRequired       = errors.New("kafka: at least one producer record is required")
-	ErrTooManyBatchRecords   = errors.New("kafka: producer batch record count exceeds configured limit")
-	ErrBatchTooLarge         = errors.New("kafka: producer batch exceeds configured byte limit")
-	ErrBatchDeliveryFailed   = errors.New("kafka: one or more batch records failed delivery")
-	ErrContextRequired       = errors.New("kafka: context is required")
-	ErrProducerClosed        = errors.New("kafka: producer is closed")
-	ErrProducerFatal         = errors.New("kafka: producer entered a fatal state")
-	ErrProducerBusy          = errors.New("kafka: producer has in-flight operations")
+	// ErrRecordsRequired reports that at least one producer record is required.
+	ErrRecordsRequired = errors.New("kafka: at least one producer record is required")
+	// ErrTooManyBatchRecords reports that producer batch record count exceeds
+	// configured limit.
+	ErrTooManyBatchRecords = errors.New("kafka: producer batch record count exceeds configured limit")
+	// ErrBatchTooLarge reports that producer batch exceeds configured byte limit.
+	ErrBatchTooLarge = errors.New("kafka: producer batch exceeds configured byte limit")
+	// ErrBatchDeliveryFailed reports that one or more batch records failed
+	// delivery.
+	ErrBatchDeliveryFailed = errors.New("kafka: one or more batch records failed delivery")
+	// ErrContextRequired reports that context is required.
+	ErrContextRequired = errors.New("kafka: context is required")
+	// ErrProducerClosed reports that producer is closed.
+	ErrProducerClosed = errors.New("kafka: producer is closed")
+	// ErrProducerFatal reports that producer entered a fatal state.
+	ErrProducerFatal = errors.New("kafka: producer entered a fatal state")
+	// ErrProducerBusy reports that producer has in-flight operations.
+	ErrProducerBusy = errors.New("kafka: producer has in-flight operations")
+	// ErrTransactionInProgress reports that producer transaction is in progress.
 	ErrTransactionInProgress = errors.New("kafka: producer transaction is in progress")
-	ErrDrainIncomplete       = errors.New("kafka: producer drain is incomplete")
+	// ErrDrainIncomplete reports that producer drain is incomplete.
+	ErrDrainIncomplete = errors.New("kafka: producer drain is incomplete")
 )
 
 const defaultPartitionerBatchBytes = 65_536
@@ -120,31 +195,77 @@ func (codec CompressionCodec) String() string {
 // lifecycle, and security policy. AllowedTopics is required and copied during
 // construction.
 type ProducerConfig struct {
-	Brokers                []string
-	ClientID               string
-	Protocol               ProtocolPolicy
-	AllowedTopics          []string
-	KeyPolicy              KeyPolicy
-	Limits                 MessageLimits
-	MaxBufferedRecords     int
-	MaxBufferedBytes       int
-	MaxBatchRecords        int
-	MaxBatchBytes          int32
-	RecordRetries          int
-	RetryBackoffMin        time.Duration
-	RetryBackoffMax        time.Duration
-	DeliveryTimeout        time.Duration
-	ShutdownTimeout        time.Duration
-	RequestTimeout         time.Duration
-	DialTimeout            time.Duration
-	Linger                 time.Duration
+	// Brokers supplies 1 through 32 distinct, bounded seed strings; validation does not
+	// resolve addresses or enforce a network allowlist.
+	Brokers []string
+	// ClientID is a required bounded UTF-8 client identity, not a credential or safe
+	// arbitrary telemetry label.
+	ClientID string
+	// Protocol selects the pinned client negotiation floor; it is not a maximum version
+	// or broker-support claim.
+	Protocol ProtocolPolicy
+	// AllowedTopics is a required, copied set of at most 64 distinct valid topic names
+	// checked before production.
+	AllowedTopics []string
+	// KeyPolicy requires a nonempty key by default; explicit partition selection does
+	// not waive that policy.
+	KeyPolicy KeyPolicy
+	// Limits bounds admitted record fields; its zero value selects DefaultMessageLimits,
+	// not an aggregate process budget.
+	Limits MessageLimits
+	// MaxBufferedRecords bounds queued production, defaulting to 1000; it is distinct
+	// from transaction-total output admission.
+	MaxBufferedRecords int
+	// MaxBufferedBytes bounds the client produce buffer, defaulting to 64 MiB and at
+	// least MaxBatchBytes.
+	MaxBufferedBytes int
+	// MaxBatchRecords bounds one public batch; zero selects 100, and partial delivery is
+	// still possible.
+	MaxBatchRecords int
+	// MaxBatchBytes bounds a Kafka producer batch, defaulting to 1 MiB and large enough
+	// for the permitted record policy.
+	MaxBatchBytes int32
+	// RecordRetries bounds client retry attempts; zero selects ten rather than disabling
+	// retries.
+	RecordRetries int
+	// RetryBackoffMin is the positive initial retry bound; zero selects 250
+	// milliseconds.
+	RetryBackoffMin time.Duration
+	// RetryBackoffMax caps jittered retry growth; zero selects one second and must not
+	// precede RetryBackoffMin.
+	RetryBackoffMax time.Duration
+	// DeliveryTimeout defaults to 30 seconds; package delivery contexts add
+	// RetryBackoffMax and do not use record event time.
+	DeliveryTimeout time.Duration
+	// ShutdownTimeout bounds cooperative shutdown waits, not the execution of arbitrary
+	// borrowed callbacks or backend Close.
+	ShutdownTimeout time.Duration
+	// RequestTimeout bounds cooperative broker requests; zero selects ten seconds.
+	RequestTimeout time.Duration
+	// DialTimeout bounds cooperative connection attempts; zero selects ten seconds.
+	DialTimeout time.Duration
+	// Linger batches production briefly; zero selects five milliseconds rather than
+	// immediate dispatch.
+	Linger time.Duration
+	// CompressionPreferences is an ordered, copied, distinct codec list; zero selects
+	// Snappy then none, and none may appear only last.
 	CompressionPreferences []CompressionCodec
-	TransactionalID        string
-	TransactionTimeout     time.Duration
+	// TransactionalID enables transactions when nonempty and must belong to only one
+	// live application instance.
+	TransactionalID string
+	// TransactionTimeout selects the broker transaction lifetime, defaulting to 30
+	// seconds when transactions are enabled.
+	TransactionTimeout time.Duration
 
+	// TransactionEndTimeout bounds detached commit/abort contexts, defaulting to 30
+	// seconds; it cannot force borrowed code to stop.
 	TransactionEndTimeout time.Duration
-	Security              ClientSecurity
-	Observers             ObserverPolicy
+	// Security selects verified TLS by default and explicitly composed, borrowed
+	// credential providers.
+	Security ClientSecurity
+	// Observers supplies copied ordered synchronous callbacks; timeout and reentry
+	// controls are cooperative, not detached background execution.
+	Observers ObserverPolicy
 }
 
 // Validate reports whether the producer configuration satisfies the bounded
@@ -158,13 +279,20 @@ func (config ProducerConfig) Validate() error {
 // MessageLimits bounds caller-controlled record fields before they reach the
 // client buffer.
 type MessageLimits struct {
-	MaxTopicBytes       int
-	MaxKeyBytes         int
-	MaxValueBytes       int
-	MaxHeaders          int
-	MaxHeaderKeyBytes   int
+	// MaxTopicBytes is positive and at most 249 ASCII topic bytes.
+	MaxTopicBytes int
+	// MaxKeyBytes is a positive key byte allowance capped at 16 MiB.
+	MaxKeyBytes int
+	// MaxValueBytes is a positive value byte allowance capped at 100 MiB.
+	MaxValueBytes int
+	// MaxHeaders is a positive ordered header count capped at 10000.
+	MaxHeaders int
+	// MaxHeaderKeyBytes is a positive header key allowance capped at 64 KiB.
+	MaxHeaderKeyBytes int
+	// MaxHeaderValueBytes is a positive per-header value allowance capped at 100 MiB.
 	MaxHeaderValueBytes int
-	MaxHeaderBytes      int
+	// MaxHeaderBytes bounds summed key/value bytes across headers, capped at 100 MiB.
+	MaxHeaderBytes int
 }
 
 // DefaultMessageLimits returns conservative limits below Kafka's default
@@ -205,7 +333,11 @@ func (limits MessageLimits) Validate() error {
 
 // Header is one ordered Kafka record header.
 type Header struct {
-	Key   string
+	// Key is a required bounded header name; arbitrary header data is not automatically
+	// exported.
+	Key string
+	// Value is bounded opaque bytes and may be nil; retention follows the owning record
+	// contract.
 	Value []byte
 }
 
@@ -213,11 +345,19 @@ type Header struct {
 // means Kafka acknowledged the record under the configured acknowledgement
 // policy; it does not mean an application side effect consumed the record.
 type DeliveryResult struct {
-	Topic     string
+	// Topic is the Kafka topic reported for this delivery result.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
 	Partition int32
-	Offset    int64
+	// Offset is a Kafka log position, not proof that an application effect occurred.
+	Offset int64
+	// Timestamp is Kafka event or broker time, distinct from the package delivery
+	// deadline.
 	Timestamp time.Time
-	Err       error
+	// Err preserves the operation failure; nil denotes success only at this API
+	// boundary, and underlying causes may need caller redaction.
+	Err error
 }
 
 // ProducerDiagnostic is a payload-free local snapshot of producer lifecycle
@@ -1708,6 +1848,9 @@ func (session *transactionSession) publish(ctx context.Context, message Message)
 	return session.publisher.publish(ctx, message)
 }
 
+// Fence new publishes before Wait: Add and close share mu, so no publication
+// can enter after the callback-scoped capability is revoked. Trusted callback
+// work must still cooperate; Wait cannot forcibly stop it.
 func (session *transactionSession) closeAndWait() {
 	session.mu.Lock()
 	session.closed = true
@@ -1815,6 +1958,9 @@ func transactionAbortOutcomeKnown(err error) bool {
 		category == ErrorFatal
 }
 
+// KAFKA-DEC-005 (KIP-447/KIP-98): detached cancellation protects a cleanup
+// attempt, not proof of broker outcome. TestRunTransactionRedactsUnknownCommitOutcome
+// retains the receipt-loss classification.
 func (producer *Producer) transactionEndContext(
 	ctx context.Context,
 ) (context.Context, context.CancelFunc) {
@@ -1874,7 +2020,8 @@ func (message ProducerRecord) validate(limits MessageLimits) error {
 	return nil
 }
 
-// Close performs a configured bounded graceful shutdown. It returns
+// Close applies the configured cooperative graceful-shutdown budget. Backend
+// Close and synchronous observers have no force-stop mechanism. It returns
 // ErrDrainIncomplete without closing the client when admitted records cannot
 // resolve before ShutdownTimeout; callers may retry Shutdown or explicitly
 // Abort.

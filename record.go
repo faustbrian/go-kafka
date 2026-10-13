@@ -5,7 +5,10 @@ import "time"
 // TopicPartition identifies one exact Kafka partition. It does not include a
 // consumer generation or imply current assignment ownership.
 type TopicPartition struct {
-	Topic     string
+	// Topic identifies the topic whose partition is named; it grants no broker access.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
 	Partition int32
 }
 
@@ -25,7 +28,10 @@ const (
 // Automatic selection requires Partition to remain zero. Explicit selections
 // require a non-negative Partition and are validated before admission.
 type PartitionSelection struct {
-	Mode      PartitionSelectionMode
+	// Mode defaults to automatic partitioning; explicit mode requires a nonnegative
+	// Partition.
+	Mode PartitionSelectionMode
+	// Partition must be zero in automatic mode and nonnegative in explicit mode.
 	Partition int32
 }
 
@@ -52,11 +58,20 @@ const (
 // ProducerRecord is one Kafka record submitted for production. The producer
 // copies all byte slices before retaining or passing the record to franz-go.
 type ProducerRecord struct {
-	Topic     string
+	// Topic must be valid under Limits and present in the producer topic allowlist.
+	Topic string
+	// Partition selects automatic or exact placement without guaranteeing
+	// cross-partition order.
 	Partition PartitionSelection
-	Key       []byte
-	Value     []byte
-	Headers   []Header
+	// Key is opaque caller-owned bytes; producer policy requires it by default and
+	// copies before retention.
+	Key []byte
+	// Value is opaque caller-owned bytes copied before producer retention.
+	Value []byte
+	// Headers is an ordered caller-owned slice copied deeply before producer retention.
+	Headers []Header
+	// Timestamp is Kafka event or broker time, distinct from the package delivery
+	// deadline.
 	Timestamp time.Time
 }
 
@@ -78,15 +93,29 @@ func (record ProducerRecord) Validate(limits MessageLimits) error {
 // the header slice remain valid only for the synchronous handler call unless
 // Retain is used.
 type ConsumedRecord struct {
-	Topic         string
-	Key           []byte
-	Value         []byte
-	Headers       []Header
-	Timestamp     time.Time
+	// Topic identifies the fetched topic, not an authenticated application source.
+	Topic string
+	// Key is borrowed for the synchronous callback; use Retain before storing or
+	// asynchronous use.
+	Key []byte
+	// Value is borrowed for the synchronous callback; use Retain before storing or
+	// asynchronous use.
+	Value []byte
+	// Headers contains borrowed value bytes; use Retain for independent slice and byte
+	// ownership.
+	Headers []Header
+	// Timestamp is Kafka event or broker time, distinct from the package delivery
+	// deadline.
+	Timestamp time.Time
+	// TimestampType distinguishes create time, log append time or unknown format.
 	TimestampType TimestampType
-	Partition     int32
-	Offset        int64
-	LeaderEpoch   int32
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
+	Partition int32
+	// Offset is a Kafka log position, not proof that an application effect occurred.
+	Offset int64
+	// LeaderEpoch is broker log metadata, not the local consumer assignment epoch.
+	LeaderEpoch int32
 }
 
 // ConsumedMessage is retained as the pre-v1 name for ConsumedRecord.

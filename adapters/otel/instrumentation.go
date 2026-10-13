@@ -1,6 +1,22 @@
 // Package kafkaotel translates bounded kafka observations into OpenTelemetry
-// spans and metrics and provides explicit bounded W3C record-header
-// propagation without recording record data or arbitrary application errors.
+// spans and metrics and provides explicit bounded W3C record-header propagation.
+//
+// New borrows explicit providers, copies identity allowlists and creates
+// instruments without installing globals or starting adapter-owned goroutines.
+// The application owns provider concurrency, sampling, aggregation, exporters,
+// flush and shutdown. Events are observed synchronously after the Kafka operation,
+// with retrospective start/end times; they are not live handler-span scopes.
+//
+// MessagingSemanticConventionVersion pins development-status conventions 1.44.0,
+// separately from the consumed SDK version. Empty allowlists omit identities;
+// they are a cardinality policy, not general SDK redaction. Provider failures or
+// panic containment cannot undo metrics/spans already emitted. InstrumentError
+// omits cause text but exposes the original cause through Unwrap.
+//
+// NewTraceContextPropagation copies W3C Trace Context only, excluding baggage
+// and global propagators. Remote context is not caller authentication or business
+// authorization. The canonical adapter's docs/reference.md and tests retain the
+// mapping, timing and duplicate-header interpretations.
 package kafkaotel
 
 import (
@@ -57,9 +73,13 @@ var (
 )
 
 // Runtime is the standard-provider surface needed by this adapter. Keeping the
-// interface here prevents OpenTelemetry from entering the root Kafka module.
+// interface here keeps standard providers out of the root Kafka public surface.
 type Runtime interface {
+	// TracerProvider supplies a non-nil borrowed provider; SDK
+	// sampling/export/flush/lifetime remain application-owned.
 	TracerProvider() trace.TracerProvider
+	// MeterProvider supplies a non-nil borrowed provider; SDK
+	// aggregation/export/lifetime remain application-owned.
 	MeterProvider() metric.MeterProvider
 }
 
@@ -67,8 +87,14 @@ type Runtime interface {
 // Empty allowlists omit the corresponding identity. Values are matched exactly
 // and copied during construction.
 type AttributePolicy struct {
-	AllowedClientIDs      []string
-	AllowedTopics         []string
+	// AllowedClientIDs is a copied exact-match set capped at 128 values; empty omits
+	// client identity.
+	AllowedClientIDs []string
+	// AllowedTopics is a copied exact-match set capped at 128 values; empty omits topic
+	// identity.
+	AllowedTopics []string
+	// AllowedConsumerGroups is a copied exact-match set capped at 128 values; empty
+	// omits group identity.
 	AllowedConsumerGroups []string
 }
 
@@ -82,7 +108,11 @@ func (policy AttributePolicy) Validate() error {
 
 // Config owns immutable adapter dependencies and cardinality policy.
 type Config struct {
-	Runtime    Runtime
+	// Runtime is a borrowed provider seam; the adapter does not install globals, flush
+	// or shut down the SDK.
+	Runtime Runtime
+	// Attributes bounds identity cardinality; it does not redact all data chosen by a
+	// custom provider.
 	Attributes AttributePolicy
 }
 

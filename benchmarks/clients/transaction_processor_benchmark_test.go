@@ -61,6 +61,8 @@ var (
 	)
 )
 
+// BenchmarkEquivalentConsumeTransformProduce compares the fixture Kafka-only
+// read/process/write settlement unit; external effects are not included.
 func BenchmarkEquivalentConsumeTransformProduce(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, payloadBytes := range []int{128, 1024} {

@@ -23,11 +23,17 @@ const (
 )
 
 // BatchFailure is the synchronous whole-partition-batch failure-policy input.
-// Batch bytes remain borrowed for the callback unless Retain is called. Cause
-// is deliberately omitted from formatting and telemetry by the package.
+// Batch bytes remain borrowed for the callback unless Retain is called. Package
+// observations omit the original cause; application formatting of this value,
+// its batch, or Cause is not a redaction boundary.
 type BatchFailure struct {
-	Batch    ConsumedBatch
-	Attempt  int
+	// Batch is borrowed whole-partition failure input; Retain copies its slice and
+	// record bytes.
+	Batch ConsumedBatch
+	// Attempt counts in-process handler invocations, including the first; it is not a
+	// durable redelivery count.
+	Attempt int
+	// Category is the stable classification of the failed handler attempt.
 	Category ErrorCategory
 
 	cause error
@@ -53,6 +59,8 @@ func (failure BatchFailure) Retain() BatchFailure {
 // callback must be synchronous, bounded, cancellation-aware, and concurrency-
 // safe when the consumer permits concurrent partition handlers.
 type BatchFailureDelegate interface {
+	// HandleBatchFailure resolves the complete batch only on nil, with caller-owned
+	// effect idempotency and cancellation cooperation.
 	HandleBatchFailure(context.Context, BatchFailure) error
 }
 
@@ -74,6 +82,8 @@ func (delegate BatchFailureDelegateFunc) HandleBatchFailure(
 // must be synchronous, bounded, cancellation-aware, and concurrency-safe when
 // the consumer permits concurrent partition handlers.
 type BatchFailurePublisher interface {
+	// PublishBatch owns its input and returns exactly one input-ordered result per
+	// record; partial target success does not resolve the source batch.
 	PublishBatch(context.Context, []ProducerRecord) ([]DeliveryResult, error)
 }
 
@@ -100,17 +110,39 @@ func (publisher BatchFailurePublisherFunc) PublishBatch(
 // during construction; callbacks retain caller-owned lifetime and concurrency
 // responsibilities.
 type BatchFailureHandlerConfig struct {
-	Handler         BatchHandler
-	Classifier      FailureClassifier
-	Retry           FailureRetryPolicy
-	Mode            FailureMode
-	Target          FailureTarget
-	Publisher       BatchFailurePublisher
-	Delegate        BatchFailureDelegate
-	Limits          MessageLimits
+	// Handler is borrowed application work; it must cooperate with cancellation and
+	// support configured concurrency.
+	Handler BatchHandler
+	// Classifier optionally maps errors to stable categories; nil uses package
+	// classification and callbacks must be bounded.
+	Classifier FailureClassifier
+	// Retry bounds in-process attempts; it does not persist a retry schedule or make
+	// external effects idempotent.
+	Retry FailureRetryPolicy
+	// Mode defaults to stopping without settlement; retry-topic, dead-letter and
+	// delegate modes require their corresponding policy inputs.
+	Mode FailureMode
+	// Target selects an explicit non-source versioned retry/dead-letter topic in
+	// publication modes.
+	Target FailureTarget
+	// Publisher is borrowed synchronous publication; only definite success permits
+	// separate source settlement.
+	Publisher BatchFailurePublisher
+	// Delegate is borrowed resolution policy; nil success explicitly permits source
+	// settlement but does not perform the commit.
+	Delegate BatchFailureDelegate
+	// Limits bounds admitted record fields; its zero value selects DefaultMessageLimits,
+	// not an aggregate process budget.
+	Limits MessageLimits
+	// MaxBatchRecords bounds retained source records, defaults to 100 and is capped at
+	// 1000.
 	MaxBatchRecords int
-	MaxBatchBytes   int64
-	PublishTimeout  time.Duration
+	// MaxBatchBytes bounds the conservative full source size, defaults to 16 MiB and is
+	// capped at 100 MiB.
+	MaxBatchBytes int64
+	// PublishTimeout bounds a cooperative publication context; zero selects ten seconds
+	// only in publication modes.
+	PublishTimeout time.Duration
 }
 
 // Validate reports whether the batch failure policy is explicit, compatible,

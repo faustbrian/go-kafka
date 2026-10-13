@@ -30,27 +30,42 @@ const (
 // member state. Assignments are the member's current ownership; target
 // assignments are the broker-selected state toward which it is reconciling.
 type ConsumerProtocolGroupMemberState struct {
+	// MemberID is the broker-assigned member identity, not a principal authentication
+	// proof.
 	MemberID string
 	// InstanceID is the static member identity when InstanceIDVisible is true.
-	InstanceID        string
+	InstanceID string
+	// InstanceIDVisible distinguishes a returned static identity from an omitted field.
 	InstanceIDVisible bool
 	// RackID is the member rack identity when RackIDVisible is true.
-	RackID        string
+	RackID string
+	// RackIDVisible distinguishes returned rack metadata from omission.
 	RackIDVisible bool
-	MemberEpoch   int32
-	MemberType    ConsumerProtocolMemberType
-	ClientID      string
-	ClientHost    string
+	// MemberEpoch is the KIP-848 member reconciliation epoch, not a local lifecycle
+	// token.
+	MemberEpoch int32
+	// MemberType distinguishes classic versus consumer-protocol members; unknown
+	// represents omitted versioned metadata.
+	MemberType ConsumerProtocolMemberType
+	// ClientID is bounded broker-reported member identity, not a credential.
+	ClientID string
+	// ClientHost is bounded broker-reported endpoint data and may be sensitive; it is
+	// not emitted by payload-free observers.
+	ClientHost string
 	// SubscribedTopics is an owned, sorted explicit topic subscription.
 	SubscribedTopics []string
 	// SubscribedTopicRegex is the broker-side subscription expression when
 	// SubscribedTopicRegexVisible is true. Kafka can expose an empty expression
 	// for an explicit topic subscription, so visibility must be checked first.
-	SubscribedTopicRegex        string
+	SubscribedTopicRegex string
+	// SubscribedTopicRegexVisible distinguishes an exposed possibly empty subscription
+	// expression from omission.
 	SubscribedTopicRegexVisible bool
 	// Assignments and TargetAssignments are owned and sorted by topic and
 	// partition. They remain distinct while a member reconciles.
-	Assignments       []TopicPartition
+	Assignments []TopicPartition
+	// TargetAssignments is copied desired broker assignment, distinct from current
+	// ownership during reconciliation.
 	TargetAssignments []TopicPartition
 }
 
@@ -59,14 +74,18 @@ type ConsumerProtocolGroupMemberState struct {
 // Members may temporarily have lower epochs and current assignments while
 // independently reconciling toward their target assignments.
 type ConsumerProtocolGroupState struct {
-	Group         string
+	// Group identifies the requested consumer group, not an authorization decision.
+	Group string
+	// CoordinatorID identifies the broker coordinator returned by this observation.
 	CoordinatorID int32
 	// State retains Kafka's title-cased wire value.
 	State string
+	// Epoch is the KIP-848 group metadata epoch, distinct from AssignmentEpoch.
 	Epoch int32
 	// AssignmentEpoch identifies the target assignment computed for Epoch.
 	AssignmentEpoch int32
-	Assignor        string
+	// Assignor is the reported broker-selected server assignor.
+	Assignor string
 	// Members are owned and sorted by member ID.
 	Members []ConsumerProtocolGroupMemberState
 	// Partitions are owned and sorted by topic and partition.
@@ -78,12 +97,15 @@ type ConsumerProtocolGroupState struct {
 // target-specific broker or policy failure, and Category provides its stable
 // package classification.
 type ConsumerProtocolGroupInspectionResult struct {
+	// Group identifies the requested consumer group, not an authorization decision.
 	Group string
 	// State is populated only when Err is nil.
 	State ConsumerProtocolGroupState
 	// Category is zero on success and classifies Err on failure.
 	Category ErrorCategory
-	Err      error
+	// Err preserves the operation failure; nil denotes success only at this API
+	// boundary, and underlying causes may need caller redaction.
+	Err error
 }
 
 type inspectorConsumerProtocolMember struct {
@@ -890,6 +912,10 @@ func (inspector *Inspector) validateConsumerProtocolGroups(
 	)
 }
 
+// KAFKA-DEC-007 pins accepted KIP-848 metadata (Kafka 4.3.1 fixture), not classic
+// group state or a same-instant cluster snapshot. Keep the version-visible flags,
+// current/target assignments and independent epochs distinct during reconciliation.
+// FuzzInspectionConsumerProtocolGroupMetadata protects malformed admission.
 func validateConsumerProtocolGroupsWithLimits(
 	requested []string,
 	groups inspectorConsumerProtocolGroups,

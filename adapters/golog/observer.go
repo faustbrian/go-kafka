@@ -1,5 +1,10 @@
 // Package golog preserves the original Kafka slog adapter import path.
 //
+// New delegates to the canonical slog adapter while retaining legacy public
+// type/error identities. Logger lifetime, synchronous calls, exact allowlists
+// and caller handler cooperation follow that adapter; no global logging state
+// or cleanup ownership is added.
+//
 // Deprecated: use github.com/faustbrian/go-kafka/adapters/slog.
 package golog
 

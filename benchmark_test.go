@@ -11,6 +11,9 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
+// BenchmarkBoundedFetchDecompression measures repeated Zstd decoding of one
+// precompressed record batch and explicit budget recycling; compression/setup
+// precedes the timed loop, not broker I/O.
 func BenchmarkBoundedFetchDecompression(b *testing.B) {
 	source := bytes.Repeat([]byte("record-batch"), 8<<10)
 	compressor, err := kgo.DefaultCompressor(kgo.ZstdCompression())
@@ -32,6 +35,8 @@ func BenchmarkBoundedFetchDecompression(b *testing.B) {
 	}
 }
 
+// BenchmarkMessageValidation measures record-policy validation over the fixed
+// key/value/header input, without producer admission or broker delivery.
 func BenchmarkMessageValidation(b *testing.B) {
 	message := Message{
 		Topic: "track.tracking-event.v1",
@@ -887,6 +892,9 @@ func benchmarkObserverDispatcher() observerDispatcher {
 	})
 }
 
+// BenchmarkFailureHandlerSuccess compares direct success with default
+// failure-decoration admission/copying for one fixed record; it exercises no
+// retries, rerouting or broker.
 func BenchmarkFailureHandlerSuccess(b *testing.B) {
 	ctx := context.Background()
 	record := ConsumedMessage{
@@ -924,6 +932,9 @@ func BenchmarkFailureHandlerSuccess(b *testing.B) {
 	})
 }
 
+// BenchmarkBatchFailureHandlerSuccess compares direct versus decorated success for
+// ten fixed partition records; whole-batch copy cost is not external effect or
+// broker throughput.
 func BenchmarkBatchFailureHandlerSuccess(b *testing.B) {
 	ctx := context.Background()
 	batch := ConsumedBatch{
@@ -969,6 +980,8 @@ func BenchmarkBatchFailureHandlerSuccess(b *testing.B) {
 	})
 }
 
+// BenchmarkConsumerPartitionWorkers compares serial and four-worker dispatch over
+// eight synthetic partition jobs with no broker or application processing.
 func BenchmarkConsumerPartitionWorkers(b *testing.B) {
 	batches := make([]consumerPartitionBatch, 8)
 	process := func(consumerPartitionBatch) consumerPartitionResult {
@@ -1001,6 +1014,9 @@ func BenchmarkConsumerPartitionWorkers(b *testing.B) {
 	})
 }
 
+// BenchmarkReplayProgress compares serial and four-partition synthetic replay
+// progress; each timed iteration constructs its owned reader and does not measure
+// broker fetch.
 func BenchmarkReplayProgress(b *testing.B) {
 	ctx := context.Background()
 	handler := ReplayHandlerFunc(func(context.Context, ReplayRecord) error {
@@ -1057,6 +1073,8 @@ func BenchmarkReplayProgress(b *testing.B) {
 	}
 }
 
+// BenchmarkInspectorTopicState measures owned-backend topic metadata translation,
+// not a live broker metadata request.
 func BenchmarkInspectorTopicState(b *testing.B) {
 	backend := &metadataInspectorBackend{
 		metadata: kadm.Metadata{Topics: kadm.TopicDetails{
@@ -1095,6 +1113,8 @@ func BenchmarkInspectorTopicState(b *testing.B) {
 	}
 }
 
+// BenchmarkInspectorConsumerGroupState measures owned-backend group metadata/lag
+// translation, not broker coordination latency.
 func BenchmarkInspectorConsumerGroupState(b *testing.B) {
 	backend := &metadataInspectorBackend{
 		recordingInspectorBackend: recordingInspectorBackend{
@@ -1133,6 +1153,8 @@ func BenchmarkInspectorConsumerGroupState(b *testing.B) {
 	}
 }
 
+// BenchmarkInspectorReadiness measures local readiness hysteresis with the
+// injected backend, not dependency availability.
 func BenchmarkInspectorReadiness(b *testing.B) {
 	backend := &metadataInspectorBackend{}
 	inspector := inspectorWithMetadataBackend(backend)

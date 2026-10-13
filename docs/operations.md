@@ -85,7 +85,9 @@ export record keys or values.
 ## Shutdown
 
 Use `Producer.Shutdown` with the service's bounded shutdown context, or handle
-the error returned by `Producer.Close`, whose bound is `ShutdownTimeout`.
+the error returned by `Producer.Close`, which applies `ShutdownTimeout` as a
+cooperative shutdown budget. Synchronous observers and the underlying
+context-free client close cannot be forcibly stopped by that deadline.
 Timeout fences new production but leaves the client open and admitted records
 owned for a retry or explicit `Abort`; do not exit as if shutdown succeeded.
 

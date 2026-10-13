@@ -196,7 +196,9 @@ do not use Kafka's
 non-production unsecured OAUTHBEARER implementation and do not claim
 compatibility with a particular OAuth identity provider.
 
-MSK IAM authentication and OpenTelemetry remain absent from the root module.
+MSK IAM and OpenTelemetry policy are composed through optional adapters rather
+than the root Kafka public API. Test-tool dependencies can still bring indirect
+OpenTelemetry modules into the root dependency graph.
 The independently versioned [`adapters/mskiam`](../adapters/mskiam) module uses
 AWS's supported Go signer and either the refreshing SDK v2 default credential
 chain or one explicit caller-owned provider. It bounds token generation,

@@ -46,6 +46,9 @@ func (state *consumerRebalanceState) beginPoll(observeWait bool) {
 	state.waitDone = completedConsumerRebalanceObserver
 }
 
+// Publish poll completion after releasing mu, then join the pending observer.
+// Borrowed records and shutdown must not escape before its synchronous callback
+// finishes; TestRebalanceShutdownWaitsForObserverCompletion protects this ordering.
 func (state *consumerRebalanceState) endPoll() {
 	state.mu.Lock()
 	pollDone := state.pollDone

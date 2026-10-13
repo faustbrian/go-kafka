@@ -4,6 +4,11 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Clarify the deprecated facade's resource and callback ownership,
+  shutdown behavior, and original callback-error exposure.
+
 ## 1.0.2 - 2026-10-08
 
 ### Changed

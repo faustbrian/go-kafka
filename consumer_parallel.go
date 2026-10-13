@@ -257,6 +257,10 @@ func (consumer *Consumer) observeConsumedBatch(
 	consumer.dispatchObservation(ctx, observation)
 }
 
+// KAFKA-DEC-003 (KIP-429): aggregate partition prefixes in stable poll order,
+// recheck the local assignment epoch, then request Kafka settlement. A failed
+// multi-partition receipt leaves Committed zero even if Kafka persisted a subset;
+// TestConsumerRunOnceCommitsOnlyContiguousPartitionSuccess covers the safe prefix.
 func (consumer *Consumer) settlePartitionResults(
 	ctx context.Context,
 	token consumerAssignmentToken,

@@ -39,6 +39,9 @@ var benchmarkRebalanceCandidates = []benchmarkConsumerCandidate{
 	{name: "sarama", new: newSaramaBenchmarkConsumer},
 }
 
+// BenchmarkEquivalentConsumerRebalance compares the declared fixture rebalance
+// workload; its membership, partitions and timing are part of the measurement
+// contract.
 func BenchmarkEquivalentConsumerRebalance(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, candidate := range benchmarkRebalanceCandidates {

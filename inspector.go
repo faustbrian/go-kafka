@@ -19,17 +19,33 @@ import (
 )
 
 var (
-	ErrInspectionTargetsRequired  = errors.New("kafka: inspection targets are required")
-	ErrTooManyInspectionTargets   = errors.New("kafka: inspection target count exceeds configured limit")
-	ErrInvalidInspectionTarget    = errors.New("kafka: inspection target is invalid")
-	ErrDuplicateInspectionTarget  = errors.New("kafka: inspection target is duplicated")
-	ErrInvalidInspectorConfig     = errors.New("kafka: inspector configuration is outside bounded limits")
-	ErrInvalidReadinessPolicy     = errors.New("kafka: inspector readiness policy is outside bounded limits")
-	ErrInspectorClosed            = errors.New("kafka: inspector is closed")
-	ErrInvalidInspectionResponse  = errors.New("kafka: broker inspection response is invalid")
+	// ErrInspectionTargetsRequired reports that inspection targets are required.
+	ErrInspectionTargetsRequired = errors.New("kafka: inspection targets are required")
+	// ErrTooManyInspectionTargets reports that inspection target count exceeds
+	// configured limit.
+	ErrTooManyInspectionTargets = errors.New("kafka: inspection target count exceeds configured limit")
+	// ErrInvalidInspectionTarget reports that inspection target is invalid.
+	ErrInvalidInspectionTarget = errors.New("kafka: inspection target is invalid")
+	// ErrDuplicateInspectionTarget reports that inspection target is duplicated.
+	ErrDuplicateInspectionTarget = errors.New("kafka: inspection target is duplicated")
+	// ErrInvalidInspectorConfig reports that inspector configuration is outside
+	// bounded limits.
+	ErrInvalidInspectorConfig = errors.New("kafka: inspector configuration is outside bounded limits")
+	// ErrInvalidReadinessPolicy reports that inspector readiness policy is
+	// outside bounded limits.
+	ErrInvalidReadinessPolicy = errors.New("kafka: inspector readiness policy is outside bounded limits")
+	// ErrInspectorClosed reports that inspector is closed.
+	ErrInspectorClosed = errors.New("kafka: inspector is closed")
+	// ErrInvalidInspectionResponse reports that broker inspection response is
+	// invalid.
+	ErrInvalidInspectionResponse = errors.New("kafka: broker inspection response is invalid")
+	// ErrInspectionResponseTooLarge reports that broker inspection response
+	// exceeds configured limits.
 	ErrInspectionResponseTooLarge = errors.New(
 		"kafka: broker inspection response exceeds configured limits",
 	)
+	// ErrInspectionTargetsFailed reports that one or more inspection targets
+	// failed.
 	ErrInspectionTargetsFailed = errors.New(
 		"kafka: one or more inspection targets failed",
 	)
@@ -37,21 +53,35 @@ var (
 
 // InspectorConfig defines a read-only Kafka metadata and lag client.
 type InspectorConfig struct {
-	Brokers        []string
-	ClientID       string
-	Protocol       ProtocolPolicy
-	Security       ClientSecurity
-	DialTimeout    time.Duration
+	// Brokers supplies 1 through 32 distinct, bounded seed strings; validation does not
+	// resolve addresses or enforce a network allowlist.
+	Brokers []string
+	// ClientID is a required bounded UTF-8 client identity, not a credential or safe
+	// arbitrary telemetry label.
+	ClientID string
+	// Protocol selects the pinned client negotiation floor; it is not a maximum version
+	// or broker-support claim.
+	Protocol ProtocolPolicy
+	// Security selects verified TLS by default and explicitly composed, borrowed
+	// credential providers.
+	Security ClientSecurity
+	// DialTimeout bounds cooperative connection attempts; zero selects ten seconds.
+	DialTimeout time.Duration
+	// RequestTimeout bounds cooperative broker requests; zero selects ten seconds.
 	RequestTimeout time.Duration
 
-	MaxMetadataBrokers    int
+	// MaxMetadataBrokers bounds broker metadata before copying; zero selects 1000.
+	MaxMetadataBrokers int
+	// MaxMetadataPartitions bounds copied partition metadata; zero selects 100000.
 	MaxMetadataPartitions int
-	MaxGroupMembers       int
+	// MaxGroupMembers bounds copied member metadata; zero selects 10000.
+	MaxGroupMembers int
 	// MaxConcurrentInspections bounds independently isolated per-target
 	// requests made by InspectTopics, InspectConsumerGroups, and
 	// InspectConsumerProtocolGroups.
 	MaxConcurrentInspections int
-	Readiness                ReadinessPolicy
+	// Readiness supplies local hysteresis thresholds, not a broker availability promise.
+	Readiness ReadinessPolicy
 	// Observers receive payload-free inspection, health, readiness, shutdown,
 	// and broker events under one bounded synchronous callback policy.
 	Observers ObserverPolicy
@@ -59,7 +89,11 @@ type InspectorConfig struct {
 
 // ReadinessPolicy controls stateful Kafka dependency-probe hysteresis.
 type ReadinessPolicy struct {
-	FailureThreshold  int
+	// FailureThreshold is the consecutive conclusive failure threshold, defaulting to
+	// three.
+	FailureThreshold int
+	// RecoveryThreshold is the consecutive successful probe threshold, defaulting to
+	// two.
 	RecoveryThreshold int
 }
 
@@ -74,48 +108,81 @@ func (policy ReadinessPolicy) Validate() error {
 // dependency observation. Ready is the service-composition signal; the method
 // error retains the latest dependency failure for diagnostics.
 type ReadinessState struct {
-	Ready                bool
-	DependencyHealthy    bool
-	ConsecutiveFailures  int
+	// Ready is the local hysteresis decision, not the same as the latest dependency
+	// result.
+	Ready bool
+	// DependencyHealthy is the last conclusive broker-probe outcome.
+	DependencyHealthy bool
+	// ConsecutiveFailures saturates at the configured failure threshold.
+	ConsecutiveFailures int
+	// ConsecutiveSuccesses saturates at the configured recovery threshold.
 	ConsecutiveSuccesses int
 }
 
 // LivenessState reports whether the inspector remains locally usable. Kafka
 // connectivity does not affect this signal.
 type LivenessState struct {
+	// Live reports that the local inspector remains open; it does not probe brokers.
 	Live bool
 }
 
 // BrokerState is bounded, copied metadata for one Kafka broker.
 type BrokerState struct {
+	// NodeID is the nonnegative broker identifier.
 	NodeID int32
-	Host   string
-	Port   int32
-	Rack   string
+	// Host is copied bounded broker endpoint text; callers own redaction and trusted
+	// broker discovery policy.
+	Host string
+	// Port is the validated broker port from 1 through 65535.
+	Port int32
+	// Rack is optional bounded rack metadata; preferred-replica behavior depends on
+	// broker topology.
+	Rack string
 }
 
 // ClusterState is bounded, copied Kafka cluster identity and broker metadata.
 type ClusterState struct {
-	ID                string
-	IDVisible         bool
-	ControllerID      int32
+	// ID is bounded cluster metadata and may be empty when not exposed.
+	ID string
+	// IDVisible distinguishes an exposed cluster identity from absence.
+	IDVisible bool
+	// ControllerID is meaningful only when ControllerVisible is true.
+	ControllerID int32
+	// ControllerVisible reports that the controller identifies a returned broker.
 	ControllerVisible bool
-	Brokers           []BrokerState
+	// Brokers is copied metadata sorted by node ID, not a cross-operation topology
+	// snapshot.
+	Brokers []BrokerState
 }
 
 // TopicPartitionState is the current broker metadata for one partition.
 type TopicPartitionState struct {
-	Partition         int32
-	Leader            int32
-	LeaderEpoch       int32
-	Replicas          []int32
-	InSyncReplicaIDs  []int32
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
+	Partition int32
+	// Leader is the reported leader broker ID, with protocol-defined unavailable values
+	// possible.
+	Leader int32
+	// LeaderEpoch is broker metadata, not the consumer local lifecycle fence.
+	LeaderEpoch int32
+	// Replicas lists copied assigned broker IDs.
+	Replicas []int32
+	// InSyncReplicaIDs lists copied current ISR broker IDs.
+	InSyncReplicaIDs []int32
+	// OfflineReplicaIDs lists copied offline assigned broker IDs.
 	OfflineReplicaIDs []int32
+	// ReplicationFactor counts assigned replicas.
 	ReplicationFactor int
-	InSyncReplicas    int
-	OfflineReplicas   int
-	BeginningOffset   int64
-	EndOffset         int64
+	// InSyncReplicas counts current ISR members, not a durable delivery promise.
+	InSyncReplicas int
+	// OfflineReplicas counts offline replicas.
+	OfflineReplicas int
+	// BeginningOffset is the observed retained log start, which can change after
+	// inspection.
+	BeginningOffset int64
+	// EndOffset is exclusive; its difference from the start is an offset allowance, not
+	// guaranteed available record count.
+	EndOffset int64
 }
 
 // TopicCleanupPolicy is the effective Kafka log cleanup policy. Zero means
@@ -195,33 +262,59 @@ type TopicState struct {
 // ConsumerGroupPartitionLag is one committed offset and broker end-offset
 // comparison.
 type ConsumerGroupPartitionLag struct {
-	Topic           string
-	Partition       int32
+	// Topic identifies the partition used for the group-offset comparison.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
+	Partition int32
+	// CommittedOffset is the group next offset; protocol absence can be represented by a
+	// negative value.
 	CommittedOffset int64
-	StartOffset     int64
-	EndOffset       int64
-	Lag             int64
+	// StartOffset is inclusive; a broker validation is needed to establish retention at
+	// observation time.
+	StartOffset int64
+	// EndOffset is exclusive; its difference from the start is an offset allowance, not
+	// guaranteed available record count.
+	EndOffset int64
+	// Lag is the observed nonnegative difference from the end, not backlog age or
+	// guaranteed retained work.
+	Lag int64
 }
 
 // ConsumerGroupState is the current state and lag for one requested group.
 type ConsumerGroupState struct {
-	Group         string
+	// Group identifies the requested consumer group, not an authorization decision.
+	Group string
+	// CoordinatorID identifies the broker coordinator returned by this observation.
 	CoordinatorID int32
-	State         string
-	ProtocolType  string
-	Protocol      string
-	Members       []ConsumerGroupMemberState
-	Partitions    []ConsumerGroupPartitionLag
+	// State is the classic protocol group state, distinct from KIP-848 consumer-protocol
+	// state.
+	State string
+	// ProtocolType is the described group protocol family.
+	ProtocolType string
+	// Protocol is the classic group-selected assignment protocol.
+	Protocol string
+	// Members contains copied classic membership/assignment metadata.
+	Members []ConsumerGroupMemberState
+	// Partitions contains copied per-partition offset comparisons.
+	Partitions []ConsumerGroupPartitionLag
 }
 
 // TopicInspectionResult is one input-ordered topic inspection outcome. State
 // is populated only when Err is nil. Err retains the target-specific broker or
 // policy failure, and Category provides its stable package classification.
 type TopicInspectionResult struct {
-	Topic    string
-	State    TopicState
+	// Topic preserves the corresponding requested target, including on failure.
+	Topic string
+	// State is populated only after a successful inspection; separate calls can observe
+	// different broker state.
+	State TopicState
+	// Category is the stable low-cardinality classification, zero on a successful
+	// inspection result.
 	Category ErrorCategory
-	Err      error
+	// Err preserves the operation failure; nil denotes success only at this API
+	// boundary, and underlying causes may need caller redaction.
+	Err error
 }
 
 // ConsumerGroupInspectionResult is one input-ordered consumer-group
@@ -229,21 +322,38 @@ type TopicInspectionResult struct {
 // target-specific broker or policy failure, and Category provides its stable
 // package classification.
 type ConsumerGroupInspectionResult struct {
-	Group    string
-	State    ConsumerGroupState
+	// Group identifies the requested consumer group, not an authorization decision.
+	Group string
+	// State is populated only after a successful inspection; separate calls can observe
+	// different broker state.
+	State ConsumerGroupState
+	// Category is the stable low-cardinality classification, zero on a successful
+	// inspection result.
 	Category ErrorCategory
-	Err      error
+	// Err preserves the operation failure; nil denotes success only at this API
+	// boundary, and underlying causes may need caller redaction.
+	Err error
 }
 
 // ConsumerGroupMemberState is bounded, copied classic consumer-group member
 // identity and current partition assignment.
 type ConsumerGroupMemberState struct {
-	MemberID          string
-	InstanceID        string
+	// MemberID is the broker-assigned member identity, not a principal authentication
+	// proof.
+	MemberID string
+	// InstanceID is an optional static member identity; it must be unique among live
+	// members of the group.
+	InstanceID string
+	// InstanceIDVisible distinguishes a returned static identity from an omitted field.
 	InstanceIDVisible bool
-	ClientID          string
-	ClientHost        string
-	Assignments       []TopicPartition
+	// ClientID is bounded broker-reported member identity, not a trusted configured
+	// allowlist value.
+	ClientID string
+	// ClientHost is bounded broker-reported endpoint data and may be sensitive; it is
+	// not emitted by payload-free observers.
+	ClientHost string
+	// Assignments is copied current ownership sorted by topic and partition.
+	Assignments []TopicPartition
 }
 
 type inspectorGroupMember struct {

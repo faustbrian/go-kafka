@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+// BenchmarkObserver measures synchronous JSON-handler observation to io.Discard;
+// logger construction is outside the timer, without storage or network writes.
 func BenchmarkObserver(b *testing.B) {
 	adapter, err := New(Config{
 		Logger: slog.New(slog.NewJSONHandler(io.Discard, nil)),

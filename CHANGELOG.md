@@ -4,6 +4,11 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Clarify copied publication inputs, borrowed handler records, partial settlement,
+  Kafka-only transaction outcomes, cooperative shutdown, and diagnostic privacy.
+
 ## 1.1.1 - 2026-10-08
 
 ### Changed

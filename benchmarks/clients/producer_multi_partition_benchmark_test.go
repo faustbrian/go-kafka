@@ -71,6 +71,9 @@ var (
 	benchmarkMultiPartitionTopicErr  error
 )
 
+// BenchmarkEquivalentMultiPartitionProduce compares the declared multi-partition
+// workload with equivalent record bytes and routing; no global ordering is
+// implied.
 func BenchmarkEquivalentMultiPartitionProduce(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, mode := range []multiPartitionMode{

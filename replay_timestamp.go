@@ -16,9 +16,13 @@ import (
 )
 
 var (
+	// ErrInvalidReplayTimestampWindow reports that replay timestamp window is
+	// invalid.
 	ErrInvalidReplayTimestampWindow = errors.New(
 		"kafka: replay timestamp window is invalid",
 	)
+	// ErrReplayTimestampRangeIncomplete reports that replay timestamp window may
+	// precede retained records.
 	ErrReplayTimestampRangeIncomplete = errors.New(
 		"kafka: replay timestamp window may precede retained records",
 	)
@@ -29,9 +33,12 @@ var (
 // millisecond precision, so both boundaries must be exact milliseconds at or
 // after the Unix epoch.
 type ReplayTimestampRequest struct {
+	// StartInclusive is an exact millisecond at or after the Unix epoch.
 	StartInclusive time.Time
-	EndExclusive   time.Time
-	Partitions     []TopicPartition
+	// EndExclusive is a later exact millisecond, never silently rounded.
+	EndExclusive time.Time
+	// Partitions is a bounded distinct set of explicit nonnegative topic partitions.
+	Partitions []TopicPartition
 }
 
 // Validate reports whether the timestamp window and explicit partition set
@@ -75,19 +82,33 @@ func (request ReplayTimestampRequest) Validate() error {
 // ReplayTimestampPartition is one resolved partition range. A zero Remaining
 // count is a valid empty time window and is omitted by ReplayRanges.
 type ReplayTimestampPartition struct {
-	Topic       string
-	Partition   int32
+	// Topic identifies the explicitly requested partition whose offsets were resolved.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
+	Partition int32
+	// StartOffset is inclusive; a broker validation is needed to establish retention at
+	// observation time.
 	StartOffset int64
-	EndOffset   int64
-	Remaining   int64
+	// EndOffset is exclusive; its difference from the start is an offset allowance, not
+	// guaranteed available record count.
+	EndOffset int64
+	// Remaining is the nonnegative number of requested offsets not yet covered, not a
+	// prediction of retained records.
+	Remaining int64
 }
 
 // ReplayTimestampPlan is an owned broker-resolved timestamp plan. Boundaries
 // are canonical UTC millisecond values and partitions are sorted.
 type ReplayTimestampPlan struct {
+	// StartInclusive is the canonical UTC inclusive timestamp used for broker lookup.
 	StartInclusive time.Time
-	EndExclusive   time.Time
-	Partitions     []ReplayTimestampPartition
+	// EndExclusive is the canonical UTC exclusive timestamp used for broker lookup.
+	EndExclusive time.Time
+	// Partitions is copied sorted broker-resolved offset metadata; it is not a durable
+	// snapshot.
+	Partitions []ReplayTimestampPartition
+	// TotalRemaining sums admitted offset ranges with signed-overflow validation.
 	TotalRemaining int64
 }
 

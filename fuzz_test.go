@@ -12,6 +12,8 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
+// FuzzObservationValidation explores operation-specific metadata bounds and stable
+// enum validation without exporting raw records.
 func FuzzObservationValidation(f *testing.F) {
 	f.Add(
 		uint8(ObservationConsumeRebalanceWait),
@@ -96,6 +98,9 @@ func FuzzObservationValidation(f *testing.F) {
 	})
 }
 
+// FuzzFetchDecompression mutates bounded codec frames and decoded-size allowances;
+// successful output stays within the limit and errors return no bytes with stable
+// categories.
 func FuzzFetchDecompression(f *testing.F) {
 	for _, seed := range []struct {
 		name  string
@@ -145,6 +150,8 @@ func FuzzFetchDecompression(f *testing.F) {
 	})
 }
 
+// FuzzTrustAnchors mutates bounded DER root admission and ownership, not
+// certificate-authority trust or real TLS interoperability.
 func FuzzTrustAnchors(f *testing.F) {
 	f.Add([]byte{}, false)
 	f.Add([]byte("not a certificate"), true)
@@ -167,6 +174,8 @@ func FuzzTrustAnchors(f *testing.F) {
 	})
 }
 
+// FuzzConsumerConfig mutates consumer admission/timing/identity fields without
+// creating a broker client.
 func FuzzConsumerConfig(f *testing.F) {
 	f.Add(
 		"events",
@@ -205,6 +214,8 @@ func FuzzConsumerConfig(f *testing.F) {
 	})
 }
 
+// FuzzFailureHandlerConfig mutates retry and reroute policy combinations without
+// publishing or settling source offsets.
 func FuzzFailureHandlerConfig(f *testing.F) {
 	f.Add(
 		"events.retry.v1",
@@ -267,6 +278,8 @@ func FuzzFailureHandlerConfig(f *testing.F) {
 	})
 }
 
+// FuzzBatchFailureHandlerConfig mutates whole-batch failure admission and bounds
+// without broker publication.
 func FuzzBatchFailureHandlerConfig(f *testing.F) {
 	f.Add(
 		"events.retry.v1",
@@ -345,6 +358,8 @@ func FuzzBatchFailureHandlerConfig(f *testing.F) {
 	})
 }
 
+// FuzzMessageValidation mutates record/header byte and count limits without
+// copying into the client buffer.
 func FuzzMessageValidation(f *testing.F) {
 	f.Add("events", uint16(8), uint16(16), uint8(2))
 	f.Add("", uint16(0), uint16(0), uint8(0))
@@ -373,6 +388,8 @@ func FuzzMessageValidation(f *testing.F) {
 	})
 }
 
+// FuzzTransactionProcessorConfig mutates composition/output admission and timeout
+// policy without joining a group or opening a transaction.
 func FuzzTransactionProcessorConfig(f *testing.F) {
 	f.Add(
 		"source-events",
@@ -426,6 +443,8 @@ func FuzzTransactionProcessorConfig(f *testing.F) {
 	})
 }
 
+// FuzzReplayConfig mutates numeric ranges/checkpoint policy and admission, not
+// live retained log availability.
 func FuzzReplayConfig(f *testing.F) {
 	f.Add(
 		"events",
@@ -496,6 +515,8 @@ func FuzzReplayConfig(f *testing.F) {
 	})
 }
 
+// FuzzReplayTimestampRequest mutates exact millisecond windows and explicit
+// partitions without performing broker lookups.
 func FuzzReplayTimestampRequest(f *testing.F) {
 	f.Add("events", int32(0), int64(0), int64(1), int32(0))
 	f.Add(".", int32(-1), int64(-1), int64(0), int32(1))
@@ -530,6 +551,8 @@ func FuzzReplayTimestampRequest(f *testing.F) {
 	})
 }
 
+// FuzzInspectionBrokerMetadata mutates broker-controlled metadata admission
+// through the owned backend fixture.
 func FuzzInspectionBrokerMetadata(f *testing.F) {
 	f.Add("events", int32(0), int32(1), int32(1), int64(0), int64(1), "1")
 	f.Add("", int32(-1), int32(-2), int32(-1), int64(-1), int64(-1), "")
@@ -591,6 +614,8 @@ func FuzzInspectionBrokerMetadata(f *testing.F) {
 	})
 }
 
+// FuzzInspectionTopicPolicyConfig mutates topic metadata/configuration parsing and
+// bounded response admission.
 func FuzzInspectionTopicPolicyConfig(f *testing.F) {
 	f.Add(
 		"delete",
@@ -649,6 +674,8 @@ func FuzzInspectionTopicPolicyConfig(f *testing.F) {
 	})
 }
 
+// FuzzInspectionConsumerGroupMetadata mutates classic membership/assignment
+// metadata and bounded copied results.
 func FuzzInspectionConsumerGroupMetadata(f *testing.F) {
 	f.Add("group-v1", "member-1", "events", int32(0))
 	f.Add("", "", "bad topic", int32(-1))
@@ -706,6 +733,8 @@ func FuzzInspectionConsumerGroupMetadata(f *testing.F) {
 	})
 }
 
+// FuzzInspectionConsumerProtocolGroupMetadata mutates KIP-848 version-visible
+// member and target-assignment metadata admission.
 func FuzzInspectionConsumerProtocolGroupMetadata(f *testing.F) {
 	f.Add(
 		"group-v2",

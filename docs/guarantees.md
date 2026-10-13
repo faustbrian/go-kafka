@@ -351,7 +351,9 @@ configuration.
 
 ## Context and memory
 
-Handler deadlines are cooperative; a handler must honor context cancellation.
+Handler and provider deadlines are cooperative; callbacks must honor context
+cancellation. Shutdown budgets do not forcibly stop synchronous observers or
+context-free backend close calls.
 Consumed byte slices reference the current fetch. Use `ConsumedRecord.Retain`
 before keeping a record beyond its handler call. Configuration and record
 bounds prevent unbounded caller-controlled allocation inside this module.
@@ -359,7 +361,10 @@ Consumer fetch policy limits concurrent requests, response bytes, and bytes per
 partition. Kafka may accept one batch above the partition fetch limit to make
 progress, so `BrokerMaxReadBytes` is the separate hard encoded-response cap.
 The package replaces franz-go's multi-gigabyte decompression ceiling with an
-explicit per-batch limit and a client-wide active decoded-buffer budget.
+explicit per-batch limit and a client-wide retained decoded-buffer budget.
+Decoded allocation capacity is charged after decompression, so transient
+allocations and codec-none buffers are outside that retained-buffer budget;
+it is not a whole-process memory cap.
 Decoded storage is recycled only after observations, handlers, settlement, or
 transaction completion no longer need the borrowed record. A rejected batch
 never reaches a handler and never advances a source offset. Broker and topic

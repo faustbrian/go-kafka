@@ -17,6 +17,8 @@ var (
 	benchmarkExtractedContext context.Context
 )
 
+// BenchmarkObserver measures synchronous adapter observation over test
+// providers; instrument construction is outside the timer and no exporter runs.
 func BenchmarkObserver(b *testing.B) {
 	instrumentation, err := New(Config{Runtime: completeTestRuntime()})
 	if err != nil {
@@ -46,6 +48,9 @@ func BenchmarkObserver(b *testing.B) {
 	}
 }
 
+// BenchmarkObserverModes compares the declared observer/messaging operation inputs
+// over test providers; compare equivalent provider and attribute policy before
+// interpreting results.
 func BenchmarkObserverModes(b *testing.B) {
 	observation := kafka.Observation{
 		Kind:        kafka.ObservationProduceRecord,
@@ -127,6 +132,9 @@ func BenchmarkObserverModes(b *testing.B) {
 	}
 }
 
+// BenchmarkTraceContextPropagation measures fixed in-memory header
+// injection/extraction and owned copies, excluding network propagation or SDK
+// export.
 func BenchmarkTraceContextPropagation(b *testing.B) {
 	policy, err := NewTraceContextPropagation(kafka.DefaultMessageLimits())
 	if err != nil {

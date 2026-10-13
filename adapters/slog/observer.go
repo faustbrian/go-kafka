@@ -1,6 +1,13 @@
 // Package kafkaslog translates bounded Kafka observations into fixed structured
-// log/slog records without adding payloads, credentials, endpoints, raw
-// headers, or application error text.
+// log/slog records without adding record payloads, credentials, broker endpoints,
+// raw headers or application error text.
+//
+// New borrows the explicit logger and copies exact identity allowlists. Empty
+// allowlists omit identities. No goroutine, global logger or backend cleanup is
+// owned; the caller's slog handler must support concurrency and cooperate with
+// synchronous context use. Panic containment omits the panic value but cannot
+// retract a log event already accepted by the handler. Allowlisted identities
+// remain application data, not proof of authentication or universally safe logs.
 package kafkaslog
 
 import (

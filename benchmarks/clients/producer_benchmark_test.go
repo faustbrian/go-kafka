@@ -139,6 +139,9 @@ var asynchronousProducerOutcomeCandidates = append(
 	},
 )
 
+// BenchmarkEquivalentSynchronousProduce compares one-record broker acknowledgement
+// across the declared clients with equivalent fixture policies; fixture/client
+// setup precedes the measured delivery loop.
 func BenchmarkEquivalentSynchronousProduce(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, keyed := range []bool{true, false} {
@@ -171,6 +174,9 @@ func BenchmarkEquivalentSynchronousProduce(benchmark *testing.B) {
 	}
 }
 
+// BenchmarkEquivalentSynchronousBatchProduce compares bounded batch delivery
+// against the shared broker fixture; retain identical batch, acknowledgement and
+// compression inputs across clients.
 func BenchmarkEquivalentSynchronousBatchProduce(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, keyed := range []bool{true, false} {
@@ -207,6 +213,9 @@ func BenchmarkEquivalentSynchronousBatchProduce(benchmark *testing.B) {
 	}
 }
 
+// BenchmarkEquivalentAsynchronousProduce compares the declared bounded
+// asynchronous window against the shared fixture; returned admission is not
+// independently equivalent to completed broker receipt.
 func BenchmarkEquivalentAsynchronousProduce(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, keyed := range []bool{true, false} {

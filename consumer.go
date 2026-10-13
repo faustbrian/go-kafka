@@ -14,70 +14,113 @@ import (
 )
 
 var (
-	ErrGroupIDRequired               = errors.New("kafka: consumer group ID is required")
-	ErrGroupIDTooLarge               = errors.New("kafka: consumer group ID exceeds configured limit")
-	ErrInvalidGroupID                = errors.New("kafka: consumer group ID is invalid")
-	ErrInvalidInstanceID             = errors.New("kafka: consumer instance ID is invalid")
-	ErrInvalidRack                   = errors.New("kafka: consumer rack is invalid")
-	ErrInvalidBalancePolicy          = errors.New("kafka: consumer balance policy is invalid")
+	// ErrGroupIDRequired reports that consumer group ID is required.
+	ErrGroupIDRequired = errors.New("kafka: consumer group ID is required")
+	// ErrGroupIDTooLarge reports that consumer group ID exceeds configured limit.
+	ErrGroupIDTooLarge = errors.New("kafka: consumer group ID exceeds configured limit")
+	// ErrInvalidGroupID reports that consumer group ID is invalid.
+	ErrInvalidGroupID = errors.New("kafka: consumer group ID is invalid")
+	// ErrInvalidInstanceID reports that consumer instance ID is invalid.
+	ErrInvalidInstanceID = errors.New("kafka: consumer instance ID is invalid")
+	// ErrInvalidRack reports that consumer rack is invalid.
+	ErrInvalidRack = errors.New("kafka: consumer rack is invalid")
+	// ErrInvalidBalancePolicy reports that consumer balance policy is invalid.
+	ErrInvalidBalancePolicy = errors.New("kafka: consumer balance policy is invalid")
+	// ErrInvalidRebalanceHandlerPolicy reports that consumer rebalance handler
+	// policy is invalid.
 	ErrInvalidRebalanceHandlerPolicy = errors.New(
 		"kafka: consumer rebalance handler policy is invalid",
 	)
-	ErrTopicsRequired          = errors.New("kafka: at least one topic is required")
-	ErrTooManyTopics           = errors.New("kafka: topic count exceeds configured limit")
-	ErrDuplicateTopic          = errors.New("kafka: topic is duplicated")
-	ErrInvalidOffsetPolicy     = errors.New("kafka: consumer offset policy is invalid")
-	ErrHandlerRequired         = errors.New("kafka: consumer handler is required")
-	ErrBatchHandlerRequired    = errors.New("kafka: consumer batch handler is required")
-	ErrHandlerPanic            = errors.New("kafka: consumer handler panicked")
-	ErrConsumerBusy            = errors.New("kafka: consumer runner is already active")
-	ErrConsumerDraining        = errors.New("kafka: consumer is draining")
-	ErrConsumerDrainActive     = errors.New("kafka: consumer drain is already active")
+	// ErrTopicsRequired reports that at least one topic is required.
+	ErrTopicsRequired = errors.New("kafka: at least one topic is required")
+	// ErrTooManyTopics reports that topic count exceeds configured limit.
+	ErrTooManyTopics = errors.New("kafka: topic count exceeds configured limit")
+	// ErrDuplicateTopic reports that topic is duplicated.
+	ErrDuplicateTopic = errors.New("kafka: topic is duplicated")
+	// ErrInvalidOffsetPolicy reports that consumer offset policy is invalid.
+	ErrInvalidOffsetPolicy = errors.New("kafka: consumer offset policy is invalid")
+	// ErrHandlerRequired reports that consumer handler is required.
+	ErrHandlerRequired = errors.New("kafka: consumer handler is required")
+	// ErrBatchHandlerRequired reports that consumer batch handler is required.
+	ErrBatchHandlerRequired = errors.New("kafka: consumer batch handler is required")
+	// ErrHandlerPanic reports that consumer handler panicked.
+	ErrHandlerPanic = errors.New("kafka: consumer handler panicked")
+	// ErrConsumerBusy reports that consumer runner is already active.
+	ErrConsumerBusy = errors.New("kafka: consumer runner is already active")
+	// ErrConsumerDraining reports that consumer is draining.
+	ErrConsumerDraining = errors.New("kafka: consumer is draining")
+	// ErrConsumerDrainActive reports that consumer drain is already active.
+	ErrConsumerDrainActive = errors.New("kafka: consumer drain is already active")
+	// ErrConsumerDrainIncomplete reports that consumer drain is incomplete.
 	ErrConsumerDrainIncomplete = errors.New(
 		"kafka: consumer drain is incomplete",
 	)
-	ErrConsumerClosing        = errors.New("kafka: consumer is shutting down")
-	ErrConsumerClosed         = errors.New("kafka: consumer is closed")
-	ErrConsumerFatal          = errors.New("kafka: consumer entered a fatal state")
+	// ErrConsumerClosing reports that consumer is shutting down.
+	ErrConsumerClosing = errors.New("kafka: consumer is shutting down")
+	// ErrConsumerClosed reports that consumer is closed.
+	ErrConsumerClosed = errors.New("kafka: consumer is closed")
+	// ErrConsumerFatal reports that consumer entered a fatal state.
+	ErrConsumerFatal = errors.New("kafka: consumer entered a fatal state")
+	// ErrConsumerInstanceFenced reports that consumer static instance was fenced.
 	ErrConsumerInstanceFenced = errors.New(
 		"kafka: consumer static instance was fenced",
 	)
+	// ErrConsumerShutdownActive reports that consumer shutdown is already active.
 	ErrConsumerShutdownActive = errors.New(
 		"kafka: consumer shutdown is already active",
 	)
+	// ErrConsumerShutdownIncomplete reports that consumer shutdown is incomplete.
 	ErrConsumerShutdownIncomplete = errors.New(
 		"kafka: consumer shutdown is incomplete",
 	)
+	// ErrPausePartitionsRequired reports that at least one pause partition is
+	// required.
 	ErrPausePartitionsRequired = errors.New(
 		"kafka: at least one pause partition is required",
 	)
+	// ErrTooManyPausedPartitions reports that paused partition count exceeds
+	// configured limit.
 	ErrTooManyPausedPartitions = errors.New(
 		"kafka: paused partition count exceeds configured limit",
 	)
+	// ErrInvalidPausePartition reports that pause partition is invalid.
 	ErrInvalidPausePartition = errors.New(
 		"kafka: pause partition is invalid",
 	)
+	// ErrDuplicatePausePartition reports that pause partition is duplicated.
 	ErrDuplicatePausePartition = errors.New(
 		"kafka: pause partition is duplicated",
 	)
+	// ErrTooManyAssignedPartitions reports that assigned partition count exceeds
+	// configured limit.
 	ErrTooManyAssignedPartitions = errors.New(
 		"kafka: assigned partition count exceeds configured limit",
 	)
+	// ErrTooManyFetchedRecords reports that fetched record count exceeds
+	// configured limit.
 	ErrTooManyFetchedRecords = errors.New(
 		"kafka: fetched record count exceeds configured limit",
 	)
+	// ErrInvalidAssignment reports that consumer assignment is invalid.
 	ErrInvalidAssignment = errors.New(
 		"kafka: consumer assignment is invalid",
 	)
+	// ErrConsumerOwnershipLost reports that consumer partition ownership was
+	// lost.
 	ErrConsumerOwnershipLost = errors.New(
 		"kafka: consumer partition ownership was lost",
 	)
+	// ErrConsumerRebalance reports that consumer handler canceled for a pending
+	// rebalance.
 	ErrConsumerRebalance = errors.New(
 		"kafka: consumer handler canceled for a pending rebalance",
 	)
+	// ErrPauseTopicNotSubscribed reports that pause topic is not subscribed.
 	ErrPauseTopicNotSubscribed = errors.New(
 		"kafka: pause topic is not subscribed",
 	)
+	// ErrInvalidConsumerConfig reports that consumer configuration is outside
+	// bounded limits.
 	ErrInvalidConsumerConfig = errors.New(
 		"kafka: consumer configuration is outside bounded limits",
 	)
@@ -90,7 +133,9 @@ var errConsumerDrainRequested = errors.New("kafka: consumer drain requested")
 type OffsetPolicy uint8
 
 const (
+	// OffsetEarliest requests the retained log start when reset is required.
 	OffsetEarliest OffsetPolicy = iota + 1
+	// OffsetLatest requests the current log end when reset is required.
 	OffsetLatest
 )
 
@@ -127,21 +172,50 @@ const (
 
 // ConsumerConfig defines one bounded consumer-group member.
 type ConsumerConfig struct {
-	Brokers               []string
-	ClientID              string
-	Protocol              ProtocolPolicy
-	GroupID               string
-	InstanceID            string
-	Rack                  string
-	Topics                []string
-	ResetOffset           OffsetPolicy
-	BalancePolicy         GroupBalancePolicy
-	RebalanceHandler      RebalanceHandlerPolicy
-	Limits                MessageLimits
-	MaxPollRecords        int
-	MaxPausedPartitions   int
+	// Brokers supplies 1 through 32 distinct, bounded seed strings; validation does not
+	// resolve addresses or enforce a network allowlist.
+	Brokers []string
+	// ClientID is a required bounded UTF-8 client identity, not a credential or safe
+	// arbitrary telemetry label.
+	ClientID string
+	// Protocol selects the pinned client negotiation floor; it is not a maximum version
+	// or broker-support claim.
+	Protocol ProtocolPolicy
+	// GroupID is the required bounded group identity; external ACL policy remains
+	// caller-owned.
+	GroupID string
+	// InstanceID is an optional static member identity; it must be unique among live
+	// members of the group.
+	InstanceID string
+	// Rack is optional bounded rack metadata; preferred-replica behavior depends on
+	// broker topology.
+	Rack string
+	// Topics is the required set of at most 64 distinct valid subscription names.
+	Topics []string
+	// ResetOffset explicitly selects earliest or latest when a usable group offset is
+	// absent; zero is invalid.
+	ResetOffset OffsetPolicy
+	// BalancePolicy defaults to cooperative sticky; eager migration requires the
+	// documented two-rollout policy.
+	BalancePolicy GroupBalancePolicy
+	// RebalanceHandler cancels admitted handlers by default; drain permits only
+	// already-admitted work to settle.
+	RebalanceHandler RebalanceHandlerPolicy
+	// Limits bounds admitted record fields; its zero value selects DefaultMessageLimits,
+	// not an aggregate process budget.
+	Limits MessageLimits
+	// MaxPollRecords bounds a fetched processing unit, defaulting to 100 and capped at
+	// 1000.
+	MaxPollRecords int
+	// MaxPausedPartitions bounds explicit local pauses; zero selects 256 and the maximum
+	// is 1024.
+	MaxPausedPartitions int
+	// MaxAssignedPartitions bounds validated callback ownership metadata; zero selects
+	// 1024 and the maximum is 65536.
 	MaxAssignedPartitions int
-	MaxConcurrentFetches  int
+	// MaxConcurrentFetches bounds broker fetch concurrency, defaulting to four and
+	// capped at 64.
+	MaxConcurrentFetches int
 	// MaxConcurrentHandlers bounds simultaneous callbacks across independent
 	// topic partitions. One partition always remains sequential. The zero
 	// value defaults to one.
@@ -149,8 +223,12 @@ type ConsumerConfig struct {
 	// FetchMinBytes is the minimum encoded record bytes a broker tries to
 	// collect before answering a fetch. Zero defaults to one byte, values must
 	// not exceed FetchMaxBytes, and FetchMaxWait bounds the wait.
-	FetchMinBytes          int32
-	FetchMaxBytes          int32
+	FetchMinBytes int32
+	// FetchMaxBytes selects the encoded fetch response allowance, defaulting to 50 MiB;
+	// separate hard read/decompression guards apply.
+	FetchMaxBytes int32
+	// FetchMaxPartitionBytes selects an encoded per-partition fetch allowance,
+	// defaulting to 1 MiB and no greater than FetchMaxBytes.
 	FetchMaxPartitionBytes int32
 	// BrokerMaxReadBytes is the hard maximum encoded Kafka response accepted
 	// from one broker connection. It must be at least FetchMaxBytes.
@@ -160,18 +238,37 @@ type ConsumerConfig struct {
 	MaxDecompressedBatchBytes int64
 	// MaxBufferedDecompressedBytes bounds decoded compressed-batch memory held
 	// across active and prefetched Kafka responses.
+	// Capacity is charged after decoding; transient allocations and codec-none
+	// buffers are not part of this retained-buffer budget.
 	MaxBufferedDecompressedBytes int64
-	FetchMaxWait                 time.Duration
+	// FetchMaxWait bounds broker collection wait; zero selects 500 milliseconds.
+	FetchMaxWait time.Duration
 
-	SessionTimeout    time.Duration
-	RebalanceTimeout  time.Duration
+	// SessionTimeout selects the group failure-detection window, defaulting to 45
+	// seconds.
+	SessionTimeout time.Duration
+	// RebalanceTimeout bounds cooperative poll settlement; heartbeat, handler/processing
+	// and commit budgets must fit its configured policy.
+	RebalanceTimeout time.Duration
+	// HeartbeatInterval defaults to three seconds and must be below SessionTimeout.
 	HeartbeatInterval time.Duration
-	HandlerTimeout    time.Duration
-	CommitTimeout     time.Duration
-	ShutdownTimeout   time.Duration
-	DialTimeout       time.Duration
-	Security          ClientSecurity
-	Observers         ObserverPolicy
+	// HandlerTimeout derives a cooperative context for inline application work; it
+	// cannot stop a callback that ignores cancellation.
+	HandlerTimeout time.Duration
+	// CommitTimeout bounds cooperative post-handler offset settlement; zero selects ten
+	// seconds.
+	CommitTimeout time.Duration
+	// ShutdownTimeout defaults to 30 seconds for cooperative runner/leave waits; it does
+	// not interrupt already admitted handlers.
+	ShutdownTimeout time.Duration
+	// DialTimeout bounds cooperative connection attempts; zero selects ten seconds.
+	DialTimeout time.Duration
+	// Security selects verified TLS by default and explicitly composed, borrowed
+	// credential providers.
+	Security ClientSecurity
+	// Observers supplies copied ordered synchronous callbacks; timeout and reentry
+	// controls are cooperative, not detached background execution.
+	Observers ObserverPolicy
 }
 
 // Validate reports whether the consumer configuration satisfies the bounded
@@ -186,6 +283,8 @@ func (config ConsumerConfig) Validate() error {
 // committed. Implementations must be concurrency-safe when the consumer
 // permits more than one concurrent handler.
 type Handler interface {
+	// Handle processes borrowed bytes synchronously, retains them only via Retain and
+	// returns nil only after durable work; errors or panic leave this record unsettled.
 	Handle(context.Context, ConsumedMessage) error
 }
 
@@ -199,8 +298,13 @@ func (handler HandlerFunc) Handle(ctx context.Context, message ConsumedMessage) 
 
 // PollResult summarizes one bounded fetch, processing, and commit cycle.
 type PollResult struct {
-	Polled    int
+	// Polled counts records returned to this bounded processing operation.
+	Polled int
+	// Processed counts successful handler completions, not exactly-once external
+	// effects.
 	Processed int
+	// Committed counts processed records covered by a wholly successful commit call;
+	// zero after an error does not prove Kafka persisted no partition offsets.
 	Committed int
 }
 
@@ -209,9 +313,14 @@ type PollResult struct {
 // generation ID. Lost reports that the latest lifecycle transition was a
 // fatal ownership loss.
 type ConsumerAssignment struct {
-	Epoch      uint64
+	// Epoch is a package-local assign/revoke/loss fence, never Kafka generation ID.
+	Epoch uint64
+	// Partitions is an independent copy sorted by topic and partition; later
+	// assignment transitions can make this observation stale.
 	Partitions []TopicPartition
-	Lost       bool
+	// Lost marks the latest fatal ownership-loss transition; snapshots can become stale
+	// immediately.
+	Lost bool
 }
 
 type consumerBackend interface {
@@ -1436,7 +1545,9 @@ func (consumer *Consumer) Shutdown(ctx context.Context) (err error) {
 	return nil
 }
 
-// Close performs a bounded graceful shutdown using the configured timeout.
+// Close applies the configured cooperative shutdown timeout. Successful close
+// is idempotent; incomplete waits remain fenced and retriable. It cannot forcibly
+// terminate a callback or context-free backend Close.
 func (consumer *Consumer) Close() error {
 	consumer.lifecycleMu.Lock()
 	if consumer.observerCallbacks != 0 {

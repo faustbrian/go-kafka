@@ -1,5 +1,15 @@
-// Package kafkatest provides public conformance suites for Kafka policy
+// Package kafkatest provides public contract suites for Kafka policy
 // implementations and compatible broker fixtures.
+//
+// BrokerHarness supplies caller-owned isolated topic creation, direct reads and
+// authoritative offset observations. RunProducerConformance, consumer, replay,
+// transaction and inspector suites exercise their selected assertions; they do
+// not certify every protocol version, security policy or managed service.
+//
+// Authentication and observer suites use explicit provider/callback fixtures.
+// Factories must isolate subtest state, honor cancellation and supply owned
+// results where required. Suites may fail through testing.T and create clients;
+// broker/resource cleanup and authorization remain the harness owner's job.
 package kafkatest
 
 import (
@@ -28,18 +38,30 @@ const (
 // ReadRequest describes one bounded direct-partition fixture read. StartOffset
 // is inclusive and MaxRecords must be positive.
 type ReadRequest struct {
-	Topic       string
-	Partition   int32
+	// Topic identifies the caller-owned fixture log to read.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
+	Partition int32
+	// StartOffset is inclusive; a broker validation is needed to establish retention at
+	// observation time.
 	StartOffset int64
-	MaxRecords  int
-	Isolation   ReadIsolation
+	// MaxRecords is a positive fixture read bound; it does not permit an unbounded
+	// broker scan.
+	MaxRecords int
+	// Isolation selects committed-only versus all transactional fixture visibility.
+	Isolation ReadIsolation
 }
 
 // BrokerHarness supplies only infrastructure operations that the Kafka policy
 // package deliberately does not expose: isolated topic creation, direct fixture
 // reads, and authoritative committed-offset lookup.
 type BrokerHarness struct {
-	Brokers  []string
+	// Brokers identifies the caller-owned isolated fixture, not production broker
+	// support evidence.
+	Brokers []string
+	// Security selects verified TLS by default and explicitly composed, borrowed
+	// credential providers.
 	Security kafka.ClientSecurity
 	// NewTopic creates an isolated topic with the requested positive partition
 	// count and returns its Kafka name.

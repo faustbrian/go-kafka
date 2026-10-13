@@ -166,6 +166,10 @@ func runReplayPartitionWorkers(
 	return results
 }
 
+// KAFKA-DEC-006 (Kafka 4.3.1 log retention/compaction): every requested numeric
+// offset must be observed; gaps fail rather than reinterpret the requested range.
+// Read-committed log holes can therefore be incomplete, not silently restored.
+// TestReplayFailsClosedOnUnexpectedRecordsAndOffsetGaps retains that boundary.
 func (reader *ReplayReader) processReplayPartition(
 	ctx context.Context,
 	handler ReplayHandler,

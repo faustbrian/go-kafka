@@ -1,5 +1,10 @@
 // Package gotelemetry preserves the original Kafka OpenTelemetry adapter path.
 //
+// New delegates to adapters/otel while retaining legacy type/error identities
+// and instrumentation name. Providers remain borrowed; SDK export, sampling,
+// flush and shutdown are caller-owned. The facade adds no background work or
+// broader propagation/redaction guarantee.
+//
 // Deprecated: use github.com/faustbrian/go-kafka/adapters/otel.
 package gotelemetry
 
@@ -36,14 +41,24 @@ var (
 
 // Runtime is the standard-provider surface needed by this adapter.
 type Runtime interface {
+	// TracerProvider supplies a non-nil borrowed provider; SDK
+	// sampling/export/flush/lifetime remain application-owned.
 	TracerProvider() trace.TracerProvider
+	// MeterProvider supplies a non-nil borrowed provider; SDK
+	// aggregation/export/lifetime remain application-owned.
 	MeterProvider() metric.MeterProvider
 }
 
 // AttributePolicy explicitly bounds Kafka identities admitted to telemetry.
 type AttributePolicy struct {
-	AllowedClientIDs      []string
-	AllowedTopics         []string
+	// AllowedClientIDs is a copied exact-match set capped at 128 values; empty omits
+	// client identity.
+	AllowedClientIDs []string
+	// AllowedTopics is a copied exact-match set capped at 128 values; empty omits topic
+	// identity.
+	AllowedTopics []string
+	// AllowedConsumerGroups is a copied exact-match set capped at 128 values; empty
+	// omits group identity.
 	AllowedConsumerGroups []string
 }
 
@@ -62,7 +77,11 @@ func (policy AttributePolicy) canonical() kafkaotel.AttributePolicy {
 
 // Config owns immutable adapter dependencies and cardinality policy.
 type Config struct {
-	Runtime    Runtime
+	// Runtime is a borrowed provider seam; the adapter does not install globals, flush
+	// or shut down the SDK.
+	Runtime Runtime
+	// Attributes bounds identity cardinality; it does not redact all data chosen by a
+	// custom provider.
 	Attributes AttributePolicy
 }
 

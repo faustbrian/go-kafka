@@ -683,6 +683,10 @@ func (dispatcher observerDispatcher) enabled() bool {
 	return len(dispatcher.observers) != 0
 }
 
+// KAFKA-DEC-009: retain values but detach the initiating operation's cancellation
+// so completed outcomes remain observable. One cooperative deadline is shared by
+// all ordered callbacks, including those invoked after it expires. No goroutine
+// or forced callback stop is hidden here.
 func (dispatcher observerDispatcher) observe(
 	ctx context.Context,
 	observation Observation,

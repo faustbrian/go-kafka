@@ -16,36 +16,63 @@ import (
 )
 
 var (
-	ErrReplayRangesRequired    = errors.New("kafka: at least one replay range is required")
-	ErrTooManyReplayRanges     = errors.New("kafka: replay range count exceeds configured limit")
-	ErrInvalidReplayRange      = errors.New("kafka: replay range is invalid")
-	ErrDuplicateReplayRange    = errors.New("kafka: replay range is duplicated")
+	// ErrReplayRangesRequired reports that at least one replay range is required.
+	ErrReplayRangesRequired = errors.New("kafka: at least one replay range is required")
+	// ErrTooManyReplayRanges reports that replay range count exceeds configured
+	// limit.
+	ErrTooManyReplayRanges = errors.New("kafka: replay range count exceeds configured limit")
+	// ErrInvalidReplayRange reports that replay range is invalid.
+	ErrInvalidReplayRange = errors.New("kafka: replay range is invalid")
+	// ErrDuplicateReplayRange reports that replay range is duplicated.
+	ErrDuplicateReplayRange = errors.New("kafka: replay range is duplicated")
+	// ErrInvalidReplayCheckpoint reports that replay checkpoint is invalid.
 	ErrInvalidReplayCheckpoint = errors.New(
 		"kafka: replay checkpoint is invalid",
 	)
+	// ErrDuplicateReplayCheckpoint reports that replay checkpoint position is
+	// duplicated.
 	ErrDuplicateReplayCheckpoint = errors.New(
 		"kafka: replay checkpoint position is duplicated",
 	)
-	ErrInvalidReplayConfig     = errors.New("kafka: replay configuration is outside bounded limits")
+	// ErrInvalidReplayConfig reports that replay configuration is outside bounded
+	// limits.
+	ErrInvalidReplayConfig = errors.New("kafka: replay configuration is outside bounded limits")
+	// ErrReplaySideEffectsDenied reports that replay side effects require
+	// explicit opt-in.
 	ErrReplaySideEffectsDenied = errors.New(
 		"kafka: replay side effects require explicit opt-in",
 	)
-	ErrReplayBusy               = errors.New("kafka: replay reader is already running")
-	ErrReplayAlreadyRun         = errors.New("kafka: replay reader has already run")
-	ErrReplayClosing            = errors.New("kafka: replay reader is shutting down")
-	ErrReplayClosed             = errors.New("kafka: replay reader is closed")
-	ErrReplayShutdownActive     = errors.New("kafka: replay shutdown is already active")
+	// ErrReplayBusy reports that replay reader is already running.
+	ErrReplayBusy = errors.New("kafka: replay reader is already running")
+	// ErrReplayAlreadyRun reports that replay reader has already run.
+	ErrReplayAlreadyRun = errors.New("kafka: replay reader has already run")
+	// ErrReplayClosing reports that replay reader is shutting down.
+	ErrReplayClosing = errors.New("kafka: replay reader is shutting down")
+	// ErrReplayClosed reports that replay reader is closed.
+	ErrReplayClosed = errors.New("kafka: replay reader is closed")
+	// ErrReplayShutdownActive reports that replay shutdown is already active.
+	ErrReplayShutdownActive = errors.New("kafka: replay shutdown is already active")
+	// ErrReplayShutdownIncomplete reports that replay shutdown is incomplete.
 	ErrReplayShutdownIncomplete = errors.New("kafka: replay shutdown is incomplete")
-	ErrUnexpectedReplayRecord   = errors.New(
+	// ErrUnexpectedReplayRecord reports that replay returned a record outside the
+	// requested ranges.
+	ErrUnexpectedReplayRecord = errors.New(
 		"kafka: replay returned a record outside the requested ranges",
 	)
-	ErrReplayOffsetGap        = errors.New("kafka: replay range contains an offset gap")
+	// ErrReplayOffsetGap reports that replay range contains an offset gap.
+	ErrReplayOffsetGap = errors.New("kafka: replay range contains an offset gap")
+	// ErrReplayOffsetOutOfRange reports that replay offset is outside broker
+	// retention bounds.
 	ErrReplayOffsetOutOfRange = errors.New(
 		"kafka: replay offset is outside broker retention bounds",
 	)
+	// ErrReplayBoundsUnavailable reports that replay broker offset bounds are
+	// unavailable.
 	ErrReplayBoundsUnavailable = errors.New(
 		"kafka: replay broker offset bounds are unavailable",
 	)
+	// ErrReplayStalled reports that replay made no progress before its bounded
+	// deadline.
 	ErrReplayStalled = errors.New(
 		"kafka: replay made no progress before its bounded deadline",
 	)
@@ -53,24 +80,37 @@ var (
 
 // ReplayRange is one inclusive start and exclusive end partition range.
 type ReplayRange struct {
-	Topic       string
-	Partition   int32
+	// Topic names the explicitly requested log; construction validates its bounded name.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
+	Partition int32
+	// StartOffset is inclusive; a broker validation is needed to establish retention at
+	// observation time.
 	StartOffset int64
-	EndOffset   int64
+	// EndOffset is exclusive; its difference from the start is an offset allowance, not
+	// guaranteed available record count.
+	EndOffset int64
 }
 
 // ReplayMetadata identifies the complete requested range and the effective
 // inclusive start selected by the external checkpoint for one replay run.
 type ReplayMetadata struct {
-	Range                ReplayRange
+	// Range is the exact original numeric request, not an assertion that every offset
+	// remains retained.
+	Range ReplayRange
+	// EffectiveStartOffset is the inclusive checkpoint-selected start for this
+	// execution.
 	EffectiveStartOffset int64
 }
 
-// ReplayRecord is one borrowed Kafka record plus immutable replay provenance.
+// ReplayRecord is one borrowed Kafka record plus by-value replay provenance.
 // Record bytes remain valid only for the synchronous handler call unless
 // Retain is used.
 type ReplayRecord struct {
 	ConsumedRecord
+	// Metadata records requested-range and checkpoint provenance, not external-effect
+	// deduplication.
 	Metadata ReplayMetadata
 }
 
@@ -84,6 +124,8 @@ func (record ReplayRecord) Retain() ReplayRecord {
 // ReplayHandler processes one replay record. Implementations must be
 // concurrency-safe when replay permits more than one concurrent handler.
 type ReplayHandler interface {
+	// HandleReplay processes borrowed bytes inline, honors cancellation and owns
+	// deduplication of any approved external effects.
 	HandleReplay(context.Context, ReplayRecord) error
 }
 
@@ -101,14 +143,21 @@ func (handler ReplayHandlerFunc) HandleReplay(
 // ReplayPosition is the next offset an external replay checkpoint requests for
 // one configured topic partition.
 type ReplayPosition struct {
-	Topic      string
-	Partition  int32
+	// Topic must match one configured range for checkpoint admission.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
+	Partition int32
+	// NextOffset is the next requested offset; callers own external checkpoint
+	// persistence and effect deduplication.
 	NextOffset int64
 }
 
 // ReplayCheckpoint is an externally persisted set of next offsets. Positions
 // may omit configured ranges, which then start at their inclusive start.
 type ReplayCheckpoint struct {
+	// Positions supplies external next-offset metadata copied on admission;
+	// omitted ranges use their configured start.
 	Positions []ReplayPosition
 }
 
@@ -134,19 +183,36 @@ const (
 // ReplayConfig defines a bounded direct-partition reader. Replay readers do not
 // join consumer groups or mutate group offsets.
 type ReplayConfig struct {
-	Brokers     []string
-	ClientID    string
-	Protocol    ProtocolPolicy
-	Ranges      []ReplayRange
-	Checkpoint  ReplayCheckpoint
+	// Brokers supplies 1 through 32 distinct, bounded seed strings; validation does not
+	// resolve addresses or enforce a network allowlist.
+	Brokers []string
+	// ClientID is a required bounded UTF-8 client identity, not a credential or safe
+	// arbitrary telemetry label.
+	ClientID string
+	// Protocol selects the pinned client negotiation floor; it is not a maximum version
+	// or broker-support claim.
+	Protocol ProtocolPolicy
+	// Ranges is copied during construction in configured order; it does not
+	// capture a fixed broker snapshot.
+	Ranges []ReplayRange
+	// Checkpoint is copied external progress admitted only within its matching
+	// configured ranges.
+	Checkpoint ReplayCheckpoint
+	// SideEffects defaults to deny handler execution, permitting dry-run planning only.
 	SideEffects ReplaySideEffectPolicy
-	Limits      MessageLimits
-	Security    ClientSecurity
+	// Limits bounds admitted record fields; its zero value selects DefaultMessageLimits,
+	// not an aggregate process budget.
+	Limits MessageLimits
+	// Security selects verified TLS by default and explicitly composed, borrowed
+	// credential providers.
+	Security ClientSecurity
 	// Observers receive payload-free plan, record, run, shutdown, and broker
 	// events. Replay partition workers and broker goroutines can invoke the
 	// copied callbacks concurrently.
 	Observers ObserverPolicy
 
+	// MaxPollRecords bounds a fetched processing unit, defaulting to 100 and capped at
+	// 1000.
 	MaxPollRecords int
 	// MaxConcurrentFetches bounds broker fetch requests.
 	MaxConcurrentFetches int
@@ -156,8 +222,12 @@ type ReplayConfig struct {
 	// FetchMinBytes is the minimum encoded record bytes a broker tries to
 	// collect before answering a fetch. Zero defaults to one byte, values must
 	// not exceed FetchMaxBytes, and FetchMaxWait bounds the wait.
-	FetchMinBytes          int32
-	FetchMaxBytes          int32
+	FetchMinBytes int32
+	// FetchMaxBytes selects the encoded fetch response allowance, defaulting to 50 MiB;
+	// separate hard read/decompression guards apply.
+	FetchMaxBytes int32
+	// FetchMaxPartitionBytes selects an encoded per-partition fetch allowance,
+	// defaulting to 1 MiB and no greater than FetchMaxBytes.
 	FetchMaxPartitionBytes int32
 	// BrokerMaxReadBytes is the hard maximum encoded Kafka response accepted
 	// from one broker connection. It must be at least FetchMaxBytes.
@@ -167,13 +237,25 @@ type ReplayConfig struct {
 	MaxDecompressedBatchBytes int64
 	// MaxBufferedDecompressedBytes bounds decoded compressed-batch memory held
 	// across active and prefetched replay responses.
+	// Capacity is charged after decoding; transient allocations and codec-none
+	// buffers are not part of this retained-buffer budget.
 	MaxBufferedDecompressedBytes int64
-	FetchMaxWait                 time.Duration
-	PlanningTimeout              time.Duration
-	ProgressTimeout              time.Duration
-	HandlerTimeout               time.Duration
-	ShutdownTimeout              time.Duration
-	DialTimeout                  time.Duration
+	// FetchMaxWait bounds broker collection wait; zero selects 500 milliseconds.
+	FetchMaxWait time.Duration
+	// PlanningTimeout bounds cooperative broker retention validation; zero selects ten
+	// seconds.
+	PlanningTimeout time.Duration
+	// ProgressTimeout bounds per-partition lack of progress, not the total replay
+	// duration; zero selects 30 seconds.
+	ProgressTimeout time.Duration
+	// HandlerTimeout derives a cooperative context for inline application work; it
+	// cannot stop a callback that ignores cancellation.
+	HandlerTimeout time.Duration
+	// ShutdownTimeout bounds cooperative shutdown waits, not the execution of arbitrary
+	// borrowed callbacks or backend Close.
+	ShutdownTimeout time.Duration
+	// DialTimeout bounds cooperative connection attempts; zero selects ten seconds.
+	DialTimeout time.Duration
 }
 
 // Validate reports whether the replay policy is explicit, compatible, and
@@ -184,40 +266,64 @@ func (config ReplayConfig) Validate() error {
 	return err
 }
 
-// ReplayPlannedRange is one immutable dry-run range after applying the
+// ReplayPlannedRange is one by-value dry-run range after applying the
 // external checkpoint.
 type ReplayPlannedRange struct {
 	ReplayRange
+	// NextOffset is the next requested offset; callers own external checkpoint
+	// persistence and effect deduplication.
 	NextOffset int64
-	Remaining  int64
+	// Remaining is the nonnegative number of requested offsets not yet covered, not a
+	// prediction of retained records.
+	Remaining int64
 }
 
 // ReplayPlan is an owned dry-run plan. Plan produces it without broker
 // validation; PlanAgainstBroker returns it only after validating broker bounds.
 type ReplayPlan struct {
-	Ranges         []ReplayPlannedRange
+	// Ranges contains owned range metadata in configured order, not a fixed broker
+	// snapshot.
+	Ranges []ReplayPlannedRange
+	// TotalRemaining sums admitted offset ranges with signed-overflow validation.
 	TotalRemaining int64
 }
 
 // ReplayRangeResult reports exact progress for one configured range.
 type ReplayRangeResult struct {
 	ReplayRange
+	// NextOffset is the next requested offset; callers own external checkpoint
+	// persistence and effect deduplication.
 	NextOffset int64
-	Processed  int64
-	Skipped    int64
-	Failed     int64
-	Complete   bool
+	// Processed counts successful handler completions, not exactly-once external
+	// effects.
+	Processed int64
+	// Skipped counts fetched duplicates/beyond-completed-range records, not successfully
+	// handled effects.
+	Skipped int64
+	// Failed counts encountered range or handler failures; progress remains resumable.
+	Failed int64
+	// Complete means NextOffset reached the exclusive end, not that external effects are
+	// exactly once.
+	Complete bool
 }
 
 // ReplayResult summarizes completed and resumable replay progress.
 type ReplayResult struct {
-	Polled           int64
-	Processed        int64
-	Skipped          int64
-	Failed           int64
-	CompletedRanges  int
+	// Polled counts records returned to this bounded processing operation.
+	Polled int64
+	// Processed counts successful handler completions, not exactly-once external
+	// effects.
+	Processed int64
+	// Skipped counts records deliberately not handled by the replay range policy.
+	Skipped int64
+	// Failed counts encountered range/handler failures, with partial progress retained.
+	Failed int64
+	// CompletedRanges counts numeric ranges whose next offset reached their end.
+	CompletedRanges int
+	// IncompleteRanges counts ranges remaining resumable after this attempt.
 	IncompleteRanges int
-	Ranges           []ReplayRangeResult
+	// Ranges contains owned configured-order progress from this attempt.
+	Ranges []ReplayRangeResult
 }
 
 // Checkpoint returns an independently owned checkpoint for resuming every
@@ -1093,7 +1199,8 @@ func (reader *ReplayReader) Shutdown(
 	return nil
 }
 
-// Close performs bounded shutdown using the configured shutdown timeout.
+// Close applies the configured cooperative shutdown timeout. It does not cancel
+// the active replay, forcibly stop a handler or bound a context-free backend Close.
 func (reader *ReplayReader) Close() error {
 	reader.mu.Lock()
 	if reader.observerCallbacks != 0 {

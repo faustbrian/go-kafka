@@ -69,6 +69,8 @@ var resourceInspectionCandidates = []resourceInspectionCandidate{
 	{name: "sarama", new: newSaramaResourceInspector},
 }
 
+// BenchmarkEquivalentInspectionReconnect measures the declared reconnect/metadata
+// fixture lifecycle, not general outage recovery or authentication rotation.
 func BenchmarkEquivalentInspectionReconnect(benchmark *testing.B) {
 	fixture := newRestartBenchmarkFixture(benchmark)
 	brokers := fixture.brokers
@@ -132,6 +134,9 @@ func BenchmarkEquivalentInspectionReconnect(benchmark *testing.B) {
 	}
 }
 
+// BenchmarkEquivalentInspectionIdleResources compares the declared idle client
+// resource sampling; retain the fixture/environment and sampling interval for
+// comparison.
 func BenchmarkEquivalentInspectionIdleResources(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	topic := createBenchmarkTopicWithPartitions(benchmark, brokers, 3)

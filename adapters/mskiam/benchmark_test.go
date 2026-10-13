@@ -28,6 +28,8 @@ func benchmarkProvider(b *testing.B) *mskiam.Provider {
 	return provider
 }
 
+// BenchmarkTokenGeneration measures real signer token creation with a static local
+// provider; construction is excluded by ResetTimer and no MSK request is made.
 func BenchmarkTokenGeneration(b *testing.B) {
 	provider := benchmarkProvider(b)
 	ctx := context.Background()
@@ -41,6 +43,9 @@ func BenchmarkTokenGeneration(b *testing.B) {
 	}
 }
 
+// BenchmarkTokenContention measures parallel token generation through one shared
+// static provider; it is not refresh-cohort or managed-service scalability
+// evidence.
 func BenchmarkTokenContention(b *testing.B) {
 	provider := benchmarkProvider(b)
 	ctx := context.Background()
@@ -92,6 +97,9 @@ func (provider benchmarkHTTPProvider) Retrieve(
 	}, nil
 }
 
+// BenchmarkExternalCredentialRetrieval includes retrieval through the owned local
+// HTTP credential fixture plus signing; it does not measure a real AWS credential
+// endpoint.
 func BenchmarkExternalCredentialRetrieval(b *testing.B) {
 	digest := sha256.Sum256([]byte(b.Name()))
 	encoded := hex.EncodeToString(digest[:])

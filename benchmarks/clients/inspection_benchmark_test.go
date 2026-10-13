@@ -72,6 +72,9 @@ var benchmarkInspectionCandidates = []benchmarkInspectionCandidate{
 	{name: "sarama", new: newSaramaBenchmarkInspector},
 }
 
+// BenchmarkEquivalentInspection compares the declared read-only fixture
+// metadata/lag operations; backend policies and response shape must remain
+// equivalent.
 func BenchmarkEquivalentInspection(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, partitionCount := range []int32{1, 8} {

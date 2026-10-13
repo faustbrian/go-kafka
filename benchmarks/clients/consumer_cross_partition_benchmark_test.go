@@ -74,6 +74,9 @@ var (
 	crossPartitionTopics   = make(map[crossPartitionTopicKey]string)
 )
 
+// BenchmarkEquivalentCrossPartitionConsumerHandling compares the declared
+// cross-partition concurrency/settlement workload; keep partition and handler
+// counts equivalent across clients.
 func BenchmarkEquivalentCrossPartitionConsumerHandling(
 	benchmark *testing.B,
 ) {

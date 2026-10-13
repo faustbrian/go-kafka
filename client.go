@@ -24,24 +24,36 @@ import (
 )
 
 var (
+	// ErrInvalidSecurityConfig reports that client security configuration is
+	// invalid.
 	ErrInvalidSecurityConfig = errors.New(
 		"kafka: client security configuration is invalid",
 	)
+	// ErrCredentialProviderFailed reports that credential provider failed.
 	ErrCredentialProviderFailed = errors.New(
 		"kafka: credential provider failed",
 	)
+	// ErrCredentialProviderPanic reports that credential provider panicked.
 	ErrCredentialProviderPanic = errors.New(
 		"kafka: credential provider panicked",
 	)
+	// ErrInvalidCredentials reports that credential provider returned invalid
+	// credentials.
 	ErrInvalidCredentials = errors.New(
 		"kafka: credential provider returned invalid credentials",
 	)
+	// ErrExpiredOAuthBearerToken reports that credential provider returned an
+	// expired OAuth bearer token.
 	ErrExpiredOAuthBearerToken = errors.New(
 		"kafka: credential provider returned an expired OAuth bearer token",
 	)
+	// ErrInvalidClientCertificateRequest reports that TLS client certificate
+	// request exceeds policy limits.
 	ErrInvalidClientCertificateRequest = errors.New(
 		"kafka: TLS client certificate request exceeds policy limits",
 	)
+	// ErrInvalidTrustAnchors reports that trust-anchor provider returned invalid
+	// certificates.
 	ErrInvalidTrustAnchors = errors.New(
 		"kafka: trust-anchor provider returned invalid certificates",
 	)
@@ -83,8 +95,14 @@ const (
 // UsernamePassword contains one owned credential result. String formatting is
 // always redacted; callers remain responsible for not logging the fields.
 type UsernamePassword struct {
-	Username        string
-	Password        []byte
+	// Username is required bounded UTF-8 identity and must not be logged as arbitrary
+	// diagnostic data.
+	Username string
+	// Password is a required bounded credential byte slice copied before SASL use;
+	// string conversions and caller copies are not securely erased.
+	Password []byte
+	// AuthorizationID is optional bounded SASL authorization identity, not an
+	// independent permission grant.
 	AuthorizationID string
 }
 
@@ -101,6 +119,8 @@ func (credentials UsernamePassword) GoString() string {
 // UsernamePasswordProvider returns fresh credentials for one authentication
 // session. Implementations must be concurrency-safe and honor ctx.
 type UsernamePasswordProvider interface {
+	// Credentials returns fresh independently owned credentials; honor the derived
+	// deadline and permit concurrent sessions.
 	Credentials(context.Context) (UsernamePassword, error)
 }
 
@@ -118,10 +138,18 @@ func (provider UsernamePasswordProviderFunc) Credentials(
 // expired credentials fail before any authentication bytes are constructed.
 // String formatting is always redacted.
 type OAuthBearerToken struct {
-	Token           []byte
-	ExpiresAt       time.Time
+	// Token is required bounded bearer syntax copied before SASL use; syntax/expiry
+	// checks do not validate a signature.
+	Token []byte
+	// ExpiresAt must be strictly after local wall time before authentication; the
+	// package does not refresh an established session itself.
+	ExpiresAt time.Time
+	// AuthorizationID is optional bounded RFC 7628 identity and forbids comma, equals
+	// and controls.
 	AuthorizationID string
-	Extensions      map[string]string
+	// Extensions is a copied bounded SASL extension map; auth is reserved and values are
+	// not automatically redacted.
+	Extensions map[string]string
 }
 
 // String returns a stable redacted representation.
@@ -137,6 +165,8 @@ func (token OAuthBearerToken) GoString() string {
 // OAuthBearerProvider returns a fresh token for one authentication session.
 // Implementations must be concurrency-safe and honor ctx.
 type OAuthBearerProvider interface {
+	// Token returns a fresh independently owned token for each session and must honor
+	// the cooperative provider context.
 	Token(context.Context) (OAuthBearerToken, error)
 }
 
@@ -153,14 +183,20 @@ func (provider OAuthBearerProviderFunc) Token(
 // ClientCertificateRequest is an owned, bounded view of the TLS server's
 // client-certificate request.
 type ClientCertificateRequest struct {
-	AcceptableCAs    [][]byte
+	// AcceptableCAs is an owned copied issuer-name list capped at 64 entries and 64 KiB
+	// aggregate.
+	AcceptableCAs [][]byte
+	// SignatureSchemes is an owned copy of at most 64 requested TLS schemes.
 	SignatureSchemes []tls.SignatureScheme
-	Version          uint16
+	// Version is the TLS version reported by the handshake request.
+	Version uint16
 }
 
 // ClientCertificateProvider returns a fresh mTLS certificate for one
 // handshake. Implementations must be concurrency-safe and honor ctx.
 type ClientCertificateProvider interface {
+	// ClientCertificate returns bounded parsed certificate material with a matching
+	// private signer; keep borrowed signer state concurrency-safe.
 	ClientCertificate(context.Context, ClientCertificateRequest) (tls.Certificate, error)
 }
 
@@ -185,6 +221,8 @@ func (provider ClientCertificateProviderFunc) ClientCertificate(
 // provider must not mutate or reuse them after returning. The package retains
 // only owned copies. String formatting is always redacted.
 type TrustAnchors struct {
+	// Certificates transfers a complete nonempty DER root set, capped at 64 unique
+	// certificates and 1 MiB aggregate; the package retains copies.
 	Certificates [][]byte
 }
 
@@ -201,6 +239,8 @@ func (anchors TrustAnchors) GoString() string {
 // TrustAnchorProvider returns the complete root set for one new TLS
 // connection. Implementations must be concurrency-safe and honor ctx.
 type TrustAnchorProvider interface {
+	// TrustAnchors supplies the complete root set for each new TLS connection; rotation
+	// does not replace roots on an established connection.
 	TrustAnchors(context.Context) (TrustAnchors, error)
 }
 
@@ -301,14 +341,28 @@ func (method AuthenticationMethod) String() string {
 // value uses verified TLS with system roots and a TLS 1.2 minimum. Construction
 // clones mutable TLS slices, certificate bytes, and root pools. Interface
 // values, private keys, TLS callbacks, and session caches remain caller-owned
-// and must be immutable or concurrency-safe for the client's lifetime.
+// and must be immutable or concurrency-safe for the client's lifetime. Validation
+// may inspect a borrowed private signer through Public. Credential strings and
+// TLS material are not securely erased by this package.
 type ClientSecurity struct {
-	Transport                 TransportSecurity
-	TLS                       *tls.Config
-	Authentication            Authentication
+	// Transport defaults to verified TLS; development plaintext forbids all
+	// authentication/provider policy.
+	Transport TransportSecurity
+	// TLS is selectively cloned after validation; private keys, callbacks and session
+	// caches remain borrowed and require concurrency safety.
+	TLS *tls.Config
+	// Authentication is the immutable mechanism selection borrowing its session
+	// provider.
+	Authentication Authentication
+	// ClientCertificateProvider optionally supplies rotating mTLS material and excludes
+	// static certificates or GetClientCertificate.
 	ClientCertificateProvider ClientCertificateProvider
-	TrustAnchorProvider       TrustAnchorProvider
-	CredentialTimeout         time.Duration
+	// TrustAnchorProvider optionally supplies roots per new connection and excludes
+	// static RootCAs and session caches.
+	TrustAnchorProvider TrustAnchorProvider
+	// CredentialTimeout derives one provider-call context, defaulting to five seconds
+	// and bounded from 100 milliseconds through one minute when providers are used.
+	CredentialTimeout time.Duration
 }
 
 // Validate reports whether the transport and authentication policy is safe and
@@ -804,10 +858,13 @@ type credentialProviderError struct {
 	cause error
 }
 
+// Error returns the stable provider-failure category without rendering cause.
 func (err *credentialProviderError) Error() string {
 	return ErrCredentialProviderFailed.Error()
 }
 
+// Unwrap preserves the category and original provider cause. Wrapper text does
+// not redact the cause; callers own diagnostic handling after inspection.
 func (err *credentialProviderError) Unwrap() []error {
 	return []error{ErrCredentialProviderFailed, err.cause}
 }

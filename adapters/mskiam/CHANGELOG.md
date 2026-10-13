@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Documentation
+
+- Clarify borrowed AWS credential providers, cooperative token deadlines,
+  refresh ownership, and structural token validation versus broker authentication.
+
 ## [1.1.1] - 2026-10-08
 
 ### Changed

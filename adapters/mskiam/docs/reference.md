@@ -140,9 +140,12 @@ beyond the credential used to sign it.
 | validation | bind URL shape, region, timestamp, lifetime, and size | malformed or expired token category |
 | return | copy token bytes and cap expiry at credential expiry | no partial token is returned |
 
-Every transition is synchronous and context-bounded. The adapter creates only
-the per-call deadline timer, starts no goroutine, and leaves credential-provider
-ownership and shutdown with the caller.
+Credential retrieval and signing are synchronous and receive cooperative
+contexts; token
+generation derives a per-call deadline, but it cannot force a borrowed provider
+or signer to return. Default-chain loading uses the caller context. The adapter
+starts no goroutine and leaves credential-provider ownership and shutdown with
+the caller.
 
 ## Failure and redaction
 

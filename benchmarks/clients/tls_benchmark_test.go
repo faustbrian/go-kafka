@@ -185,6 +185,8 @@ var (
 	}
 )
 
+// BenchmarkEquivalentTLSSynchronousProduce compares fixture TLS delivery under
+// equivalent client security and acknowledgement policy, not all TLS deployments.
 func BenchmarkEquivalentTLSSynchronousProduce(benchmark *testing.B) {
 	brokers, tlsConfig := benchmarkTLSBrokers(benchmark)
 	for _, size := range []int{128, 1024} {
@@ -250,6 +252,8 @@ func BenchmarkEquivalentTLSSynchronousProduce(benchmark *testing.B) {
 	}
 }
 
+// BenchmarkEquivalentTLSConnectProduceClose includes fixture TLS client
+// construction, delivery and close; it is not a warm-client throughput comparison.
 func BenchmarkEquivalentTLSConnectProduceClose(benchmark *testing.B) {
 	brokers, tlsConfig := benchmarkTLSBrokers(benchmark)
 	value := benchmarkTLSValue(128)
@@ -293,6 +297,9 @@ func BenchmarkEquivalentTLSConnectProduceClose(benchmark *testing.B) {
 	}
 }
 
+// BenchmarkEquivalentAuthenticatedSynchronousProduce compares the selected fixture
+// authentication mechanisms during synchronous delivery, not managed-service
+// authentication support.
 func BenchmarkEquivalentAuthenticatedSynchronousProduce(benchmark *testing.B) {
 	for _, mode := range []benchmarkAuthenticatedMode{
 		benchmarkMutualTLS,
@@ -362,6 +369,9 @@ func BenchmarkEquivalentAuthenticatedSynchronousProduce(benchmark *testing.B) {
 	}
 }
 
+// BenchmarkEquivalentAuthenticatedConnectProduceClose includes fixture
+// authenticated connect/deliver/close costs; do not compare it with a warm-client
+// benchmark.
 func BenchmarkEquivalentAuthenticatedConnectProduceClose(benchmark *testing.B) {
 	value := benchmarkTLSValue(128)
 	for _, mode := range []benchmarkAuthenticatedMode{

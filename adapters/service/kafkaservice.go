@@ -1,5 +1,24 @@
 // Package kafkaservice composes explicit Kafka resources with service
 // lifecycle and correlation boundaries.
+//
+// NewProducer and NewConsumer are inert wrappers: the application constructs
+// Kafka resources and supplies synchronous callbacks. A producer is borrowed
+// unless Shutdown explicitly transfers teardown; consumer Shutdown is required.
+// Start admits use only after validation. Stop closes admission, waits for
+// admitted work/startup and retains successful teardown; failed shutdown may
+// be retried. The service supervisor must cancel and join intake first.
+//
+// Locks protect lifecycle state, not user callback execution. Callback panics
+// are contained without panic values, but context budgets require cooperation
+// and cannot force a callback to return. Resource returns the exact resource,
+// not a copy. Raw causes exposed by CallbackError and StartupError need caller
+// redaction.
+//
+// Correlation creates fresh delivery/request hops and trace propagation is
+// explicitly borrowed. TrustedMetadata preserves valid correlation, not sender
+// authentication, tenant isolation or broker acknowledgement. This package does
+// not construct clients, own broker transactions, supervise external effects,
+// install global telemetry or make publication atomic with application state.
 package kafkaservice
 
 import (

@@ -9,12 +9,16 @@ import (
 	"github.com/twmb/franz-go/pkg/kversion"
 )
 
+// ErrInvalidProtocolPolicy identifies a minimum version outside the pinned
+// franz-go release table or valid bounded version syntax.
 var ErrInvalidProtocolPolicy = errors.New("kafka: protocol policy is invalid")
 
 // ProtocolPolicy controls Kafka request-version negotiation without exposing
 // franz-go version types. An empty MinimumVersion uses franz-go's negotiated
 // request versions without a package-imposed downgrade floor.
 type ProtocolPolicy struct {
+	// MinimumVersion is a known pinned franz-go Kafka release floor; empty permits
+	// normal negotiation without this floor.
 	MinimumVersion string
 }
 
@@ -52,6 +56,9 @@ func kafkaReleaseAtLeast(value string, minimumMajor int, minimumMinor int) bool 
 		(major == minimumMajor && minor >= minimumMinor)
 }
 
+// KAFKA-DEC-001: this is a downgrade floor in franz-go v1.21.5 negotiation,
+// not a maximum release or independently qualified broker-support matrix.
+// TestClientRolesApplyProtocolAndBoundedEOFRecoveryPolicy retains the selection.
 func clientProtocolOptions(policy ProtocolPolicy) []kgo.Opt {
 	if policy.MinimumVersion == "" {
 		return nil

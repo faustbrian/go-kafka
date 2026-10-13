@@ -8,6 +8,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 )
 
+// FuzzConfigValidate mutates region and token-deadline syntax through validation
+// only; it is not live AWS or MSK evidence.
 func FuzzConfigValidate(f *testing.F) {
 	f.Add("eu-north-1", int64(0))
 	f.Add("us-gov-east-1", int64(time.Second))
@@ -22,6 +24,8 @@ func FuzzConfigValidate(f *testing.F) {
 	})
 }
 
+// FuzzTokenResultValidation mutates returned signer token/expiry through a fake
+// signer, exercising parser and panic boundaries without network credentials.
 func FuzzTokenResultValidation(f *testing.F) {
 	f.Add("YWJj", int64((15*time.Minute)/time.Millisecond))
 	f.Add("", int64(0))

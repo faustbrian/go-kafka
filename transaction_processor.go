@@ -12,36 +12,57 @@ import (
 )
 
 var (
+	// ErrInvalidTransactionProcessorConfig reports that transaction processor
+	// configuration is invalid.
 	ErrInvalidTransactionProcessorConfig = errors.New(
 		"kafka: transaction processor configuration is invalid",
 	)
+	// ErrTransactionHandlerRequired reports that transaction processor handler is
+	// required.
 	ErrTransactionHandlerRequired = errors.New(
 		"kafka: transaction processor handler is required",
 	)
+	// ErrTransactionNotCommitted reports that consume-transform-produce
+	// transaction was not committed.
 	ErrTransactionNotCommitted = errors.New(
 		"kafka: consume-transform-produce transaction was not committed",
 	)
+	// ErrTooManyTransactionOutputRecords reports that transaction output record
+	// count exceeds configured limit.
 	ErrTooManyTransactionOutputRecords = errors.New(
 		"kafka: transaction output record count exceeds configured limit",
 	)
+	// ErrTransactionOutputTooLarge reports that transaction output bytes exceed
+	// configured limit.
 	ErrTransactionOutputTooLarge = errors.New(
 		"kafka: transaction output bytes exceed configured limit",
 	)
+	// ErrTransactionProcessorBusy reports that transaction processor runner is
+	// already active.
 	ErrTransactionProcessorBusy = errors.New(
 		"kafka: transaction processor runner is already active",
 	)
+	// ErrTransactionProcessorClosing reports that transaction processor is
+	// shutting down.
 	ErrTransactionProcessorClosing = errors.New(
 		"kafka: transaction processor is shutting down",
 	)
+	// ErrTransactionProcessorClosed reports that transaction processor is closed.
 	ErrTransactionProcessorClosed = errors.New(
 		"kafka: transaction processor is closed",
 	)
+	// ErrTransactionProcessorShutdownActive reports that transaction processor
+	// shutdown is already active.
 	ErrTransactionProcessorShutdownActive = errors.New(
 		"kafka: transaction processor shutdown is already active",
 	)
+	// ErrTransactionProcessorShutdownIncomplete reports that transaction
+	// processor shutdown is incomplete.
 	ErrTransactionProcessorShutdownIncomplete = errors.New(
 		"kafka: transaction processor shutdown is incomplete",
 	)
+	// ErrTransactionProcessorFatal reports that transaction processor entered a
+	// fatal state.
 	ErrTransactionProcessorFatal = errors.New(
 		"kafka: transaction processor entered a fatal state",
 	)
@@ -50,29 +71,57 @@ var (
 // TransactionConnectionConfig defines shared broker, identity, protocol, and
 // security policy for one consume-transform-produce client.
 type TransactionConnectionConfig struct {
-	Brokers     []string
-	ClientID    string
-	Protocol    ProtocolPolicy
+	// Brokers supplies 1 through 32 distinct, bounded seed strings; validation does not
+	// resolve addresses or enforce a network allowlist.
+	Brokers []string
+	// ClientID is a required bounded UTF-8 client identity, not a credential or safe
+	// arbitrary telemetry label.
+	ClientID string
+	// Protocol selects the pinned client negotiation floor; it is not a maximum version
+	// or broker-support claim.
+	Protocol ProtocolPolicy
+	// DialTimeout bounds cooperative connection attempts; zero selects ten seconds.
 	DialTimeout time.Duration
-	Security    ClientSecurity
+	// Security selects verified TLS by default and explicitly composed, borrowed
+	// credential providers.
+	Security ClientSecurity
 }
 
 // TransactionGroupConfig defines the bounded read-committed consumer-group
 // side of one consume-transform-produce client.
 type TransactionGroupConfig struct {
-	GroupID              string
-	InstanceID           string
-	Rack                 string
-	Topics               []string
-	ResetOffset          OffsetPolicy
-	BalancePolicy        GroupBalancePolicy
-	MaxPollRecords       int
+	// GroupID is the required bounded group identity; external ACL policy remains
+	// caller-owned.
+	GroupID string
+	// InstanceID is an optional static member identity; it must be unique among live
+	// members of the group.
+	InstanceID string
+	// Rack is optional bounded rack metadata; preferred-replica behavior depends on
+	// broker topology.
+	Rack string
+	// Topics is the required set of at most 64 distinct valid subscription names.
+	Topics []string
+	// ResetOffset explicitly selects earliest or latest when a usable group offset is
+	// absent; zero is invalid.
+	ResetOffset OffsetPolicy
+	// BalancePolicy defaults to cooperative sticky; eager migration requires the
+	// documented two-rollout policy.
+	BalancePolicy GroupBalancePolicy
+	// MaxPollRecords bounds a fetched processing unit, defaulting to 100 and capped at
+	// 1000.
+	MaxPollRecords int
+	// MaxConcurrentFetches bounds broker fetch concurrency, defaulting to four and
+	// capped at 64.
 	MaxConcurrentFetches int
 	// FetchMinBytes is the minimum encoded record bytes a broker tries to
 	// collect before answering a fetch. Zero defaults to one byte, values must
 	// not exceed FetchMaxBytes, and FetchMaxWait bounds the wait.
-	FetchMinBytes          int32
-	FetchMaxBytes          int32
+	FetchMinBytes int32
+	// FetchMaxBytes selects the encoded fetch response allowance, defaulting to 50 MiB;
+	// separate hard read/decompression guards apply.
+	FetchMaxBytes int32
+	// FetchMaxPartitionBytes selects an encoded per-partition fetch allowance,
+	// defaulting to 1 MiB and no greater than FetchMaxBytes.
 	FetchMaxPartitionBytes int32
 	// BrokerMaxReadBytes is the hard maximum encoded Kafka response accepted
 	// from one broker connection. It must be at least FetchMaxBytes.
@@ -82,44 +131,97 @@ type TransactionGroupConfig struct {
 	MaxDecompressedBatchBytes int64
 	// MaxBufferedDecompressedBytes bounds decoded compressed-batch memory held
 	// across active and prefetched source responses.
+	// Capacity is charged after decoding; transient allocations and codec-none
+	// buffers are not part of this retained-buffer budget.
 	MaxBufferedDecompressedBytes int64
-	FetchMaxWait                 time.Duration
-	SessionTimeout               time.Duration
-	RebalanceTimeout             time.Duration
-	HeartbeatInterval            time.Duration
-	ProcessingTimeout            time.Duration
+	// FetchMaxWait bounds broker collection wait; zero selects 500 milliseconds.
+	FetchMaxWait time.Duration
+	// SessionTimeout selects the group failure-detection window, defaulting to 45
+	// seconds.
+	SessionTimeout time.Duration
+	// RebalanceTimeout bounds cooperative poll settlement; heartbeat, handler/processing
+	// and commit budgets must fit its configured policy.
+	RebalanceTimeout time.Duration
+	// HeartbeatInterval defaults to three seconds and must be below SessionTimeout.
+	HeartbeatInterval time.Duration
+	// ProcessingTimeout is one cooperative budget for the complete poll, not an
+	// independent allowance per record.
+	ProcessingTimeout time.Duration
 }
 
 // TransactionOutputConfig defines bounded transactional production policy.
 // TransactionalID must be unique to one live processor instance.
 type TransactionOutputConfig struct {
-	AllowedTopics          []string
-	KeyPolicy              KeyPolicy
-	MaxBufferedRecords     int
-	MaxBufferedBytes       int
-	MaxBatchBytes          int32
-	MaxOutputRecords       int
-	MaxOutputBytes         int64
-	RecordRetries          int
-	RetryBackoffMin        time.Duration
-	RetryBackoffMax        time.Duration
-	DeliveryTimeout        time.Duration
-	RequestTimeout         time.Duration
-	Linger                 time.Duration
+	// AllowedTopics is a required, copied set of at most 64 distinct valid topic names
+	// checked before production.
+	AllowedTopics []string
+	// KeyPolicy requires a nonempty key by default; explicit partition selection does
+	// not waive that policy.
+	KeyPolicy KeyPolicy
+	// MaxBufferedRecords bounds queued production, defaulting to 1000; it is distinct
+	// from transaction-total output admission.
+	MaxBufferedRecords int
+	// MaxBufferedBytes bounds the client produce buffer, defaulting to 64 MiB and at
+	// least MaxBatchBytes.
+	MaxBufferedBytes int
+	// MaxBatchBytes bounds a Kafka producer batch, defaulting to 1 MiB and large enough
+	// for the permitted record policy.
+	MaxBatchBytes int32
+	// MaxOutputRecords bounds admitted outputs, including failed deliveries,
+	// independently of current buffers; zero selects 1000, maximum 100000.
+	MaxOutputRecords int
+	// MaxOutputBytes bounds conservative admitted-output bytes, defaults to 10 MiB
+	// and is capped at 1 GiB; ignored publish failures still abort the poll.
+	MaxOutputBytes int64
+	// RecordRetries bounds client retry attempts; zero selects ten rather than disabling
+	// retries.
+	RecordRetries int
+	// RetryBackoffMin is the positive initial retry bound; zero selects 250
+	// milliseconds.
+	RetryBackoffMin time.Duration
+	// RetryBackoffMax caps jittered retry growth; zero selects one second and must not
+	// precede RetryBackoffMin.
+	RetryBackoffMax time.Duration
+	// DeliveryTimeout defaults to 30 seconds; package delivery contexts add
+	// RetryBackoffMax and do not use record event time.
+	DeliveryTimeout time.Duration
+	// RequestTimeout bounds cooperative broker requests; zero selects ten seconds.
+	RequestTimeout time.Duration
+	// Linger batches production briefly; zero selects five milliseconds rather than
+	// immediate dispatch.
+	Linger time.Duration
+	// CompressionPreferences is an ordered, copied, distinct codec list; zero selects
+	// Snappy then none, and none may appear only last.
 	CompressionPreferences []CompressionCodec
-	TransactionalID        string
-	TransactionTimeout     time.Duration
-	TransactionEndTimeout  time.Duration
+	// TransactionalID is required and must be unique to one live processor instance.
+	TransactionalID string
+	// TransactionTimeout selects the broker transaction lifetime, defaulting to 30
+	// seconds when transactions are enabled.
+	TransactionTimeout time.Duration
+	// TransactionEndTimeout bounds detached commit/abort contexts, defaulting to 30
+	// seconds; it cannot force borrowed code to stop.
+	TransactionEndTimeout time.Duration
 }
 
 // TransactionProcessorConfig composes shared connection, source group, output,
 // record-limit, and lifecycle policy for Kafka-only consume-transform-produce.
 type TransactionProcessorConfig struct {
-	Connection      TransactionConnectionConfig
-	Group           TransactionGroupConfig
-	Output          TransactionOutputConfig
-	Limits          MessageLimits
-	Observers       ObserverPolicy
+	// Connection supplies the shared identity, transport and provider policy.
+	Connection TransactionConnectionConfig
+	// Group defines read-committed source membership and the all-or-nothing poll
+	// boundary.
+	Group TransactionGroupConfig
+	// Output supplies bounded Kafka-only transaction production and total-output
+	// admission policy.
+	Output TransactionOutputConfig
+	// Limits bounds admitted record fields; its zero value selects DefaultMessageLimits,
+	// not an aggregate process budget.
+	Limits MessageLimits
+	// Observers supplies copied ordered synchronous callbacks; timeout and reentry
+	// controls are cooperative, not detached background execution.
+	Observers ObserverPolicy
+	// ShutdownTimeout bounds cooperative shutdown waits, not the execution of arbitrary
+	// borrowed callbacks or backend Close.
 	ShutdownTimeout time.Duration
 }
 
@@ -133,8 +235,12 @@ func (config TransactionProcessorConfig) Validate() error {
 
 // TransactionHandler processes one borrowed source record and may publish
 // records through the transaction capability. Returning an error aborts the
-// complete poll and leaves every source offset unsettled.
+// complete poll and leaves every source offset unsettled. Handlers must cooperate
+// with cancellation before effects: the processor checks cancellation after the
+// call returns, but cannot preempt application work or roll back external effects.
 type TransactionHandler interface {
+	// Handle receives a borrowed record and callback-scoped Transaction; honor ctx
+	// before effects and return only after owned publication work stops.
 	Handle(context.Context, ConsumedRecord, Transaction) error
 }
 
@@ -155,9 +261,16 @@ func (handler TransactionHandlerFunc) Handle(
 // those records are visible to read-committed consumers only when Committed is
 // true.
 type TransactionPollResult struct {
-	Polled    int
+	// Polled counts records returned to this bounded processing operation.
+	Polled int
+	// Processed counts successful handler completions, not exactly-once external
+	// effects.
 	Processed int
+	// Published counts broker-acknowledged output inside the transaction, not
+	// read-committed visibility.
 	Published int
+	// Committed reports confirmed atomic Kafka offsets/output settlement; false alone
+	// does not resolve an unknown commit receipt.
 	Committed bool
 }
 

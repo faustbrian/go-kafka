@@ -94,26 +94,43 @@ const (
 // FailureRetryPolicy bounds optional in-process handler retries. MaxAttempts
 // includes the initial handler call. The zero value performs one attempt.
 type FailureRetryPolicy struct {
-	MaxAttempts    int
+	// MaxAttempts includes the first call, defaults to one and is capped at 32.
+	MaxAttempts int
+	// InitialBackoff is at least one millisecond only when retries are enabled;
+	// otherwise it must be zero.
 	InitialBackoff time.Duration
-	MaxBackoff     time.Duration
-	Categories     []ErrorCategory
+	// MaxBackoff caps exponential wait at no more than five minutes and must not precede
+	// InitialBackoff.
+	MaxBackoff time.Duration
+	// Categories is a copied unique category set; enabled retry defaults to
+	// ErrorRetryable.
+	Categories []ErrorCategory
 }
 
 // FailureTarget identifies one explicit versioned retry or dead-letter topic.
 // Version describes the application's topic/envelope contract version and is
 // propagated in package-owned failure metadata.
 type FailureTarget struct {
-	Topic   string
+	// Topic is a valid explicit target different from the source at runtime; the package
+	// does not create it.
+	Topic string
+	// Version is the positive application envelope/topic version written into failure
+	// metadata.
 	Version uint16
 }
 
 // HandlerFailure is the synchronous failure-policy input. Record bytes remain
-// borrowed for the callback unless Retain is called. Cause is deliberately
-// omitted from formatting and telemetry by the package.
+// borrowed for the callback unless Retain is called. Package observations omit
+// the original cause; application formatting of this value, its record, or Cause
+// is not a redaction boundary.
 type HandlerFailure struct {
-	Record   ConsumedRecord
-	Attempt  int
+	// Record is borrowed failure input during the synchronous callback; Retain copies
+	// its bytes.
+	Record ConsumedRecord
+	// Attempt counts in-process handler invocations, including the first; it is not a
+	// durable redelivery count.
+	Attempt int
+	// Category is the stable classification of the failed handler attempt.
 	Category ErrorCategory
 
 	cause error
@@ -137,6 +154,8 @@ func (failure HandlerFailure) Retain() HandlerFailure {
 // low-cardinality operational category. Implementations must be synchronous,
 // bounded, concurrency-safe, and must not render record data or credentials.
 type FailureClassifier interface {
+	// ClassifyFailure must return a defined stable category without logging raw
+	// error/record data; invocation is synchronous and panics are contained.
 	ClassifyFailure(error) ErrorCategory
 }
 
@@ -152,6 +171,8 @@ func (classifier FailureClassifierFunc) ClassifyFailure(err error) ErrorCategory
 // nil result declares the source record resolved and permits normal consumer
 // settlement. An error leaves the source record unsettled.
 type FailureDelegate interface {
+	// HandleFailure returns nil only when application resolution permits settlement; it
+	// must honor cancellation and own any external effect.
 	HandleFailure(context.Context, HandlerFailure) error
 }
 
@@ -171,6 +192,8 @@ func (delegate FailureDelegateFunc) HandleFailure(
 // implementation owns the supplied record and must return one definite
 // delivery result before returning.
 type FailurePublisher interface {
+	// PublishRecord owns the supplied bytes and returns a definite record delivery
+	// result; it must honor cancellation and concurrent callers.
 	PublishRecord(context.Context, ProducerRecord) DeliveryResult
 }
 
@@ -178,14 +201,32 @@ type FailurePublisher interface {
 // Configuration is validated and copied before construction. Callback
 // implementations retain their own lifetime and concurrency ownership.
 type FailureHandlerConfig struct {
-	Handler        Handler
-	Classifier     FailureClassifier
-	Retry          FailureRetryPolicy
-	Mode           FailureMode
-	Target         FailureTarget
-	Publisher      FailurePublisher
-	Delegate       FailureDelegate
-	Limits         MessageLimits
+	// Handler is borrowed application work; it must cooperate with cancellation and
+	// support configured concurrency.
+	Handler Handler
+	// Classifier optionally maps errors to stable categories; nil uses package
+	// classification and callbacks must be bounded.
+	Classifier FailureClassifier
+	// Retry bounds in-process attempts; it does not persist a retry schedule or make
+	// external effects idempotent.
+	Retry FailureRetryPolicy
+	// Mode defaults to stopping without settlement; retry-topic, dead-letter and
+	// delegate modes require their corresponding policy inputs.
+	Mode FailureMode
+	// Target selects an explicit non-source versioned retry/dead-letter topic in
+	// publication modes.
+	Target FailureTarget
+	// Publisher is borrowed synchronous publication; only definite success permits
+	// separate source settlement.
+	Publisher FailurePublisher
+	// Delegate is borrowed resolution policy; nil success explicitly permits source
+	// settlement but does not perform the commit.
+	Delegate FailureDelegate
+	// Limits bounds admitted record fields; its zero value selects DefaultMessageLimits,
+	// not an aggregate process budget.
+	Limits MessageLimits
+	// PublishTimeout bounds a cooperative publication context; zero selects ten seconds
+	// only in publication modes.
 	PublishTimeout time.Duration
 }
 
@@ -202,10 +243,15 @@ func (config FailureHandlerConfig) Validate() error {
 type FailureStage uint8
 
 const (
+	// FailureStageStop identifies explicit unsettled failure.
 	FailureStageStop FailureStage = iota + 1
+	// FailureStageClassify identifies invalid or panicking error classification.
 	FailureStageClassify
+	// FailureStageBackoff identifies interrupted bounded retry wait.
 	FailureStageBackoff
+	// FailureStagePublish identifies uncertain or failed target delivery.
 	FailureStagePublish
+	// FailureStageDelegate identifies failed application resolution.
 	FailureStageDelegate
 )
 

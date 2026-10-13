@@ -17,10 +17,15 @@ import (
 // AuthenticationProviderHarness supplies isolated implementations of every
 // provider seam owned by the root Kafka module.
 type AuthenticationProviderHarness struct {
-	UsernamePassword  func(*testing.T) kafka.UsernamePasswordProvider
-	OAuthBearer       func(*testing.T) kafka.OAuthBearerProvider
+	// UsernamePassword constructs isolated fresh state for each credential-provider
+	// subtest.
+	UsernamePassword func(*testing.T) kafka.UsernamePasswordProvider
+	// OAuthBearer constructs isolated fresh state for each token-provider subtest.
+	OAuthBearer func(*testing.T) kafka.OAuthBearerProvider
+	// ClientCertificate constructs isolated fresh state for each mTLS-provider subtest.
 	ClientCertificate func(*testing.T) kafka.ClientCertificateProvider
-	TrustAnchors      func(*testing.T) kafka.TrustAnchorProvider
+	// TrustAnchors constructs isolated fresh state for each root-rotation subtest.
+	TrustAnchors func(*testing.T) kafka.TrustAnchorProvider
 }
 
 // Validate checks whether every authentication provider seam is present.

@@ -38,6 +38,8 @@ var benchmarkReplayCandidates = []benchmarkReplayCandidate{
 	{name: "sarama", run: runSaramaBenchmarkReplay},
 }
 
+// BenchmarkEquivalentReplay compares exact-range fixture replay after equivalent
+// committed source setup, not general restoration of compacted or retained logs.
 func BenchmarkEquivalentReplay(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, recordCount := range []int{10, 100} {

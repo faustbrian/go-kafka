@@ -104,6 +104,9 @@ var (
 	)
 )
 
+// BenchmarkEquivalentConsumerHandling compares equivalent record handling and
+// source settlement over preloaded fixture records, not arbitrary application side
+// effects.
 func BenchmarkEquivalentConsumerHandling(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, mode := range []benchmarkConsumerMode{

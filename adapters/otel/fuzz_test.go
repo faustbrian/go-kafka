@@ -16,6 +16,8 @@ import (
 	tracenoop "go.opentelemetry.io/otel/trace/noop"
 )
 
+// FuzzAttributePolicyValidate mutates identity cardinality/validation policy
+// without real SDK export.
 func FuzzAttributePolicyValidate(f *testing.F) {
 	f.Add("client", "orders", "workers", uint8(1), false)
 	f.Add("", ".", "\x00", uint8(0), false)
@@ -48,6 +50,8 @@ func FuzzAttributePolicyValidate(f *testing.F) {
 	})
 }
 
+// FuzzHostileProviders explores nil, failing and panicking injected telemetry
+// providers without recording raw diagnostics.
 func FuzzHostileProviders(f *testing.F) {
 	f.Add(uint8(0), uint8(0), uint8(0), uint8(kafka.ObservationProducerShutdown), int64(time.Millisecond), false, []byte("client"))
 	f.Add(uint8(3), uint8(1), uint8(2), uint8(kafka.ObservationProduceRecord), int64(0), false, []byte{0xff, 0})
@@ -175,6 +179,8 @@ func fuzzIdentities(base string, count int, duplicate bool) []string {
 	return values
 }
 
+// FuzzObserverValidation mutates observation/identity boundaries through owned
+// test sinks; it is not live exporter or broker qualification.
 func FuzzObserverValidation(f *testing.F) {
 	f.Add(uint8(kafka.ObservationProduceRecord), int64(time.Millisecond), 1, 0, true, uint8(0), []byte("client|topic|group"))
 	f.Add(uint8(255), int64(-1), -1, -1, false, uint8(255), []byte{0xff, 0, 1})
@@ -252,6 +258,8 @@ func FuzzObserverValidation(f *testing.F) {
 	})
 }
 
+// FuzzTraceContextPropagation mutates bounded W3C header injection/extraction and
+// duplicate-field ownership without global propagators or baggage.
 func FuzzTraceContextPropagation(f *testing.F) {
 	f.Add("application", []byte("value"))
 	f.Add("0", []byte{})

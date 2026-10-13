@@ -4,6 +4,11 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Clarify the deprecated facade's borrowed SDK lifecycle, propagation ownership,
+  and relationship to the canonical OpenTelemetry adapter.
+
 ## 1.0.2 - 2026-10-08
 
 ### Changed

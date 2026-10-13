@@ -53,6 +53,9 @@ var (
 	)
 )
 
+// BenchmarkEquivalentTransactionalProduce compares fixture Kafka transaction
+// outcomes with equivalent commit/isolation policy, not external transaction
+// atomicity.
 func BenchmarkEquivalentTransactionalProduce(benchmark *testing.B) {
 	brokers := benchmarkBrokers(benchmark)
 	for _, payloadBytes := range []int{128, 1024} {

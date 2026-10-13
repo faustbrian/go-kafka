@@ -10,6 +10,8 @@ import (
 	"github.com/faustbrian/go-kafka/kafkaservice"
 )
 
+// FuzzHandlerCorrelationBoundary mutates inbound correlation metadata through the
+// explicit handler fixture; preservation does not authenticate a sender.
 func FuzzHandlerCorrelationBoundary(fuzz *testing.F) {
 	fuzz.Add("workflow", "producer-request", true, false)
 	fuzz.Add("contains spaces", "producer-request", true, true)

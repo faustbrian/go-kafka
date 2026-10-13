@@ -1,4 +1,21 @@
 // Package mskiam provides bounded Amazon MSK IAM authentication for kafka.
+//
+// Load selects a required region and either borrows a refreshing credentials
+// provider or resolves the AWS SDK default chain. The adapter delegates SigV4
+// signing to aws-msk-iam-sasl-signer-go v1.0.4 with AWS SDK v2 v1.43.0, then
+// validates bounded token URL structure, scope and lifetime. It does not verify
+// the signature independently or authorize an MSK cluster action.
+//
+// Provider starts no goroutines. Calls are concurrent when the borrowed provider
+// is safe, but token deadlines are cooperative and do not force blocked SDK or
+// signer code to stop. Near-expiry callers share a refresh cohort; credential
+// copies and signer strings are not securely erased. Error categories discard
+// arbitrary provider diagnostics while preserving safe cancellation identities.
+//
+// See specification/decisions.json KAFKA-MSKIAM-DEC-001 through 003 and the
+// matching reference for signing, refresh and direct-service evidence. This
+// adapter does not itself establish Provisioned or Serverless MSK qualification,
+// install broker ACLs or manage the lifetime of a caller-supplied provider.
 package mskiam
 
 import (
@@ -89,10 +106,14 @@ type invalidTokenCategory struct {
 	message string
 }
 
+// Error returns only the package-owned malformed/expired token category, not
+// signer output or credential diagnostics.
 func (category *invalidTokenCategory) Error() string {
 	return category.message
 }
 
+// Is preserves ErrInvalidToken matching for both refined token categories;
+// errors.Is still distinguishes their concrete sentinel identities.
 func (category *invalidTokenCategory) Is(target error) bool {
 	return target == ErrInvalidToken
 }
@@ -102,9 +123,15 @@ func (category *invalidTokenCategory) Is(target error) bool {
 // default credential chain. A non-nil provider remains caller-owned and must
 // be concurrency-safe, honor context cancellation, and rotate credentials.
 type Config struct {
-	Region              string
+	// Region is required bounded AWS region syntax, not evidence that MSK is available
+	// in that region.
+	Region string
+	// CredentialsProvider is a borrowed concurrency-safe refreshing provider; nil lets
+	// Load resolve the SDK default chain.
 	CredentialsProvider aws.CredentialsProvider
-	TokenTimeout        time.Duration
+	// TokenTimeout is a cooperative signer/retrieval allowance, zero selects five
+	// seconds with bounds of 100 milliseconds through one minute.
+	TokenTimeout time.Duration
 }
 
 // Validate checks the complete configuration without loading credentials.
@@ -309,6 +336,10 @@ func (provider *Provider) retrieveCredentials(
 	return provider.refreshCredentials(ctx, now, refreshGeneration)
 }
 
+// KAFKA-MSKIAM-DEC-002: refreshGate owns lastRefresh, while refreshes identifies
+// the cohort. Canceled callers do not publish a generation that would poison
+// another caller's deadline. TestConcurrentNearExpiryCredentialsRefreshOnce and
+// cancellation tests retain this shared-refresh boundary.
 func (provider *Provider) refreshCredentials(
 	ctx context.Context,
 	now time.Time,
@@ -566,6 +597,10 @@ func decimalDigits(value string) bool {
 	return value != ""
 }
 
+// KAFKA-MSKIAM-DEC-001 pins signer v1.0.4 URL structure and SDK v1.43.0 inputs.
+// This bounded parser checks scope/time/signature syntax, not SigV4 authenticity:
+// AWS signing and the broker verifier own that cryptographic boundary.
+// TestSignedTokenValidationRejectsEachMalformedField retains the exact admission.
 func validToken(
 	token string,
 	region string,

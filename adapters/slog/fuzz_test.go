@@ -11,6 +11,8 @@ import (
 	kafka "github.com/faustbrian/go-kafka"
 )
 
+// FuzzIdentityPolicyValidate mutates exact-match identity allowlist admission
+// without configuring a logger or invoking a sink.
 func FuzzIdentityPolicyValidate(f *testing.F) {
 	f.Add("client", "orders", "workers")
 	f.Add("", ".", "\x00")
@@ -28,6 +30,8 @@ func FuzzIdentityPolicyValidate(f *testing.F) {
 	})
 }
 
+// FuzzObserverValidation mutates observation/identity boundaries through owned
+// test sinks; it is not live exporter or broker qualification.
 func FuzzObserverValidation(f *testing.F) {
 	f.Add(uint8(kafka.ObservationProduceRecord), int64(1), true, uint8(0))
 	f.Add(uint8(kafka.ObservationReplayRecord), int64(1), true, uint8(0))

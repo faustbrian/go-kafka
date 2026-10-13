@@ -9,6 +9,8 @@ import (
 	"github.com/faustbrian/go-kafka/kafkaservice"
 )
 
+// BenchmarkProducerPublish measures adapter correlation/copy/publication through a
+// synthetic resource, not Kafka broker delivery.
 func BenchmarkProducerPublish(b *testing.B) {
 	factory, err := correlation.NewFactory(correlation.FactoryOptions{})
 	if err != nil {
@@ -59,6 +61,8 @@ func BenchmarkProducerPublish(b *testing.B) {
 	}
 }
 
+// BenchmarkLifecycleShutdown measures lifecycle coordination through synthetic
+// resources, not Kafka flush, group leave or network close.
 func BenchmarkLifecycleShutdown(b *testing.B) {
 	b.Run("producer", func(b *testing.B) {
 		b.ReportAllocs()

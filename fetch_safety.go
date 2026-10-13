@@ -182,6 +182,10 @@ func (decompressor *boundedDecompressor) Decompress(
 	}
 }
 
+// Charge returned allocation capacity, not just decoded length. This budget
+// tracks compressed buffers until franz-go recycling calls PutDecompressBytes;
+// allocation and codec-none broker buffers are separate bounds, not whole-process
+// memory admission. FuzzFetchDecompression protects decoded-size/error boundaries.
 func (decompressor *boundedDecompressor) reserveDecoded(
 	decoded []byte,
 	err error,
@@ -324,10 +328,13 @@ func newFetchBatchMalformedError(cause error) error {
 	return &fetchBatchMalformedError{cause: cause}
 }
 
+// Error renders only ErrFetchBatchMalformed, not codec diagnostics.
 func (err *fetchBatchMalformedError) Error() string {
 	return ErrFetchBatchMalformed.Error()
 }
 
+// Unwrap retains the malformed category and original codec cause; callers must
+// apply their own privacy policy before rendering the latter.
 func (err *fetchBatchMalformedError) Unwrap() []error {
 	return []error{ErrFetchBatchMalformed, err.cause}
 }

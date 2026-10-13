@@ -4,6 +4,11 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Clarify borrowed SDK lifecycle, identity allowlists, retrospective spans,
+  propagation ownership, and original provider-error exposure.
+
 ## 1.0.1 - 2026-10-08
 
 ### Changed

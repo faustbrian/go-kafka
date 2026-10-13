@@ -12,9 +12,14 @@ import (
 // topic partition. Records are ordered by offset. The slice is owned for the
 // handler call, but record bytes remain borrowed unless Retain is used.
 type ConsumedBatch struct {
-	Topic     string
+	// Topic is shared by every record in this admitted partition batch.
+	Topic string
+	// Partition identifies a Kafka partition; it does not prove assignment ownership or
+	// broker generation.
 	Partition int32
-	Records   []ConsumedRecord
+	// Records is the handler-owned ordered slice for one partition; its record bytes
+	// remain borrowed until retained.
+	Records []ConsumedRecord
 }
 
 // Retain returns a deep copy whose slice and record bytes the caller owns.
@@ -36,6 +41,8 @@ func (batch ConsumedBatch) Retain() ConsumedBatch {
 // entire batch; any error settles none of it. Implementations must be
 // concurrency-safe when the consumer permits more than one concurrent handler.
 type BatchHandler interface {
+	// HandleBatch treats the whole borrowed partition batch as the settlement unit;
+	// errors permit repeating earlier external effects.
 	HandleBatch(context.Context, ConsumedBatch) error
 }
 
