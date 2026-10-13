@@ -1,5 +1,8 @@
 # API
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: Operations](operations.md)
+
 Use `NewProducer`, `NewConsumer`, `NewTransactionProcessor`,
 `NewReplayReader`, and `NewInspector` as the composition roots. Every
 constructor validates identities and bounded resource policy before franz-go

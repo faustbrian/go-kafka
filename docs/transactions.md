@@ -1,5 +1,8 @@
 # Transactions
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 Transactions require a stable, unique `TransactionalID` for each live producer
 identity. Reusing an identity fences the older producer.
 Transactional IDs must be valid UTF-8 without whitespace padding or control

@@ -1,5 +1,8 @@
 # Replay
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 `ReplayReader` takes explicit topic, partition, inclusive start, and exclusive
 end offsets. It directly assigns partitions, does not join a group, and does
 not read or alter committed group offsets.

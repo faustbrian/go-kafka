@@ -1,5 +1,8 @@
 # Kafka OpenTelemetry adapter (compatibility path)
 
+[Documentation map](../../docs/index.md) · [Repository README](../../README.md)
+[Next: Documentation map](../../docs/index.md)
+
 > Deprecated: use `github.com/faustbrian/go-kafka/adapters/otel`. This module
 > remains supported during the published migration window.
 
@@ -70,8 +73,8 @@ additional guarantees beyond the documented module boundary.
 This module follows its [compatibility policy](COMPATIBILITY.md). Report vulnerabilities through the
 [parent security policy](../../SECURITY.md).
 
-See the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md)
-and [Integration and data movement family guidance](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/design-language.md#package-families-and-selection)
+See the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md)
+and [Integration and data movement family guidance](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/design-language.md#package-families-and-selection)
 for package selection and companion integrations.
 
 ## License

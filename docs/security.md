@@ -1,5 +1,8 @@
 # Security
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: Operations](operations.md)
+
 The [versioned threat model](threat-model-v1.md) records the trust boundaries,
 repo-owned controls, and deployment responsibilities for this package family.
 

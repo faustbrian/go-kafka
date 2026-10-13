@@ -1,5 +1,8 @@
 # Equivalent Kafka replay, inspection, rebalance, TLS, and resource captures, 2026-07-31
 
+[Documentation map](../../index.md) · [Repository README](../../../README.md)
+[Next: Documentation map](../../index.md)
+
 This directory publishes one bounded local comparison run. It is evidence for
 the exact workload and environment below, not a general client ranking.
 

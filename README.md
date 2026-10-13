@@ -1,8 +1,7 @@
 # kafka
 
 [![CI](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml)
-[![CodeQL](https://img.shields.io/badge/CodeQL-required-blue)](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml)
-[![Documentation](https://img.shields.io/badge/docs-checked_in_CI-blue)](docs/)
+[![Documentation](https://img.shields.io/badge/docs-adoption_and_API-blue)](docs/index.md)
 [![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-kafka.svg)](https://pkg.go.dev/github.com/faustbrian/go-kafka)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-kafka?sort=semver)](https://github.com/faustbrian/go-kafka/releases)
 [![Go](https://img.shields.io/badge/go-1.27.0-00ADD8?logo=go)](https://go.dev/)
@@ -16,6 +15,17 @@ or security configuration.
 The package provides at-least-once building blocks. It does not make database
 writes and Kafka publication atomic, make consumer side effects exactly once,
 or own topic and broker configuration.
+
+## Adoption entry points
+
+The root module is `github.com/faustbrian/go-kafka` (stable).
+It requires Go 1.27.0. Pin the published `v1.1.1` root tag
+with `go get github.com/faustbrian/go-kafka@v1.1.1`.
+Install only the modules your application imports; nested module status and
+migration boundaries remain documented separately.
+
+Start with the [documentation map](docs/index.md) for package selection,
+examples, operational constraints, and contributor references.
 
 ## Installation
 
@@ -73,8 +83,8 @@ Start with the [documentation index](docs/README.md), [compatibility matrix](doc
 The [detailed reference](docs/reference.md) preserves the complete producer,
 consumer, replay, inspection, and lifecycle contracts.
 
-Browse the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md)
-and its [Integration and data movement family](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/design-language.md#package-families-and-selection)
+Browse the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md)
+and its [Integration and data movement family](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/design-language.md#package-families-and-selection)
 to compare Kafka with companion libraries and optional adapters.
 
 ## Development

@@ -1,5 +1,8 @@
 # Kafka slog adapter
 
+[Documentation map](../../docs/index.md) · [Repository README](../../README.md)
+[Next: Documentation map](../../docs/index.md)
+
 `kafkaslog` translates stable, payload-free `kafka.Observation` values into fixed
 structured records through Go's standard `log/slog` API. It is part of the root
 Kafka module and adds no logging dependency.

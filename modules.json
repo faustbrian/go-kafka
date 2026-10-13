@@ -148,7 +148,7 @@
           "faq": "docs/troubleshooting.md",
           "changelog": "CHANGELOG.md",
           "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka",
-          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md"
         },
         "known_good_compatibility_sets": [],
         "delivery": {
@@ -317,7 +317,7 @@
           "faq": "adapters/gotelemetry/docs/reference.md",
           "changelog": "adapters/gotelemetry/CHANGELOG.md",
           "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/gotelemetry",
-          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md"
         },
         "known_good_compatibility_sets": [],
         "delivery": {
@@ -456,7 +456,7 @@
           "faq": "adapters/mskiam/docs/reference.md",
           "changelog": "adapters/mskiam/CHANGELOG.md",
           "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam",
-          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md"
         },
         "known_good_compatibility_sets": [],
         "delivery": {
@@ -678,7 +678,7 @@
           "faq": "kafkaservice/docs/reference.md",
           "changelog": "kafkaservice/CHANGELOG.md",
           "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/kafkaservice",
-          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md"
         },
         "known_good_compatibility_sets": [],
         "delivery": {
@@ -822,7 +822,7 @@
           "faq": "adapters/otel/docs/reference.md",
           "changelog": "adapters/otel/CHANGELOG.md",
           "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/otel",
-          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md"
         },
         "known_good_compatibility_sets": [],
         "delivery": {
@@ -961,7 +961,7 @@
           "faq": "adapters/service/docs/reference.md",
           "changelog": "adapters/service/CHANGELOG.md",
           "pkg_go_dev": "https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/service",
-          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md"
+          "ecosystem_index": "https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md"
         },
         "known_good_compatibility_sets": [],
         "delivery": {

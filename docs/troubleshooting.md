@@ -1,5 +1,8 @@
 # Troubleshooting, FAQ, and glossary
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 Start with the stable error category and the operation that returned it. Do not
 diagnose by matching error text. Preserve `errors.Is` and `errors.As` identity
 locally, but do not export an unwrapped application, provider, or broker error

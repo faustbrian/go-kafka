@@ -1,5 +1,8 @@
 # Migration, deprecation, and upgrades
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 The module follows stable v1 compatibility. Delivery semantics, defaults, record ownership, error
 identity, ordering, offset settlement, transaction behavior, replay behavior,
 metrics, and configuration are compatibility-sensitive contracts.

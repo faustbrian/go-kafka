@@ -1,5 +1,8 @@
 # Observability hooks
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 The root module exposes a vendor-neutral `ObserverPolicy`. The current surface
 reports producer delivery plus consumer poll, record-handler, batch-handler,
 offset-commit, bounded in-process retry scheduling, assignment, revocation,

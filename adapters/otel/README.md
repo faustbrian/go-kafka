@@ -1,5 +1,8 @@
 # Kafka OpenTelemetry adapter
 
+[Documentation map](../../docs/index.md) · [Repository README](../../README.md)
+[Next: Documentation map](../../docs/index.md)
+
 `kafkaotel` is the independently versioned OpenTelemetry adapter for
 [`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains
 vendor-neutral and does not import OpenTelemetry.
@@ -67,8 +70,8 @@ additional guarantees beyond the documented module boundary.
 This module follows its [compatibility policy](COMPATIBILITY.md). Report vulnerabilities through the
 [parent security policy](../../SECURITY.md).
 
-See the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md)
-and [Integration and data movement family guidance](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/design-language.md#package-families-and-selection)
+See the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md)
+and [Integration and data movement family guidance](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/design-language.md#package-families-and-selection)
 for package selection and companion integrations.
 
 ## License

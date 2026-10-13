@@ -1,5 +1,8 @@
 # Operations
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 ## Readiness
 
 `Inspector.DependencyHealth` is a bounded connectivity probe, and `Health` is

@@ -1,5 +1,8 @@
 # Detailed reference
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: Operations](operations.md)
+
 This document contains the detailed package contracts and operational notes.
 Start with the root README and documentation index.
 

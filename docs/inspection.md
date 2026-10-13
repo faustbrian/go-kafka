@@ -1,5 +1,8 @@
 # Inspection and dependency health
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 `Inspector` is the package's bounded, read-only Kafka administration surface.
 It does not create, delete, alter, expand, reassign, or reset Kafka resources.
 

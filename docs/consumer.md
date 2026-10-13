@@ -1,5 +1,8 @@
 # Consumer groups and rebalances
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 The package consumer is Kafka-specific and at least once. It joins one explicit
 consumer group, subscribes to explicit topics, disables automatic commits, and
 blocks franz-go rebalances while one bounded poll is handled and settled. It is

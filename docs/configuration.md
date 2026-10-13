@@ -1,5 +1,8 @@
 # Configuration reference
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 Every constructor validates its complete policy before allocating a franz-go
 client. Configuration is passed by value and is not retained as a mutable
 control surface. Invalid combinations fail closed; there is no unrestricted

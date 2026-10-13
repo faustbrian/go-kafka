@@ -1,5 +1,8 @@
 # Specification conformance matrix
 
+[Documentation map](../../../docs/index.md) · [Repository README](../../../README.md)
+[Next: Documentation map](../../../docs/index.md)
+
 The [decision register](../docs/specification-decisions.md) binds every observable decision to pinned authorities and current evidence.
 
 | Decision | Authority | Executable evidence | Differential evidence |

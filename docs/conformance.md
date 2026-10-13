@@ -1,5 +1,8 @@
 # Public conformance suites
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 The `kafkatest` package exposes consumer-facing conformance suites without
 exporting franz-go types. They verify the stable Kafka policy contracts against
 an explicitly selected broker fixture or provider implementation.

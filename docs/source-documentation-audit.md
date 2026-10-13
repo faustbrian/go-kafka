@@ -1,5 +1,8 @@
 # Source documentation audit
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 ## Acceptance, ownership, direct consumers and bounded checks
 
 Base 895add4c2e19dc49162420fddcd9b7e07fa97d47, freshly fetched remote main in a clean detached task-owned worktree. Tier A comments/docs only.

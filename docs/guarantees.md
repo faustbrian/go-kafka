@@ -1,5 +1,8 @@
 # Guarantees and failure model
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 ## Producer
 
 The producer explicitly requests all in-sync replica acknowledgements and does

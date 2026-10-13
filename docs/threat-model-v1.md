@@ -1,5 +1,8 @@
 # Threat model v1: Kafka client package family
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: Operations](operations.md)
+
 Reviewed 2026-09-30 against repository main `e3e49533d5e4141414ce35cf1df71a6fd2d12c62`.
 This model covers the root client, its optional `mskiam`, `otel`, and `service`
 adapters, and the compatibility facades. It is a source and local-fixture risk

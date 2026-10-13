@@ -1,5 +1,8 @@
 # Kafka slog adapter (compatibility path)
 
+[Documentation map](../../docs/index.md) · [Repository README](../../README.md)
+[Next: Documentation map](../../docs/index.md)
+
 > Deprecated: use `github.com/faustbrian/go-kafka/adapters/slog`. This path
 > remains source compatible during the published migration window.
 

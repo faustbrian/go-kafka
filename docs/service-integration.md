@@ -1,5 +1,8 @@
 # Service integration
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 `adapters/service` connects concrete Kafka resources to
 `github.com/faustbrian/go-service` without hiding the Kafka API or moving
 topic, partition, retry, transaction, settlement, or business-handler policy

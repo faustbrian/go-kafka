@@ -1,5 +1,8 @@
 # Amazon MSK and ECS deployment guidance
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 Amazon MSK Provisioned and Serverless are currently **unverified and
 unsupported** by this repository. This guide describes the intended deployment
 boundary and the checks required before a support claim. It does not replace a

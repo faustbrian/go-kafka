@@ -1,5 +1,8 @@
 # Kafka client comparison benchmarks
 
+[Documentation map](../../docs/index.md) · [Repository README](../../README.md)
+[Next: Documentation map](../../docs/index.md)
+
 This non-releasable module isolates comparison clients and container tooling
 from the Kafka policy module. It records end-to-end broker measurements only
 where the candidates can provide the same observable contract. It is not a

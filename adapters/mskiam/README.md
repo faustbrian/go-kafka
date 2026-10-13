@@ -1,5 +1,8 @@
 # Kafka Amazon MSK IAM adapter
 
+[Documentation map](../../docs/index.md) · [Repository README](../../README.md)
+[Next: Documentation map](../../docs/index.md)
+
 `mskiam` is the independently versioned Amazon MSK IAM authentication adapter
 for [`github.com/faustbrian/go-kafka`](../..). The root Kafka module
 remains AWS-independent.
@@ -61,8 +64,8 @@ additional guarantees beyond the documented module boundary.
 This module follows its [compatibility policy](COMPATIBILITY.md). Report vulnerabilities through the
 [parent security policy](../../SECURITY.md).
 
-See the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/README.md)
-and [Integration and data movement family guidance](https://github.com/faustbrian/go-library-tools/blob/v1.4.0/docs/ecosystem/design-language.md#package-families-and-selection)
+See the versioned [Golib ecosystem index](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/README.md)
+and [Integration and data movement family guidance](https://github.com/faustbrian/go-library-tools/blob/v1.8.4/docs/ecosystem/design-language.md#package-families-and-selection)
 for package selection and companion integrations.
 
 ## License

@@ -1,5 +1,8 @@
 # Equivalent Kafka mTLS, PLAIN, SCRAM, and OAuth capture, 2026-08-09
 
+[Documentation map](../../index.md) · [Repository README](../../../README.md)
+[Next: Documentation map](../../index.md)
+
 This directory publishes one bounded local comparison run. It is evidence for
 the exact authenticated producer workloads and environment below, not a
 general client ranking.

@@ -1,5 +1,8 @@
 # Kafka policy-overhead capture, 2026-08-10
 
+[Documentation map](../../index.md) · [Repository README](../../../README.md)
+[Next: Documentation map](../../index.md)
+
 This directory publishes bounded local no-I/O producer, consumer-group, and
 consume-transform-produce captures. They isolate root policy from Kafka broker,
 network, group coordination, serialization, compression, retry, and storage

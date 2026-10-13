@@ -1,5 +1,8 @@
 # Topic, keying, partitioning, and durability design
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 Kafka topic design is an application and operator contract. This package
 validates client-side topic, key, partition, record, and buffer policy, but it
 does not create topics, add partitions, change replication, alter retention,

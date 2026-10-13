@@ -1,5 +1,8 @@
 # Specification decisions
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 This register is authoritative together with `specification/decisions.json`. Source and update authorities are pinned independently in `specification/monitoring.json`.
 
 ## KAFKA-DEC-001: Protocol implementation and version negotiation boundary

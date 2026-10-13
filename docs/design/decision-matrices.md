@@ -1,5 +1,8 @@
 # Production policy decision matrices
 
+[Documentation map](../index.md) · [Repository README](../../README.md)
+[Next: API](../api.md)
+
 These decisions preceded v1 API stabilization. A row marked planned remains a
 design constraint, not a support claim.
 

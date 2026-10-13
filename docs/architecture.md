@@ -1,5 +1,8 @@
 # Architecture
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 The module owns client-side Kafka policy, not domain schemas or cluster
 infrastructure.
 

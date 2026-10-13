@@ -1,5 +1,8 @@
 # Operational runbooks
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 These runbooks separate application actions from Kafka operator actions. The
 package never creates topics, changes ACLs, moves replicas, resets group
 offsets, or performs cluster failover. Every incident command and mutation

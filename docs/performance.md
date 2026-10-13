@@ -1,5 +1,8 @@
 # Performance evidence
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 Performance evidence is organized by observable Kafka contract. A result is
 comparable only when acknowledgement, idempotence, ordering, partition count,
 keying, compression, payload, retry, timeout, and commit behavior are aligned.

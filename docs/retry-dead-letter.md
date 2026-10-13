@@ -1,5 +1,8 @@
 # Consumer retry and dead-letter policy
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 Kafka stores ordered partition logs and consumer-group positions. It does not
 provide queue-style nack, per-record visibility timeouts, or an invisible
 in-flight state. A failed source record remains eligible for redelivery until

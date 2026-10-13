@@ -1,5 +1,8 @@
 # Compatibility and execution matrix
 
+[Documentation map](index.md) · [Repository README](../README.md)
+[Next: API](api.md)
+
 This matrix separates pinned implementation inputs from support claims. It was
 recorded through 2026-08-10. Upstream protocol support is not package evidence.
 The [specification decision register](specification-decisions.md) records the
