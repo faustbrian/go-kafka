@@ -9,8 +9,8 @@ require (
 	github.com/segmentio/kafka-go v0.4.51
 	github.com/testcontainers/testcontainers-go v0.44.0
 	github.com/testcontainers/testcontainers-go/modules/kafka v0.44.0
-	github.com/twmb/franz-go v1.21.5
-	github.com/twmb/franz-go/pkg/kadm v1.18.0
+	github.com/twmb/franz-go v1.22.0
+	github.com/twmb/franz-go/pkg/kadm v1.19.0
 	github.com/xdg-go/scram v1.2.0
 )
 
@@ -65,7 +65,7 @@ require (
 	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/tklauser/go-sysconf v0.4.0 // indirect
 	github.com/tklauser/numcpus v0.12.0 // indirect
-	github.com/twmb/franz-go/pkg/kmsg v1.13.1 // indirect
+	github.com/twmb/franz-go/pkg/kmsg v1.14.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
