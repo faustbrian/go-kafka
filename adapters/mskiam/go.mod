@@ -30,7 +30,7 @@ require (
 	github.com/testcontainers/testcontainers-go/modules/kafka v0.44.0 // indirect
 	github.com/twmb/franz-go v1.21.5 // indirect
 	github.com/twmb/franz-go/pkg/kadm v1.18.0 // indirect
-	github.com/twmb/franz-go/pkg/kmsg v1.13.1 // indirect
+	github.com/twmb/franz-go/pkg/kmsg v1.14.0 // indirect
 	go.opentelemetry.io/otel/metric v1.45.0 // indirect
 	go.opentelemetry.io/otel/trace v1.45.0 // indirect
 	golang.org/x/crypto v0.55.0 // indirect
