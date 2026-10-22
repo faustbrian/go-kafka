@@ -21,8 +21,9 @@ All notable changes to this module are documented here.
   `kafka/gotelemetry:` to `kafka/slog:` and `kafka/otel:`.
 - The independently versioned `adapters/mskiam`, `adapters/otel` and
   `adapters/service` modules still build on root v1; keep their users on root
-  v1 until their v2 majors are published. The latest v1 release receives
-  security fixes until then.
+  v1 until their v2 majors are published. The latest v1 release keeps
+  receiving security fixes until then and through the window announced for
+  the removed paths (see the security policy).
 
 ### Documentation
 

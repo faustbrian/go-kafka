@@ -98,8 +98,8 @@ classification is unchanged.
 
 These paths are removed before the support window their deprecation notices
 announced. Their v1 tags remain available, and the latest root v1 release
-receives security fixes until the adapter modules publish majors built on
-root v2.
+keeps receiving security fixes for at least that announced window; see the
+[security policy](../SECURITY.md).
 
 Within v2, incompatible corrections require a new major release. When a safe
 transition can be supported, a deprecation must name the replacement,
