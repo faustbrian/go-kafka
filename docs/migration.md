@@ -92,7 +92,14 @@ also see a different instrumentation scope: spans and metrics are emitted under
 `github.com/faustbrian/go-kafka/adapters/otel` instead of
 `github.com/faustbrian/go-kafka/adapters/gotelemetry`, so move dashboard and
 alert selectors keyed on the scope name. Metric names and attributes are
-unchanged.
+unchanged. Error text prefixes change from `kafka/golog:` and
+`kafka/gotelemetry:` to `kafka/slog:` and `kafka/otel:`; `errors.Is`
+classification is unchanged.
+
+These paths are removed before the support window their deprecation notices
+announced. Their v1 tags remain available, and the latest root v1 release
+receives security fixes until the adapter modules publish majors built on
+root v2.
 
 Within v2, incompatible corrections require a new major release. When a safe
 transition can be supported, a deprecation must name the replacement,

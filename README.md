@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/faustbrian/go-kafka/actions/workflows/ci.yml)
 [![Documentation](https://img.shields.io/badge/docs-adoption_and_API-blue)](docs/index.md)
-[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-kafka.svg)](https://pkg.go.dev/github.com/faustbrian/go-kafka)
+[![Go Reference](https://pkg.go.dev/badge/github.com/faustbrian/go-kafka/v2.svg)](https://pkg.go.dev/github.com/faustbrian/go-kafka/v2)
 [![Release](https://img.shields.io/github/v/release/faustbrian/go-kafka?sort=semver)](https://github.com/faustbrian/go-kafka/releases)
 [![Go](https://img.shields.io/badge/go-1.27.0-00ADD8?logo=go)](https://go.dev/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)

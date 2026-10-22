@@ -17,7 +17,12 @@ All notable changes to this module are documented here.
   and `kafkaservice` compatibility modules. Import `adapters/slog`,
   `adapters/otel` and `adapters/service` instead. Former `gotelemetry` users
   now see the `adapters/otel` instrumentation scope; move scope-keyed
-  selectors.
+  selectors. Error text prefixes change from `kafka/golog:` and
+  `kafka/gotelemetry:` to `kafka/slog:` and `kafka/otel:`.
+- The independently versioned `adapters/mskiam`, `adapters/otel` and
+  `adapters/service` modules still build on root v1; keep their users on root
+  v1 until their v2 majors are published. The latest v1 release receives
+  security fixes until then.
 
 ### Documentation
 
