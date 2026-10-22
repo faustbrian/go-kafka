@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	kafkaotel "github.com/faustbrian/go-kafka/adapters/otel"
+	kafkaotel "github.com/faustbrian/go-kafka/adapters/otel/v2"
 )
 
 func TestCanonicalOTelAdapterExposesTheReleasedContract(t *testing.T) {

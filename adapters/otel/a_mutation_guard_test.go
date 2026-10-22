@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	kafka "github.com/faustbrian/go-kafka"
+	kafka "github.com/faustbrian/go-kafka/v2"
 )
 
 func TestObservationDiagnosticsDistinguishZeroFromOne(t *testing.T) {

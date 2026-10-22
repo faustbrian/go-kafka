@@ -32,8 +32,8 @@ import (
 	"unicode/utf8"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-service"
+	"github.com/faustbrian/go-kafka/v2"
+	"github.com/faustbrian/go-service/v3"
 	"go.opentelemetry.io/otel/propagation"
 )
 

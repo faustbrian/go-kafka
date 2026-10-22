@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/IBM/sarama"
-	policy "github.com/faustbrian/go-kafka"
+	policy "github.com/faustbrian/go-kafka/v2"
 	segmentkafka "github.com/segmentio/kafka-go"
 	"github.com/twmb/franz-go/pkg/kadm"
 	"github.com/twmb/franz-go/pkg/kgo"

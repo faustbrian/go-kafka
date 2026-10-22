@@ -11,12 +11,12 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam/v2"
 )
 
 func benchmarkProvider(b *testing.B) *mskiam.Provider {
 	b.Helper()
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:              "eu-north-1",
 		CredentialsProvider: staticCredentialsProvider{},
 		TokenTimeout:        time.Second,

@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 func TestSupportedIdleAdaptersStopWithoutWaitingForWork(t *testing.T) {
@@ -110,7 +110,7 @@ func TestProducerStopCompletesAfterAdmittedPublicationReturns(t *testing.T) {
 	if err = component.Start(context.Background()); err != nil {
 		t.Fatalf("Start() error = %v", err)
 	}
-	parent, startErr := mustFactory(t, "parent", "request").Start()
+	parent, startErr := mustFactory(t, "parent", "request").Create()
 	if startErr != nil {
 		t.Fatalf("Start() correlation error = %v", startErr)
 	}

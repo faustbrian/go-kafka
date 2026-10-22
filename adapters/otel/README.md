@@ -17,7 +17,7 @@ or installs global OpenTelemetry state.
 ## Install
 
 ```sh
-go get github.com/faustbrian/go-kafka/adapters/otel@v1
+go get github.com/faustbrian/go-kafka/adapters/otel/v2@v2
 ```
 
 ## Quick start
@@ -62,7 +62,7 @@ additional guarantees beyond the documented module boundary.
 
 - [Documentation index](docs/README.md)
 - [Complete technical guide](docs/reference.md)
-- [Go API reference](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/otel)
+- [Go API reference](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/otel/v2)
 - [Parent package documentation](../../docs/README.md)
 
 ## Compatibility and support

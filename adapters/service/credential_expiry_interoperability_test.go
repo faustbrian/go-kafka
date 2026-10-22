@@ -28,8 +28,8 @@ import (
 	"time"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 const (
@@ -164,7 +164,7 @@ func TestLifecycleAdapterRecoversFromExpiredOAuthCredential(t *testing.T) {
 	if err := readiness.Run(ctx); err != nil {
 		t.Fatal("initial OAuth producer readiness failed")
 	}
-	parent, err := factory.Start()
+	parent, err := factory.Create()
 	if err != nil {
 		t.Fatal("create OAuth producer parent correlation")
 	}

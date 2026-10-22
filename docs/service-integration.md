@@ -47,8 +47,7 @@ value. A startup panic still begins transferred-resource cleanup. A shutdown
 panic completes that failed attempt rather than stranding waiters, so a later
 bounded stop can retry.
 
-Concrete Kafka composition remains explicit. The `adapters/service` module
-still builds on root v1 until its v2 major is published:
+Concrete Kafka composition remains explicit through `adapters/service/v2`:
 
 ```go
 adapter, err := kafkaservice.NewProducer(

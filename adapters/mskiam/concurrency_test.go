@@ -6,13 +6,13 @@ import (
 	"testing"
 	"time"
 
-	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam/v2"
 )
 
 func TestProviderIsSafeForConcurrentTokenGeneration(t *testing.T) {
 	t.Parallel()
 
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:              "eu-north-1",
 		CredentialsProvider: staticCredentialsProvider{},
 		TokenTimeout:        time.Second,

@@ -33,7 +33,7 @@ import (
 	"github.com/aws/aws-msk-iam-sasl-signer-go/signer"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
-	kafka "github.com/faustbrian/go-kafka"
+	kafka "github.com/faustbrian/go-kafka/v2"
 )
 
 const (
@@ -215,13 +215,6 @@ func Load(ctx context.Context, adapterConfig Config) (*Provider, error) {
 	provider.refreshGate <- struct{}{}
 
 	return provider, nil
-}
-
-// New delegates to Load for compatibility.
-//
-// Deprecated: use Load.
-func New(ctx context.Context, adapterConfig Config) (*Provider, error) {
-	return Load(ctx, adapterConfig)
 }
 
 // String returns a stable redacted representation.

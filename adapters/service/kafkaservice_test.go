@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -491,7 +491,7 @@ func TestAdapterConstructionRejectsInvalidOptions(t *testing.T) {
 }
 
 func TestProducerBoundsRecordBeforeCopyAndAfterPropagation(t *testing.T) {
-	parent, err := mustFactory(t, "workflow", "request").Start()
+	parent, err := mustFactory(t, "workflow", "request").Create()
 	if err != nil {
 		t.Fatalf("Start() correlation error = %v", err)
 	}
@@ -615,7 +615,7 @@ func TestProducerLifecycleValidatesReadinessDrainsAndRetriesShutdown(t *testing.
 	if err = readiness.Run(context.Background()); !errors.Is(err, readinessErr) {
 		t.Fatalf("readiness after start = %v", err)
 	}
-	parent, _ := mustFactory(t, "workflow", "parent").Start()
+	parent, _ := mustFactory(t, "workflow", "parent").Create()
 	publishResult := make(chan error, 1)
 	go func() {
 		_, _, publishErr := producer.Publish(
@@ -783,7 +783,7 @@ func TestProducerPublishErrorsPreserveChildValuesAndReservedMetadata(t *testing.
 	) {
 		t.Fatalf("Publish() without parent error = %v", err)
 	}
-	parent, _ := mustFactory(t, "workflow", "parent").Start()
+	parent, _ := mustFactory(t, "workflow", "parent").Create()
 	values, delivery, err := producer.Publish(
 		correlation.WithValues(context.Background(), parent),
 		kafka.ProducerRecord{Topic: "orders", Headers: []kafka.Header{{
@@ -915,7 +915,7 @@ func TestCustomCorrelationAndTraceCarriersRemainExplicit(t *testing.T) {
 	if err = producer.Component().Start(context.Background()); err != nil {
 		t.Fatalf("Start() error = %v", err)
 	}
-	parent, _ := mustFactory(t, "workflow-id", "parent-id").Start()
+	parent, _ := mustFactory(t, "workflow-id", "parent-id").Create()
 	record := kafka.ProducerRecord{Topic: "orders", Headers: []kafka.Header{
 		{Key: "application", Value: []byte("present")},
 		{Key: "TRACE-CUSTOM", Value: []byte("stale")},
@@ -1769,7 +1769,7 @@ func TestCallbackPanicsAreContainedAndShutdownRemainsRetryable(t *testing.T) {
 			readiness.Run(context.Background()),
 			kafkaservice.CallbackReadiness,
 		)
-		parent, startErr := mustFactory(t, "parent", "parent-request").Start()
+		parent, startErr := mustFactory(t, "parent", "parent-request").Create()
 		if startErr != nil {
 			t.Fatalf("Start() correlation error = %v", startErr)
 		}

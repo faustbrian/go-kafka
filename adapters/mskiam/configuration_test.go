@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam/v2"
 )
 
 type pointerCredentialsProvider struct{}
@@ -120,19 +120,19 @@ func TestNewValidatesBeforeLoadingCredentials(t *testing.T) {
 	t.Parallel()
 
 	var nilContext context.Context
-	if _, err := mskiam.New(nilContext, mskiam.Config{
+	if _, err := mskiam.Load(nilContext, mskiam.Config{
 		Region: "eu-north-1",
 	}); !errors.Is(err, mskiam.ErrContextRequired) {
 		t.Fatalf("nil context: %v", err)
 	}
-	if _, err := mskiam.New(context.Background(), mskiam.Config{
+	if _, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region: "invalid",
 	}); !errors.Is(err, mskiam.ErrInvalidConfig) {
 		t.Fatalf("invalid config: %v", err)
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
-	if _, err := mskiam.New(ctx, mskiam.Config{
+	if _, err := mskiam.Load(ctx, mskiam.Config{
 		Region: "eu-north-1",
 	}); !errors.Is(err, mskiam.ErrTokenCanceled) ||
 		!errors.Is(err, context.Canceled) {
@@ -143,7 +143,7 @@ func TestNewValidatesBeforeLoadingCredentials(t *testing.T) {
 		time.Unix(1, 0),
 	)
 	defer deadlineCancel()
-	if _, err := mskiam.New(deadlineCtx, mskiam.Config{
+	if _, err := mskiam.Load(deadlineCtx, mskiam.Config{
 		Region: "eu-north-1",
 	}); !errors.Is(err, mskiam.ErrTokenTimeout) ||
 		!errors.Is(err, context.DeadlineExceeded) {
@@ -157,7 +157,7 @@ func TestNewUsesAWSDefaultCredentialChain(t *testing.T) {
 	t.Setenv("AWS_SESSION_TOKEN", "test-session-token")
 	t.Setenv("AWS_EC2_METADATA_DISABLED", "true")
 
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region: "eu-north-1",
 	})
 	if err != nil {
@@ -188,7 +188,7 @@ func TestNewRedactsDefaultCredentialLoadFailure(t *testing.T) {
 	t.Setenv("AWS_SECRET_ACCESS_KEY", "")
 	t.Setenv("AWS_EC2_METADATA_DISABLED", "true")
 
-	_, err := mskiam.New(context.Background(), mskiam.Config{
+	_, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region: "eu-north-1",
 	})
 	if !errors.Is(err, mskiam.ErrCredentialLoad) ||
@@ -208,7 +208,7 @@ func TestConfigurationAndProviderFormattingIsRedacted(t *testing.T) {
 		config.GoString() != config.String() {
 		t.Fatalf("unredacted config: %s", config.String())
 	}
-	provider, err := mskiam.New(context.Background(), config)
+	provider, err := mskiam.Load(context.Background(), config)
 	if err != nil {
 		t.Fatalf("new provider: %v", err)
 	}

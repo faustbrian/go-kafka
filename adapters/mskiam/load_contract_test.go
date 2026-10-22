@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam/v2"
 )
 
 func TestLoadIsTheContextFirstConstructionContract(t *testing.T) {
@@ -22,7 +22,7 @@ func TestLoadIsTheContextFirstConstructionContract(t *testing.T) {
 	if provider, err := mskiam.Load(canceled, config); provider != nil || !errors.Is(err, context.Canceled) {
 		t.Fatalf("Load(canceled) = %#v, %v", provider, err)
 	}
-	if provider, err := mskiam.New(canceled, config); provider != nil || !errors.Is(err, context.Canceled) {
-		t.Fatalf("New(canceled) = %#v, %v", provider, err)
+	if provider, err := mskiam.Load(canceled, config); provider != nil || !errors.Is(err, context.Canceled) {
+		t.Fatalf("Load(canceled) = %#v, %v", provider, err)
 	}
 }

@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 type exampleGenerator struct {
@@ -52,7 +52,7 @@ func ExampleNewProducer() {
 	if err = component.Start(context.Background()); err != nil {
 		return
 	}
-	parent, _ := factory.Start()
+	parent, _ := factory.Create()
 	values, _, err := producer.Publish(
 		correlation.WithValues(context.Background(), parent),
 		kafka.ProducerRecord{

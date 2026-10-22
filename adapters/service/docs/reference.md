@@ -154,7 +154,7 @@ the root clients or application.
 ## Compatibility and migration
 
 This stable v1 module is independently versioned. Its module path is
-`github.com/faustbrian/go-kafka/adapters/service`; consumers must pin a
+`github.com/faustbrian/go-kafka/adapters/service/v2`; consumers must pin a
 released module version and must not rely on the repository workspace or local
 `replace` directives.
 

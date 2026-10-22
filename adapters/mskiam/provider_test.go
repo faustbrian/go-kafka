@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	kafka "github.com/faustbrian/go-kafka"
-	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam/v2"
+	kafka "github.com/faustbrian/go-kafka/v2"
 )
 
 type staticCredentialsProvider struct{}
@@ -71,7 +71,7 @@ func (provider *rotatingCredentialsProvider) counts() (int, int) {
 func TestProviderGeneratesOwnedExpiringMSKIAMToken(t *testing.T) {
 	t.Parallel()
 
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:              "eu-north-1",
 		CredentialsProvider: staticCredentialsProvider{},
 		TokenTimeout:        time.Second,
@@ -117,7 +117,7 @@ func TestProviderRefreshesExpiringCredentialsAndCapsTokenExpiry(t *testing.T) {
 
 	now := time.Now().UTC().Truncate(time.Millisecond)
 	credentials := &rotatingCredentialsProvider{now: now}
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:              "eu-north-1",
 		CredentialsProvider: credentials,
 		TokenTimeout:        time.Second,

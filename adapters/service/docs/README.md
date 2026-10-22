@@ -10,7 +10,7 @@
 
 ## API reference
 
-- [Go package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/service)
+- [Go package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/service/v2)
 
 ## Security and compatibility
 

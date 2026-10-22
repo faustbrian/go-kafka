@@ -22,7 +22,7 @@ import (
 
 	"github.com/aws/aws-msk-iam-sasl-signer-go/signer"
 	"github.com/aws/aws-sdk-go-v2/aws"
-	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam/v2"
 )
 
 type sourceCredentials struct {
@@ -95,7 +95,7 @@ func assertDefaultChainTokenUses(
 	want sourceCredentials,
 ) {
 	t.Helper()
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:       "eu-north-1",
 		TokenTimeout: 2 * time.Second,
 	})
@@ -302,7 +302,7 @@ func TestWorkloadReplacementLoadsCurrentEnvironmentIdentity(t *testing.T) {
 	t.Setenv("AWS_ACCESS_KEY_ID", initial.accessKey)
 	t.Setenv("AWS_SECRET_ACCESS_KEY", initial.secretKey)
 	t.Setenv("AWS_SESSION_TOKEN", initial.session)
-	initialProvider, err := mskiam.New(context.Background(), mskiam.Config{
+	initialProvider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:       "eu-north-1",
 		TokenTimeout: 2 * time.Second,
 	})
@@ -312,7 +312,7 @@ func TestWorkloadReplacementLoadsCurrentEnvironmentIdentity(t *testing.T) {
 	t.Setenv("AWS_ACCESS_KEY_ID", rotated.accessKey)
 	t.Setenv("AWS_SECRET_ACCESS_KEY", rotated.secretKey)
 	t.Setenv("AWS_SESSION_TOKEN", rotated.session)
-	replacementProvider, err := mskiam.New(context.Background(), mskiam.Config{
+	replacementProvider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region:       "eu-north-1",
 		TokenTimeout: 2 * time.Second,
 	})
@@ -330,7 +330,7 @@ func TestWorkloadReplacementLoadsCurrentEnvironmentIdentity(t *testing.T) {
 
 func TestExplicitProviderUsesGeneratedIdentity(t *testing.T) {
 	credentials := generatedSourceCredentials(t, "explicit-provider")
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region: "eu-north-1",
 		CredentialsProvider: generatedExplicitProvider{
 			credentials: credentials,
@@ -363,7 +363,7 @@ func TestProviderRejectsProcessWideSignerDebugSettingWithoutMutation(
 	}))
 	defer server.Close()
 	t.Setenv("AWS_ENDPOINT_URL_STS", server.URL)
-	provider, err := mskiam.New(context.Background(), mskiam.Config{
+	provider, err := mskiam.Load(context.Background(), mskiam.Config{
 		Region: "eu-north-1",
 		CredentialsProvider: generatedExplicitProvider{
 			credentials: credentials,

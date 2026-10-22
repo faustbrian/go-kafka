@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	policy "github.com/faustbrian/go-kafka"
+	policy "github.com/faustbrian/go-kafka/v2"
 	"github.com/twmb/franz-go/pkg/kadm"
 	"github.com/twmb/franz-go/pkg/kgo"
 )

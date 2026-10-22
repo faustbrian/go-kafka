@@ -17,8 +17,8 @@ import (
 	"time"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 const serviceKafkaImage = "apache/kafka:4.3.1@" +
@@ -172,7 +172,7 @@ func TestLifecycleAdapterDrainsRootKafkaResources(t *testing.T) {
 		runResult <- plan.Tasks[0].Run(runCtx)
 	}()
 
-	parent, err := factory.Start()
+	parent, err := factory.Create()
 	if err != nil {
 		t.Fatalf("create parent correlation: %v", err)
 	}
@@ -377,7 +377,7 @@ func TestLifecycleAdapterRecoversFromKafkaFailureBoundaries(t *testing.T) {
 		startupCallback.Operation != kafkaservice.CallbackStartup {
 		t.Fatalf("partial startup callback error = %#v", classifiedStartup.Validation)
 	}
-	parent, parentErr := factory.Start()
+	parent, parentErr := factory.Create()
 	if parentErr != nil {
 		t.Fatalf("construct partial-startup parent correlation: %v", parentErr)
 	}
@@ -646,7 +646,7 @@ func TestLifecycleAdapterRebalancesDuringShutdown(t *testing.T) {
 	if err = producerComponent.Start(ctx); err != nil {
 		t.Fatalf("start rebalance producer adapter: %v", err)
 	}
-	parent, err := factory.Start()
+	parent, err := factory.Create()
 	if err != nil {
 		t.Fatalf("construct rebalance parent correlation: %v", err)
 	}

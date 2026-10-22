@@ -10,7 +10,7 @@
 
 ## API reference
 
-- [Go package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam)
+- [Go package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam/v2)
 - [Specification Decisions](specification-decisions.md)
 
 ## Security and compatibility

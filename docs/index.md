@@ -16,10 +16,10 @@ root API; follow its own README and migration guidance before composing it.
 | Module | Status | Owner detail |
 | --- | --- | --- |
 | `github.com/faustbrian/go-kafka/v2` | stable | [README](../README.md) |
-| `github.com/faustbrian/go-kafka/adapters/mskiam` | stable; requires root v1 until its v2 major | [README](../adapters/mskiam/README.md) |
+| `github.com/faustbrian/go-kafka/adapters/mskiam/v2` | stable | [README](../adapters/mskiam/README.md) |
 | `github.com/faustbrian/go-kafka/benchmarks/clients` | internal; non-releasable | [README](../benchmarks/clients/README.md) |
-| `github.com/faustbrian/go-kafka/adapters/otel` | stable; requires root v1 until its v2 major | [README](../adapters/otel/README.md) |
-| `github.com/faustbrian/go-kafka/adapters/service` | stable; requires root v1 until its v2 major | [README](../adapters/service/README.md) |
+| `github.com/faustbrian/go-kafka/adapters/otel/v2` | stable | [README](../adapters/otel/README.md) |
+| `github.com/faustbrian/go-kafka/adapters/service/v2` | stable | [README](../adapters/service/README.md) |
 
 ## Choose and adopt
 

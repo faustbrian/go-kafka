@@ -18,8 +18,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	kafka "github.com/faustbrian/go-kafka"
-	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam"
+	mskiam "github.com/faustbrian/go-kafka/adapters/mskiam/v2"
+	kafka "github.com/faustbrian/go-kafka/v2"
 )
 
 const (
@@ -52,7 +52,7 @@ func TestAmazonMSKCompatibility(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), config.timeout)
 	defer cancel()
 
-	provider, err := mskiam.New(ctx, mskiam.Config{
+	provider, err := mskiam.Load(ctx, mskiam.Config{
 		Region:       config.region,
 		TokenTimeout: 10 * time.Second,
 	})
@@ -389,8 +389,8 @@ func reportMSKRuntime(t *testing.T, config mskCompatibilityConfig) {
 		versions[info.Main.Path] = info.Main.Version
 		for _, dependency := range info.Deps {
 			switch dependency.Path {
-			case "github.com/faustbrian/go-kafka",
-				"github.com/faustbrian/go-kafka/adapters/mskiam",
+			case "github.com/faustbrian/go-kafka/v2",
+				"github.com/faustbrian/go-kafka/adapters/mskiam/v2",
 				"github.com/aws/aws-msk-iam-sasl-signer-go",
 				"github.com/aws/aws-sdk-go-v2",
 				"github.com/twmb/franz-go",

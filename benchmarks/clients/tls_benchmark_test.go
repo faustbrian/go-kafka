@@ -26,7 +26,7 @@ import (
 	"time"
 
 	"github.com/IBM/sarama"
-	policy "github.com/faustbrian/go-kafka"
+	policy "github.com/faustbrian/go-kafka/v2"
 	"github.com/testcontainers/testcontainers-go"
 	tcexec "github.com/testcontainers/testcontainers-go/exec"
 	"github.com/testcontainers/testcontainers-go/wait"

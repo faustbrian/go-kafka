@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 // FuzzHandlerCorrelationBoundary mutates inbound correlation metadata through the

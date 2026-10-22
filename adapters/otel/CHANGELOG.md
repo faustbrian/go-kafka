@@ -2,7 +2,17 @@
 
 All notable changes to this module are documented here.
 
-## Unreleased
+## 2.0.0 - 2026-10-22
+
+### Changed
+
+- Move to `github.com/faustbrian/go-kafka/adapters/otel/v2` and build on root
+  `github.com/faustbrian/go-kafka/v2`.
+- The instrumentation scope follows the module major:
+  `github.com/faustbrian/go-kafka/adapters/otel/v2`. Move scope-keyed
+  selectors; metric names and attributes are unchanged.
+
+## 1.1.0 - 2026-10-22
 
 ### Documentation
 

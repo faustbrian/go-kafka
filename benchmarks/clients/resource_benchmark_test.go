@@ -18,7 +18,7 @@ import (
 	"testing"
 	"time"
 
-	policy "github.com/faustbrian/go-kafka"
+	policy "github.com/faustbrian/go-kafka/v2"
 	"github.com/moby/moby/api/types/container"
 	dockernetwork "github.com/moby/moby/api/types/network"
 	segmentkafka "github.com/segmentio/kafka-go"

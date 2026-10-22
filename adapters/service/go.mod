@@ -1,26 +1,22 @@
-module github.com/faustbrian/go-kafka/adapters/service
+module github.com/faustbrian/go-kafka/adapters/service/v2
 
 go 1.27.0
 
 require (
-	github.com/faustbrian/go-correlation v1.0.0
-	github.com/faustbrian/go-kafka v1.0.0
-	github.com/faustbrian/go-service v1.0.0
-	go.opentelemetry.io/otel v1.45.0
-	go.opentelemetry.io/otel/trace v1.45.0
+	github.com/faustbrian/go-correlation v1.1.2
+	github.com/faustbrian/go-kafka/v2 v2.0.0
+	github.com/faustbrian/go-service/v3 v3.0.0
+	go.opentelemetry.io/otel v1.46.0
+	go.opentelemetry.io/otel/trace v1.46.0
 )
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/faustbrian/go-cli v1.0.0 // indirect
-	github.com/faustbrian/go-identifier v1.0.0 // indirect
-	github.com/jackc/pgx/v5 v5.10.0 // indirect
+	github.com/faustbrian/go-cli/v2 v2.0.0 // indirect
+	github.com/faustbrian/go-identifier/v2 v2.0.0 // indirect
+	github.com/jackc/pgx/v5 v5.11.0 // indirect
 	github.com/klauspost/compress v1.20.1 // indirect
-	github.com/moby/moby/api v1.56.1 // indirect
-	github.com/moby/moby/client v0.6.1 // indirect
 	github.com/pierrec/lz4/v4 v4.1.33 // indirect
-	github.com/testcontainers/testcontainers-go v0.44.0 // indirect
-	github.com/testcontainers/testcontainers-go/modules/kafka v0.44.0 // indirect
 	github.com/twmb/franz-go v1.21.5 // indirect
 	github.com/twmb/franz-go/pkg/kadm v1.18.0 // indirect
 	github.com/twmb/franz-go/pkg/kmsg v1.13.1 // indirect

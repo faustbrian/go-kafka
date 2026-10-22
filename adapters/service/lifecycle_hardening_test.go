@@ -12,9 +12,9 @@ import (
 	"time"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
-	"github.com/faustbrian/go-service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
+	"github.com/faustbrian/go-service/v3"
 )
 
 func TestServiceDrainClosesKafkaAdmissionBeforeCancellation(t *testing.T) {
@@ -49,7 +49,7 @@ func TestServiceDrainClosesKafkaAdmissionBeforeCancellation(t *testing.T) {
 		if err = runtime.Drain(); err != nil {
 			t.Fatalf("Drain() error = %v", err)
 		}
-		parent, startErr := mustFactory(t, "parent", "request").Start()
+		parent, startErr := mustFactory(t, "parent", "request").Create()
 		if startErr != nil {
 			t.Fatalf("Start() correlation error = %v", startErr)
 		}
@@ -192,7 +192,7 @@ func TestCallbackFailuresRemainClassifiableWithoutExposingCauses(t *testing.T) {
 		callbackCause,
 		kafkaservice.CallbackReadiness,
 	)
-	parent, startErr := mustFactory(t, "parent", "request").Start()
+	parent, startErr := mustFactory(t, "parent", "request").Create()
 	if startErr != nil {
 		t.Fatalf("Start() correlation error = %v", startErr)
 	}
@@ -389,7 +389,7 @@ func TestStopPropagatesOneCallerOwnedShutdownBudget(t *testing.T) {
 	if err = component.Start(context.Background()); err != nil {
 		t.Fatalf("Start() error = %v", err)
 	}
-	parent, err := mustFactory(t, "parent", "request").Start()
+	parent, err := mustFactory(t, "parent", "request").Create()
 	if err != nil {
 		t.Fatalf("Start() correlation error = %v", err)
 	}
@@ -521,7 +521,7 @@ func TestProducerStopWaitsForEveryAdmittedOperation(t *testing.T) {
 	if !ok {
 		t.Fatal("Readiness() missing configured check")
 	}
-	parent, startErr := mustFactory(t, "parent", "request").Start()
+	parent, startErr := mustFactory(t, "parent", "request").Create()
 	if startErr != nil {
 		t.Fatalf("Start() correlation error = %v", startErr)
 	}
@@ -697,7 +697,7 @@ func TestSIGTERMWithdrawsReadinessAndFencesAdmissionOnce(t *testing.T) {
 	if runtime.Ready() {
 		t.Fatal("service remained ready after SIGTERM")
 	}
-	parent, startErr := mustFactory(t, "parent", "request").Start()
+	parent, startErr := mustFactory(t, "parent", "request").Create()
 	if startErr != nil {
 		t.Fatalf("Start() correlation error = %v", startErr)
 	}

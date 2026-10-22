@@ -17,7 +17,7 @@ or the application.
 ## Install
 
 ```sh
-go get github.com/faustbrian/go-kafka/adapters/service@v1
+go get github.com/faustbrian/go-kafka/adapters/service/v2@v2
 ```
 
 ## Quick start
@@ -63,7 +63,7 @@ additional guarantees beyond the documented module boundary.
 
 - [Documentation index](docs/README.md)
 - [Complete technical guide](docs/reference.md)
-- [Go API reference](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/service)
+- [Go API reference](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/service/v2)
 - [Parent package documentation](../../docs/README.md)
 
 ## Compatibility and support

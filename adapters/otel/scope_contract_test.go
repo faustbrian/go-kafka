@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/v2"
 	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/metric/metricdata"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -12,9 +12,9 @@ import (
 )
 
 // Dashboards and alerts select spans and metrics by instrumentation scope, so
-// the scope name is a public contract, independent of the module path.
+// the scope name is a public contract; it changes only with the module major.
 func TestInstrumentationScopeIsStable(t *testing.T) {
-	const scope = "github.com/faustbrian/go-kafka/adapters/otel"
+	const scope = "github.com/faustbrian/go-kafka/adapters/otel/v2"
 	spans := tracetest.NewSpanRecorder()
 	reader := sdkmetric.NewManualReader()
 	instrumentation, err := New(Config{Runtime: testRuntime{

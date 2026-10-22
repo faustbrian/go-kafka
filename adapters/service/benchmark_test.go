@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/faustbrian/go-correlation"
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/adapters/service"
+	"github.com/faustbrian/go-kafka/adapters/service/v2"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 // BenchmarkProducerPublish measures adapter correlation/copy/publication through a
@@ -16,7 +16,7 @@ func BenchmarkProducerPublish(b *testing.B) {
 	if err != nil {
 		b.Fatalf("NewFactory() error = %v", err)
 	}
-	parent, err := factory.Start()
+	parent, err := factory.Create()
 	if err != nil {
 		b.Fatalf("Start() correlation error = %v", err)
 	}

@@ -73,23 +73,27 @@ complete migration.
 Replace root imports `github.com/faustbrian/go-kafka` and its subpackages with
 `github.com/faustbrian/go-kafka/v2`. Version 2 removes the compatibility paths
 below; import the canonical path instead. Delivery, settlement, transaction and
-replay semantics are unchanged. The independently versioned adapter modules
-follow with their own majors built on root v2; keep them with root v1 until
-those are published.
+replay semantics are unchanged. Move the independently versioned adapter
+modules with it: `adapters/mskiam/v2`, `adapters/otel/v2` and
+`adapters/service/v2` build on root v2 (the service adapter also on
+`go-service/v3`). `adapters/mskiam/v2` removes the deprecated `New`; call
+`Load`. `adapters/otel/v2` emits under the instrumentation scope
+`github.com/faustbrian/go-kafka/adapters/otel/v2`, which follows its module
+major; move scope-keyed selectors.
 
 ## Removed compatibility paths
 
 | Removed path | Canonical path |
 | --- | --- |
 | `github.com/faustbrian/go-kafka/adapters/golog` | `github.com/faustbrian/go-kafka/v2/adapters/slog` |
-| `github.com/faustbrian/go-kafka/adapters/gotelemetry` | `github.com/faustbrian/go-kafka/adapters/otel` |
-| `github.com/faustbrian/go-kafka/kafkaservice` | `github.com/faustbrian/go-kafka/adapters/service` |
+| `github.com/faustbrian/go-kafka/adapters/gotelemetry` | `github.com/faustbrian/go-kafka/adapters/otel/v2` |
+| `github.com/faustbrian/go-kafka/kafkaservice` | `github.com/faustbrian/go-kafka/adapters/service/v2` |
 
 Change the import path and package alias (`golog` to `kafkaslog` and
 `gotelemetry` to `kafkaotel`); the exported construction, ownership, lifecycle,
 and error-classification contracts are unchanged. Former `gotelemetry` users
 also see a different instrumentation scope: spans and metrics are emitted under
-`github.com/faustbrian/go-kafka/adapters/otel` instead of
+`github.com/faustbrian/go-kafka/adapters/otel/v2` instead of
 `github.com/faustbrian/go-kafka/adapters/gotelemetry`, so move dashboard and
 alert selectors keyed on the scope name. Metric names and attributes are
 unchanged. Error text prefixes change from `kafka/golog:` and

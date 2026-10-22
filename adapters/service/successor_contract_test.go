@@ -3,7 +3,7 @@ package kafkaservice_test
 import (
 	"testing"
 
-	kafkaservice "github.com/faustbrian/go-kafka/adapters/service"
+	kafkaservice "github.com/faustbrian/go-kafka/adapters/service/v2"
 )
 
 func TestCanonicalServiceAdapterExposesTheReleasedContract(t *testing.T) {

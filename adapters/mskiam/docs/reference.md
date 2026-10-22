@@ -57,7 +57,7 @@ OAUTHBEARER and rejects a plaintext transport.
 - `ProviderError` exposes stable categories through `errors.Is` while discarding
   arbitrary provider and signer diagnostics.
 
-See the compiled [package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam)
+See the compiled [package documentation](https://pkg.go.dev/github.com/faustbrian/go-kafka/adapters/mskiam/v2)
 for the complete exported API.
 
 ## When to use this adapter

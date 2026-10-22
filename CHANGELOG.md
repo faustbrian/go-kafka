@@ -4,6 +4,13 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## Unreleased
+
+### Changed
+
+- Release `adapters/mskiam/v2.0.0`, `adapters/otel/v2.0.0` and
+  `adapters/service/v2.0.0` on root v2. See each adapter's changelog.
+
 ## 2.0.0 - 2026-10-22
 
 ### Changed
