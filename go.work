@@ -2,10 +2,8 @@ go 1.27.3
 
 use (
 	.
-	./adapters/gotelemetry
 	./adapters/mskiam
 	./adapters/otel
 	./adapters/service
 	./benchmarks/clients
-	./kafkaservice
 )

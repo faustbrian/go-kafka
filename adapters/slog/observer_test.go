@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	kafka "github.com/faustbrian/go-kafka"
+	kafka "github.com/faustbrian/go-kafka/v2"
 )
 
 func TestObserverEmitsOnlyBoundedStructuredObservationMetadata(t *testing.T) {

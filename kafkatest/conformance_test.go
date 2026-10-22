@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/go-kafka"
-	"github.com/faustbrian/go-kafka/kafkatest"
+	"github.com/faustbrian/go-kafka/v2"
+	"github.com/faustbrian/go-kafka/v2/kafkatest"
 )
 
 func TestAuthenticationProviderFuncConformance(t *testing.T) {

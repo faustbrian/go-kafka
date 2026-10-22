@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 func ExampleNewBatchFailureHandler() {

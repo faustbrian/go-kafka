@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"testing"
 
-	kafkaslog "github.com/faustbrian/go-kafka/adapters/slog"
+	kafkaslog "github.com/faustbrian/go-kafka/v2/adapters/slog"
 )
 
 func TestCanonicalSlogAdapterExposesTheReleasedContract(t *testing.T) {

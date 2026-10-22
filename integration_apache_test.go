@@ -23,7 +23,7 @@ import (
 	"time"
 
 	"github.com/containerd/errdefs"
-	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/v2"
 	dockernetwork "github.com/moby/moby/api/types/network"
 	dockerclient "github.com/moby/moby/client"
 	"github.com/testcontainers/testcontainers-go"

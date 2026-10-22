@@ -15,11 +15,9 @@ root API; follow its own README and migration guidance before composing it.
 
 | Module | Status | Owner detail |
 | --- | --- | --- |
-| `github.com/faustbrian/go-kafka` | stable | [README](../README.md) |
-| `github.com/faustbrian/go-kafka/adapters/gotelemetry` | deprecated | [README](../adapters/gotelemetry/README.md) |
+| `github.com/faustbrian/go-kafka/v2` | stable | [README](../README.md) |
 | `github.com/faustbrian/go-kafka/adapters/mskiam` | stable | [README](../adapters/mskiam/README.md) |
 | `github.com/faustbrian/go-kafka/benchmarks/clients` | internal; non-releasable | [README](../benchmarks/clients/README.md) |
-| `github.com/faustbrian/go-kafka/kafkaservice` | deprecated | [README](../kafkaservice/README.md) |
 | `github.com/faustbrian/go-kafka/adapters/otel` | stable | [README](../adapters/otel/README.md) |
 | `github.com/faustbrian/go-kafka/adapters/service` | stable | [README](../adapters/service/README.md) |
 
@@ -46,8 +44,6 @@ root API; follow its own README and migration guidance before composing it.
 
 ## Operate and evaluate boundaries
 
-- [Kafka OpenTelemetry adapter (compatibility path)](../adapters/gotelemetry/README.md).
-- [Documentation](../adapters/gotelemetry/docs/README.md).
 - [Operations](operations.md).
 - [Operational runbooks](runbooks.md).
 - [Security](security.md).
@@ -56,7 +52,6 @@ root API; follow its own README and migration guidance before composing it.
 
 ## Owned adapters, examples, and harnesses
 
-- [Kafka slog adapter (compatibility path)](../adapters/golog/README.md).
 - [Kafka Amazon MSK IAM adapter](../adapters/mskiam/README.md).
 - [Documentation](../adapters/mskiam/docs/README.md).
 - [Kafka OpenTelemetry adapter](../adapters/otel/README.md).
@@ -64,8 +59,6 @@ root API; follow its own README and migration guidance before composing it.
 - [Kafka service integration](../adapters/service/README.md).
 - [Documentation](../adapters/service/docs/README.md).
 - [Kafka slog adapter](../adapters/slog/README.md).
-- [Kafka service integration (compatibility path)](../kafkaservice/README.md).
-- [Documentation](../kafkaservice/docs/README.md).
 
 ## Maintainer, specification, and evidence references
 

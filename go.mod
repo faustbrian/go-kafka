@@ -1,4 +1,4 @@
-module github.com/faustbrian/go-kafka
+module github.com/faustbrian/go-kafka/v2
 
 go 1.27.0
 

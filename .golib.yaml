@@ -20,9 +20,6 @@ api:
     - module: .
       mode: apidiff
       path: api/baseline.txt
-    - module: adapters/gotelemetry
-      mode: apidiff
-      path: adapters/gotelemetry/api/baseline.txt
     - module: adapters/mskiam
       mode: apidiff
       path: adapters/mskiam/api/baseline.txt
@@ -32,9 +29,6 @@ api:
     - module: adapters/service
       mode: apidiff
       path: adapters/service/api/baseline.txt
-    - module: kafkaservice
-      mode: apidiff
-      path: kafkaservice/api/baseline.txt
 operations:
   - module: .
     gate: local-test
@@ -157,13 +151,6 @@ operations:
         makefile: verification/package.mk
         target: interoperability
         timeout: 20m
-  - module: adapters/gotelemetry
-    gate: test
-    steps:
-      - type: make
-        makefile: verification/package.mk
-        target: package-contract
-        timeout: 10m
   - module: adapters/mskiam
     gate: test
     steps:

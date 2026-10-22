@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/v2"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/twmb/franz-go/pkg/kerr"
 	franzoauth "github.com/twmb/franz-go/pkg/sasl/oauth"

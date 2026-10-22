@@ -3,7 +3,7 @@ package kafka_test
 import (
 	"fmt"
 
-	"github.com/faustbrian/go-kafka"
+	"github.com/faustbrian/go-kafka/v2"
 )
 
 func ExampleReplayResult_Checkpoint() {

@@ -39,7 +39,7 @@ that hide a failing package.
 
 ## Verification
 
-Use Go 1.27.2; public module minima remain Go 1.27.0. An isolated checkout
+Use Go 1.27.3; public module minima remain Go 1.27.0. An isolated checkout
 needs no sibling repositories or coordination goal files. Begin with root
 deterministic tests and one active target when its hostile fetch boundary
 changes, using a disposable cache per bounded session:

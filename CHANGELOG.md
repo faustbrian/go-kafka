@@ -4,6 +4,19 @@ All notable changes to this module are documented here.
 
 ## Unreleased
 
+## 2.0.0 - 2026-10-22
+
+### Changed
+
+- Move the root module to `github.com/faustbrian/go-kafka/v2`. Delivery,
+  settlement, transaction and replay semantics are unchanged.
+
+### Removed
+
+- Remove the deprecated `adapters/golog` package and the `adapters/gotelemetry`
+  and `kafkaservice` compatibility modules. Import `adapters/slog`,
+  `adapters/otel` and `adapters/service` instead.
+
 ### Documentation
 
 - Clarify copied publication inputs, borrowed handler records, partial settlement,

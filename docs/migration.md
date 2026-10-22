@@ -3,7 +3,7 @@
 [Documentation map](index.md) · [Repository README](../README.md)
 [Next: API](api.md)
 
-The module follows stable v1 compatibility. Delivery semantics, defaults, record ownership, error
+The module follows stable v2 compatibility. Delivery semantics, defaults, record ownership, error
 identity, ordering, offset settlement, transaction behavior, replay behavior,
 metrics, and configuration are compatibility-sensitive contracts.
 
@@ -68,11 +68,18 @@ benchmark, and adoption modules must move in the same coherent change when they
 consume the corrected contract. Passing only the root Kafka tests is not a
 complete migration.
 
-## Deprecation policy
+## To v2
 
-The target-oriented adapter paths are additive replacements:
+Replace root imports `github.com/faustbrian/go-kafka` and its subpackages with
+`github.com/faustbrian/go-kafka/v2`. Version 2 removes the compatibility paths
+below; import the canonical path instead. Delivery, settlement, transaction and
+replay semantics are unchanged. The independently versioned adapter modules
+follow with their own majors built on root v2; keep them with root v1 until
+those are published.
 
-| Compatibility path | Canonical path |
+## Removed compatibility paths
+
+| Removed path | Canonical path |
 | --- | --- |
 | `github.com/faustbrian/go-kafka/adapters/golog` | `github.com/faustbrian/go-kafka/adapters/slog` |
 | `github.com/faustbrian/go-kafka/adapters/gotelemetry` | `github.com/faustbrian/go-kafka/adapters/otel` |
@@ -80,9 +87,7 @@ The target-oriented adapter paths are additive replacements:
 
 Change only the import path and package alias (`golog` to `kafkaslog` and
 `gotelemetry` to `kafkaotel`); the exported construction, ownership, lifecycle,
-and error-classification contracts remain compatible. The old paths remain
-supported for the longer of 180 days after successor public availability and
-two subsequently published stable owner-module minor releases.
+and error-classification contracts are unchanged.
 
 Within v1, incompatible corrections require a new major release. When a safe
 transition can be supported, a deprecation must name the replacement,
