@@ -222,7 +222,7 @@
           "build_tags": []
         }
       ],
-      "purpose": "`mskiam` is the independently versioned Amazon MSK IAM authentication adapter for [`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains AWS-independent.",
+      "purpose": "`mskiam` is the independently versioned Amazon MSK IAM authentication adapter for [`github.com/faustbrian/go-kafka/v2`](../..). The root Kafka module remains AWS-independent.",
       "lifecycle": "stable",
       "kind": "adapter",
       "releasable": true,
@@ -443,7 +443,7 @@
           "build_tags": []
         }
       ],
-      "purpose": "`kafkaotel` is the canonical independently versioned OpenTelemetry adapter for `github.com/faustbrian/go-kafka`. The root Kafka module remains vendor-neutral.",
+      "purpose": "`kafkaotel` is the canonical independently versioned OpenTelemetry adapter for `github.com/faustbrian/go-kafka/v2`. The root Kafka module remains vendor-neutral.",
       "lifecycle": "stable",
       "kind": "adapter",
       "releasable": true,
@@ -583,7 +583,7 @@
           "build_tags": []
         }
       ],
-      "purpose": "`kafkaservice` is the canonical independently versioned integration between `github.com/faustbrian/go-kafka` and `github.com/faustbrian/go-service`.",
+      "purpose": "`kafkaservice` is the canonical independently versioned integration between `github.com/faustbrian/go-kafka/v2` and `github.com/faustbrian/go-service/v3`.",
       "lifecycle": "stable",
       "kind": "public library",
       "releasable": true,
