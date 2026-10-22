@@ -5,7 +5,7 @@
 
 This is a historical audit of the v1 source at the base below. Its
 `adapters/golog`, `adapters/gotelemetry` and `kafkaservice` rows describe paths
-v2 removes.
+v2 removes. Its adapter module rows carry the pre-v2 module paths.
 
 ## Acceptance, ownership, direct consumers and bounded checks
 

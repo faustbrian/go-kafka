@@ -4,7 +4,7 @@ This guide contains the complete behavioral and operational reference. Start
 with the [package overview](../README.md).
 
 `mskiam` is the independently versioned Amazon MSK IAM authentication adapter
-for [`github.com/faustbrian/go-kafka`](../../..). The root Kafka module
+for [`github.com/faustbrian/go-kafka/v2`](../../..). The root Kafka module
 remains AWS-independent.
 
 Use this adapter only with Amazon MSK clusters whose IAM access control is
@@ -50,7 +50,7 @@ OAUTHBEARER and rejects a plaintext transport.
   `CredentialsProvider` selects an explicit caller-owned AWS SDK v2 provider.
 - `Config.Validate` checks region, timeout, and typed-nil provider bounds without
   loading credentials.
-- `New` validates configuration, loads the default AWS credential chain when
+- `Load` validates configuration, loads the default AWS credential chain when
   needed, and returns a concurrency-safe `Provider`.
 - `Provider.Token` implements `kafka.OAuthBearerProvider` and creates one fresh,
   owned token for each authentication session.
@@ -77,7 +77,7 @@ refreshed by every caller in the same request cohort.
 
 ## Credential selection and rotation
 
-When `CredentialsProvider` is nil, `New` uses
+When `CredentialsProvider` is nil, `Load` uses
 `config.LoadDefaultConfig(ctx, config.WithRegion(...))`. The AWS SDK default
 chain can select environment, web-identity, shared-profile, process, ECS
 container, EKS pod-identity, or EC2 instance-role credentials according to SDK

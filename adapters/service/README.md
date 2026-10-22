@@ -4,8 +4,8 @@
 [Next: Documentation map](../../docs/index.md)
 
 `kafkaservice` is the independently versioned integration between
-[`github.com/faustbrian/go-kafka`](../..) and
-`github.com/faustbrian/go-service`. The root Kafka production package
+[`github.com/faustbrian/go-kafka/v2`](../..) and
+`github.com/faustbrian/go-service/v3`. The root Kafka production package
 does not import service, correlation, or OpenTelemetry APIs.
 
 The adapter keeps concrete Kafka resources visible. It owns only service

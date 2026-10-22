@@ -4,7 +4,7 @@
 [Next: Documentation map](../../docs/index.md)
 
 `kafkaotel` is the independently versioned OpenTelemetry adapter for
-[`github.com/faustbrian/go-kafka`](../..). The root Kafka module remains
+[`github.com/faustbrian/go-kafka/v2`](../..). The root Kafka module remains
 vendor-neutral and does not import OpenTelemetry.
 
 Use this adapter when Kafka policy observations should become traces and

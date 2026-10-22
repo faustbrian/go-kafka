@@ -150,7 +150,7 @@
       ],
       "public_apis": [
         "Provider",
-        "New"
+        "Load"
       ],
       "documentation": [
         "adapters/mskiam/docs/specification-decisions.md"

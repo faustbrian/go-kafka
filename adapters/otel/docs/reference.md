@@ -4,7 +4,7 @@ This guide contains the complete behavioral and operational reference. Start
 with the [package overview](../README.md).
 
 `kafkaotel` is the independently versioned OpenTelemetry adapter for
-[`github.com/faustbrian/go-kafka`](../../..). The root Kafka module remains
+[`github.com/faustbrian/go-kafka/v2`](../../..). The root Kafka module remains
 vendor-neutral and does not import OpenTelemetry.
 
 Use this adapter when Kafka policy observations should become traces and
@@ -356,7 +356,11 @@ client identity.
 
 ## Migration
 
-This module follows stable v1 compatibility. Span names, kinds, attributes, metric names, units,
+This module follows stable v2 compatibility. Moving from v1 to v2 changes the
+import to `/v2`, requires root `go-kafka/v2`, and changes the instrumentation
+scope from `github.com/faustbrian/go-kafka/adapters/otel` to
+`github.com/faustbrian/go-kafka/adapters/otel/v2`; move scope-keyed dashboard
+and alert selectors. Span names, kinds, attributes, metric names, units,
 boundaries, propagation validation, and the convention pin are user-visible
 migration surfaces. Upgrade OpenTelemetry and this adapter together, review
 the changelog, update dashboards and sampling rules, and revalidate allowlists.

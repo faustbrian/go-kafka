@@ -112,7 +112,7 @@ func TestProducerStopCompletesAfterAdmittedPublicationReturns(t *testing.T) {
 	}
 	parent, startErr := mustFactory(t, "parent", "request").Create()
 	if startErr != nil {
-		t.Fatalf("Start() correlation error = %v", startErr)
+		t.Fatalf("Create() correlation error = %v", startErr)
 	}
 	publishResult := make(chan error, 1)
 	go func() {

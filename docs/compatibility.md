@@ -8,7 +8,7 @@ recorded through 2026-08-10. Upstream protocol support is not package evidence.
 The [specification decision register](specification-decisions.md) records the
 package interpretations that govern this matrix.
 
-The independently versioned `adapters/service` module is additive and stable at v1.
+The independently versioned `adapters/service` module is additive and stable at v2.
 Existing direct producer and consumer construction remains supported. The
 adapter uses the public Kafka record, handler, health, run, and shutdown
 contracts and does not change their wire or settlement semantics.

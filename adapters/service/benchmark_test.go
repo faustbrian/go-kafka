@@ -18,7 +18,7 @@ func BenchmarkProducerPublish(b *testing.B) {
 	}
 	parent, err := factory.Create()
 	if err != nil {
-		b.Fatalf("Start() correlation error = %v", err)
+		b.Fatalf("Create() correlation error = %v", err)
 	}
 	producer, err := kafkaservice.NewProducer(
 		kafkaservice.ProducerOptions[struct{}]{

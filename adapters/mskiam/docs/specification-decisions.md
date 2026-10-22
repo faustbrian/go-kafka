@@ -89,7 +89,7 @@ This register is authoritative together with `specification/decisions.json`. Sou
 - **fuzz_evidence:** None.
 - **interoperability_evidence:** `adapters/mskiam/msk_compatibility_test.go`
 - **differential_evidence:** `adapters/mskiam/specification/maintained-peer-differential.md`
-- **public_apis:** `Provider`, `New`
+- **public_apis:** `Provider`, `Load`
 - **documentation:** `adapters/mskiam/docs/specification-decisions.md`
 - **upstream_status:** The pinned authority defines the protocol or provider boundary; package policy owns the narrower observable contract.
 - **reconsider_when:** A monitored authority changes, a maintained peer exposes contrary evidence, or the public contract is deliberately revised.

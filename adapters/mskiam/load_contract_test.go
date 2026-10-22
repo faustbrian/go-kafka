@@ -22,7 +22,4 @@ func TestLoadIsTheContextFirstConstructionContract(t *testing.T) {
 	if provider, err := mskiam.Load(canceled, config); provider != nil || !errors.Is(err, context.Canceled) {
 		t.Fatalf("Load(canceled) = %#v, %v", provider, err)
 	}
-	if provider, err := mskiam.Load(canceled, config); provider != nil || !errors.Is(err, context.Canceled) {
-		t.Fatalf("Load(canceled) = %#v, %v", provider, err)
-	}
 }

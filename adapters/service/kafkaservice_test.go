@@ -493,7 +493,7 @@ func TestAdapterConstructionRejectsInvalidOptions(t *testing.T) {
 func TestProducerBoundsRecordBeforeCopyAndAfterPropagation(t *testing.T) {
 	parent, err := mustFactory(t, "workflow", "request").Create()
 	if err != nil {
-		t.Fatalf("Start() correlation error = %v", err)
+		t.Fatalf("Create() correlation error = %v", err)
 	}
 	publishCalls := 0
 	producer, err := kafkaservice.NewProducer(
@@ -1771,7 +1771,7 @@ func TestCallbackPanicsAreContainedAndShutdownRemainsRetryable(t *testing.T) {
 		)
 		parent, startErr := mustFactory(t, "parent", "parent-request").Create()
 		if startErr != nil {
-			t.Fatalf("Start() correlation error = %v", startErr)
+			t.Fatalf("Create() correlation error = %v", startErr)
 		}
 		_, _, err = producer.Publish(
 			correlation.WithValues(context.Background(), parent),

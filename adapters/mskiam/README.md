@@ -4,7 +4,7 @@
 [Next: Documentation map](../../docs/index.md)
 
 `mskiam` is the independently versioned Amazon MSK IAM authentication adapter
-for [`github.com/faustbrian/go-kafka`](../..). The root Kafka module
+for [`github.com/faustbrian/go-kafka/v2`](../..). The root Kafka module
 remains AWS-independent.
 
 Use this adapter only with Amazon MSK clusters whose IAM access control is

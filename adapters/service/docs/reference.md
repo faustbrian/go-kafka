@@ -4,8 +4,8 @@ This guide contains the complete behavioral and operational reference. Start
 with the [package overview](../README.md).
 
 `kafkaservice` is the independently versioned integration between
-[`github.com/faustbrian/go-kafka`](../../..) and
-`github.com/faustbrian/go-service`. The root Kafka production package
+[`github.com/faustbrian/go-kafka/v2`](../../..) and
+`github.com/faustbrian/go-service/v3`. The root Kafka production package
 does not import service, correlation, or OpenTelemetry APIs.
 
 The adapter keeps concrete Kafka resources visible. It owns only service
@@ -153,7 +153,7 @@ the root clients or application.
 
 ## Compatibility and migration
 
-This stable v1 module is independently versioned. Its module path is
+This stable v2 module is independently versioned. Its module path is
 `github.com/faustbrian/go-kafka/adapters/service/v2`; consumers must pin a
 released module version and must not rely on the repository workspace or local
 `replace` directives.

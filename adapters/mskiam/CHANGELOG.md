@@ -116,6 +116,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   redaction, refresh contention, and separate generation/retrieval benchmarks.
 
 [1.1.1]: https://github.com/faustbrian/go-kafka/releases/tag/adapters/mskiam/v1.1.1
-[Unreleased]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv1.1.1...HEAD
+[2.0.0]: https://github.com/faustbrian/go-kafka/releases/tag/adapters%2Fmskiam%2Fv2.0.0
+[1.2.0]: https://github.com/faustbrian/go-kafka/releases/tag/adapters%2Fmskiam%2Fv1.2.0
 [1.1.0]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv1.0.0...adapters%2Fmskiam%2Fv1.1.0
 [1.0.0]: https://github.com/faustbrian/go-kafka/releases/tag/adapters%2Fmskiam%2Fv1.0.0
