@@ -3,6 +3,10 @@
 [Documentation map](index.md) · [Repository README](../README.md)
 [Next: API](api.md)
 
+This is a historical audit of the v1 source at the base below. Its
+`adapters/golog`, `adapters/gotelemetry` and `kafkaservice` rows describe paths
+v2 removes.
+
 ## Acceptance, ownership, direct consumers and bounded checks
 
 Base 895add4c2e19dc49162420fddcd9b7e07fa97d47, freshly fetched remote main in a clean detached task-owned worktree. Tier A comments/docs only.

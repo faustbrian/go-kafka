@@ -99,9 +99,6 @@
         },
         "optional_owned_dependencies": [],
         "adapters": [
-          "github.com/faustbrian/go-kafka/adapters/mskiam",
-          "github.com/faustbrian/go-kafka/adapters/otel",
-          "github.com/faustbrian/go-kafka/adapters/service",
           "github.com/faustbrian/go-kafka/v2/adapters/slog"
         ],
         "companions": [
