@@ -81,15 +81,20 @@ those are published.
 
 | Removed path | Canonical path |
 | --- | --- |
-| `github.com/faustbrian/go-kafka/adapters/golog` | `github.com/faustbrian/go-kafka/adapters/slog` |
+| `github.com/faustbrian/go-kafka/adapters/golog` | `github.com/faustbrian/go-kafka/v2/adapters/slog` |
 | `github.com/faustbrian/go-kafka/adapters/gotelemetry` | `github.com/faustbrian/go-kafka/adapters/otel` |
 | `github.com/faustbrian/go-kafka/kafkaservice` | `github.com/faustbrian/go-kafka/adapters/service` |
 
-Change only the import path and package alias (`golog` to `kafkaslog` and
+Change the import path and package alias (`golog` to `kafkaslog` and
 `gotelemetry` to `kafkaotel`); the exported construction, ownership, lifecycle,
-and error-classification contracts are unchanged.
+and error-classification contracts are unchanged. Former `gotelemetry` users
+also see a different instrumentation scope: spans and metrics are emitted under
+`github.com/faustbrian/go-kafka/adapters/otel` instead of
+`github.com/faustbrian/go-kafka/adapters/gotelemetry`, so move dashboard and
+alert selectors keyed on the scope name. Metric names and attributes are
+unchanged.
 
-Within v1, incompatible corrections require a new major release. When a safe
+Within v2, incompatible corrections require a new major release. When a safe
 transition can be supported, a deprecation must name the replacement,
 reason, semantic difference, and earliest removal release in public Go docs and
 the changelog. Deprecated behavior must remain tested until removal.

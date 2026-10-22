@@ -15,7 +15,9 @@ All notable changes to this module are documented here.
 
 - Remove the deprecated `adapters/golog` package and the `adapters/gotelemetry`
   and `kafkaservice` compatibility modules. Import `adapters/slog`,
-  `adapters/otel` and `adapters/service` instead.
+  `adapters/otel` and `adapters/service` instead. Former `gotelemetry` users
+  now see the `adapters/otel` instrumentation scope; move scope-keyed
+  selectors.
 
 ### Documentation
 

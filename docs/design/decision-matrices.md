@@ -10,7 +10,7 @@ design constraint, not a support claim.
 
 | Surface | Decision | Ownership and dependency rule | Status |
 | --- | --- | --- | --- |
-| Root `kafka` module | Own Kafka-specific policy contracts and a franz-go implementation. | May depend on franz-go and kadm internally; ordinary public APIs must not expose their types. | Implemented stable v1 boundary |
+| Root `kafka` module | Own Kafka-specific policy contracts and a franz-go implementation. | May depend on franz-go and kadm internally; ordinary public APIs must not expose their types. | Implemented stable v2 boundary |
 | Authentication | Root owns TLS, mTLS, PLAIN, SCRAM, and bounded OAUTHBEARER provider contracts. | No process-wide mutable credentials; providers own endpoint acquisition, refresh, and expiry semantics. | Implemented and broker-tested against pinned local security fixtures |
 | `adapters/mskiam` nested module | Translate the supported AWS Go signer into the root token-provider contract. | The AWS SDK and signer must not enter the root module. | Implemented and locally contract-tested; direct MSK broker support remains unverified |
 | `adapters/otel` nested module | Translate stable hooks into selected OpenTelemetry Kafka conventions. | OpenTelemetry must not be required for correctness or imported by the root. | Implemented with a reviewed semantic-convention 1.44.0 mapping and broker-backed W3C propagation evidence |
