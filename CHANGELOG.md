@@ -9,6 +9,18 @@ All notable changes to this module are documented here.
 - Clarify copied publication inputs, borrowed handler records, partial settlement,
   Kafka-only transaction outcomes, cooperative shutdown, and diagnostic privacy.
 
+## 1.1.2 - 2026-10-22
+
+### Changed
+
+- Publish the current source and documentation with a fresh immutable tag.
+- Publish independently versioned modules from the same source snapshot:
+  - `adapters/gotelemetry/v1.1.0`.
+  - `adapters/mskiam/v1.2.0`.
+  - `kafkaservice/v1.1.0`.
+  - `adapters/otel/v1.1.0`.
+  - `adapters/service/v1.1.0`.
+
 ## 1.1.1 - 2026-10-08
 
 ### Changed
