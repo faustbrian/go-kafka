@@ -19,8 +19,8 @@ or own topic and broker configuration.
 ## Adoption entry points
 
 The root module is `github.com/faustbrian/go-kafka/v2` (stable).
-It requires Go 1.27.0. Pin the `v2.0.0` root tag
-with `go get github.com/faustbrian/go-kafka/v2@v2.0.0`.
+It requires Go 1.27.0. Pin the `v2.0.1` root tag
+with `go get github.com/faustbrian/go-kafka/v2@v2.0.1`.
 Install only the modules your application imports; nested module status and
 migration boundaries remain documented separately.
 
@@ -89,7 +89,7 @@ to compare Kafka with companion libraries and optional adapters.
 
 ## Development
 
-Use Go 1.27.3 and the verified public Tools v2.1.3 binary; public minima remain
+Use Go 1.27.4 and the verified public Tools v2.1.3 binary; public minima remain
 Go 1.27.0. `make check` and `make ci` select bounded checks; `make check-full`
 selects the unchanged full campaigns. Backend and managed-service changes
 also need their affected real integration/interoperability evidence. See

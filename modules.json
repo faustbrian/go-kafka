@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "repository": "github.com/faustbrian/go-kafka",
-  "go_version": "1.27.3",
+  "go_version": "1.27.4",
   "modules": [
     {
       "directory": ".",
@@ -53,7 +53,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "2.0.0",
+      "version": "2.0.1",
       "tag_prefix": "v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -230,7 +230,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "2.0.0",
+      "version": "2.0.1",
       "tag_prefix": "adapters/mskiam/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -451,7 +451,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "2.0.0",
+      "version": "2.0.1",
       "tag_prefix": "adapters/otel/v",
       "cohesion": {
         "family": "integration-and-data-movement",
@@ -591,7 +591,7 @@
       "family_label": "Integration And Data Movement",
       "family_description": "Bounded external I/O, data movement, provider boundaries, and derived search state.",
       "family_order": 7,
-      "version": "2.0.0",
+      "version": "2.0.1",
       "tag_prefix": "adapters/service/v",
       "cohesion": {
         "family": "integration-and-data-movement",

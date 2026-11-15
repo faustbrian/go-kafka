@@ -5,6 +5,13 @@ All notable changes to this module are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-11-15
+
+### Security
+
+- Upgrade `github.com/klauspost/compress` to v1.20.2 to address
+  GO-2026-6865. Consumers should require v1.20.2 or newer.
+
 ## [2.0.0] - 2026-10-22
 
 ### Changed
@@ -116,6 +123,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   redaction, refresh contention, and separate generation/retrieval benchmarks.
 
 [1.1.1]: https://github.com/faustbrian/go-kafka/releases/tag/adapters/mskiam/v1.1.1
+[2.0.1]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv2.0.0...adapters%2Fmskiam%2Fv2.0.1
 [2.0.0]: https://github.com/faustbrian/go-kafka/releases/tag/adapters%2Fmskiam%2Fv2.0.0
 [1.2.0]: https://github.com/faustbrian/go-kafka/releases/tag/adapters%2Fmskiam%2Fv1.2.0
 [1.1.0]: https://github.com/faustbrian/go-kafka/compare/adapters%2Fmskiam%2Fv1.0.0...adapters%2Fmskiam%2Fv1.1.0
