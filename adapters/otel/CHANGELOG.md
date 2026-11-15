@@ -2,6 +2,13 @@
 
 All notable changes to this module are documented here.
 
+## 2.0.1 - 2026-11-15
+
+### Security
+
+- Upgrade `github.com/klauspost/compress` to v1.20.2 to address
+  GO-2026-6865. Consumers should require v1.20.2 or newer.
+
 ## 2.0.0 - 2026-10-22
 
 ### Changed

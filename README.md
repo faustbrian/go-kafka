@@ -19,8 +19,8 @@ or own topic and broker configuration.
 ## Adoption entry points
 
 The root module is `github.com/faustbrian/go-kafka/v2` (stable).
-It requires Go 1.27.0. Pin the `v2.0.0` root tag
-with `go get github.com/faustbrian/go-kafka/v2@v2.0.0`.
+It requires Go 1.27.0. Pin the `v2.0.1` root tag
+with `go get github.com/faustbrian/go-kafka/v2@v2.0.1`.
 Install only the modules your application imports; nested module status and
 migration boundaries remain documented separately.
 
