@@ -10,6 +10,8 @@ All notable changes to this module are documented here.
 
 - Upgrade `github.com/klauspost/compress` to v1.20.2 to address
   GO-2026-6865. Consumers should require v1.20.2 or newer.
+- Build with Go 1.27.4 to address GO-2026-6859 in `net/http`.
+  Consumers should use Go 1.27.4 or newer.
 
 ### Changed
 
